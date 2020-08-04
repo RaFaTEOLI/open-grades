@@ -53,11 +53,11 @@
                                 <!-- Authentication Links -->
                                 @guest
                                 <li class="nav-item pr-3">
-                                    <a href="{{ route('login') }}" class="btn btn-custom btn-outline-info btn-lg">{{ __('Login') }}</a>
+                                    <a href="{{ route('login') }}" class="btn btn-custom btn-outline-info btn-lg">{{ __('login_register.login') }}</a>
                                 </li>
                                 @if (Route::has('register'))
                                 <li class="nav-item pr-3">
-                                    <a href="{{ route('register') }}" class="btn btn-custom btn-outline-info btn-lg">{{ __('Register') }}</a>
+                                    <a href="{{ route('register') }}" class="btn btn-custom btn-outline-info btn-lg">{{ __('login_register.register') }}</a>
                                 </li>
                                 @endif
                                 @else

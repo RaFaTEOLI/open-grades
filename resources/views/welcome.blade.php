@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Welcome</div>
+                <div class="card-header">{{ __('messages.welcome') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,7 @@
                     </div>
                     @endif
 
-                    Open Grades is an open source school/college manager
+                    {{ __('messages.description') }}
                 </div>
             </div>
         </div>
