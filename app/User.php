@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'api_token',
+        'name', 'email', 'password', 'api_token', 'admin'
     ];
 
     /**
@@ -39,6 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function format() {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'photo' => $this->photo,
