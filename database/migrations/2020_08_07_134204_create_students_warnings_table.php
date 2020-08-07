@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Carbon;
 
-class CreateClassOpeningsTable extends Migration
+class CreateStudentsWarningsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +13,15 @@ class CreateClassOpeningsTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_openings', function (Blueprint $table) {
+        Schema::create('students_warnings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('class_id');
-            $table->timestamp('start_time')->default(Carbon::today());
-            $table->timestamp('end_time')->nullable();
-
+            $table->string('name');
+            $table->string('description');
+            $table->timestamps();
+            
+            $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('class_id')->references('id')->on('classes');
         });
     }
@@ -31,6 +33,6 @@ class CreateClassOpeningsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('class_openings');
+        Schema::dropIfExists('students_warnings');
     }
 }

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Carbon;
 
-class CreateClassOpeningsTable extends Migration
+class CreateStudentsClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,16 @@ class CreateClassOpeningsTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_openings', function (Blueprint $table) {
+        Schema::create('students_classes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('class_id');
-            $table->timestamp('start_time')->default(Carbon::today());
-            $table->timestamp('end_time')->nullable();
-
+            $table->bigInteger('presence')->default(0);
+            $table->bigInteger('absent')->default(0);
+            $table->timestamp('enroll_date')->default(Carbon::today());
+            $table->timestamp('left_date')->nullable();
+            
+            $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('class_id')->references('id')->on('classes');
         });
     }
@@ -31,6 +35,6 @@ class CreateClassOpeningsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('class_openings');
+        Schema::dropIfExists('students_classes');
     }
 }
