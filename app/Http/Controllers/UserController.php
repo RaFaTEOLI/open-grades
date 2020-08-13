@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
+
 class UserController extends Controller
 {
     private $userRepository;

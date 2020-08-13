@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Controllers\API\HttpStatus;
+use App\Repositories\UserRepository;
+use Illuminate\Foundation\Console\Presets\React;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller 
@@ -36,6 +38,7 @@ class UserController extends Controller
      */ 
     public function register(Request $request) 
     { 
+        $userRepository = new UserRepository();
         $token = Str::random(60);
 
         $validator = Validator::make($request->all(), [ 
@@ -50,12 +53,12 @@ class UserController extends Controller
 
         $input = $request->all(); 
 
-        $input['password'] = Hash::make($input['password']);
         $input['api_token'] = $token;
-        $user = User::create($input); 
+
+        $user = $userRepository->register($input); 
 
         $success['token'] =  hash('sha256', $token);
-        $success['user'] = $user->format();
+        $success['user'] = $user;
 
         return response()->json(['success'=> $success], HttpStatus::CREATED); 
     }
@@ -66,6 +69,33 @@ class UserController extends Controller
      */ 
     public function details() 
     { 
-        return response()->json(['success' => Auth::user()], HttpStatus::SUCCESS); 
+        $user = Auth::user();
+        return response()->json(['success' => $user], HttpStatus::SUCCESS); 
+    } 
+
+    /** 
+     * Show an user by id
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function show($id) 
+    { 
+        $userRepository = new UserRepository();
+        $user = $userRepository->findById($id);
+
+        return response()->json($user, HttpStatus::SUCCESS); 
+    } 
+
+    /** 
+     * Show all users
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function all() 
+    { 
+        $userRepository = new UserRepository();
+        $user = $userRepository->all();
+
+        return response()->json($user, HttpStatus::SUCCESS); 
     } 
 }

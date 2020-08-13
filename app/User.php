@@ -43,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'name' => $this->name,
             'email' => $this->email,
             'photo' => $this->photo,
+            'admin' => $this->admin,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
