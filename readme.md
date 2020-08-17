@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Open Grades
+## About
 Open Grades is an opensource application build with Laravel to manage class calendars, class grades and etc, it is made for students and teachers.
 We believe that every school or independent teacher should have access to an easy system to manage his students, grades and much more for free.
 
@@ -17,9 +17,9 @@ We believe that every school or independent teacher should have access to an eas
 - Notify your students.
 - Create warnings for bad behavior and etc.
 
-## Open Grades Team
+## Our Team
 
-We would like to extend our thanks to the following member of the team. If you are interested in becoming a member of the team, please send an email to [rafinha.tessarolo@hotmail.com](mailto:rafinha.tessarolo@hotmail.com)
+We would like to extend our thanks to the following members of the team. If you are interested in becoming a member of the team, please send an email to [rafinha.tessarolo@hotmail.com](mailto:rafinha.tessarolo@hotmail.com)
 
 - **[Rafael Tessarolo](https://github.com/RaFaTEOLI)**
 - **[Allan Galdino](https://github.com/GaldinoAllan)**
@@ -28,7 +28,7 @@ We would like to extend our thanks to the following member of the team. If you a
 
 ## Contributing
 
-Thank you for considering contributing to Open Grades app! The contribution guide can be found in the [Open Grades documentation](https://laravel.com/docs/contributions).
+Thank you for considering contributing to Open Grades app! The contribution guide can be found in the [Open Grades documentation](#).
 
 ## Security Vulnerabilities
 
