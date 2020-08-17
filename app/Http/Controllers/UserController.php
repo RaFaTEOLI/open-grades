@@ -27,8 +27,8 @@ class UserController extends Controller
         return $user;
     }
 
-    public function update($userId) {
-        $user = $this->userRepository->update($userId);
+    public function update($userId, $data) {
+        $user = $this->userRepository->update($userId, $data);
 
         return $user;
     }

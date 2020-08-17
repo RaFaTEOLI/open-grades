@@ -28,8 +28,6 @@ class UserRepository implements UserRepositoryInterface {
     public function findById($id) {
         return User::findOrFail($id)
             ->where('deleted_at', null)
-            ->with('student')
-            ->with('teacher')
             ->get()
             ->first()
             ->format();
