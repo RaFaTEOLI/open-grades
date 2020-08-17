@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/RaFaTEOLI/open-grades/blob/master/public/plugins/images/admin-text-dark.png" width="400"></p>
+<p align="center"><img src="https://github.com/RaFaTEOLI/open-grades/blob/master/public/plugins/images/logo_git.png?raw=true" width="400"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
