@@ -26,7 +26,7 @@ We would like to extend our thanks to the following members of the team. If you 
 - **[Paulo Victor](https://github.com/paulovictor01)**
 - **[Jean Souza](https://github.com/jeanhrsouza)**
 
-## Contributing
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/RaFaTEOLI/open-grades/issues)
 
 Thank you for considering contributing to Open Grades app! The contribution guide can be found in the [Open Grades documentation](#).
 
