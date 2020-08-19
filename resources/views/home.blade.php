@@ -5,7 +5,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">Dashboard</h4> </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a>
+                        <!-- <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a> -->
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                         </ol>
@@ -20,10 +20,13 @@
                 <div class="row">
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">Total Visit</h3>
+                            <h3 class="box-title">{{ __('dashboard.total_students') }}</h3>
                             <ul class="list-inline two-part">
-                                <li>
+                                <!-- <li>
                                     <div id="sparklinedash"></div>
+                                </li> -->
+                                <li>
+                                    <i class="fa fa-users" style="color: grey;"></i>
                                 </li>
                                 <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">659</span></li>
                             </ul>
@@ -31,10 +34,13 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">Total Page Views</h3>
+                            <h3 class="box-title">{{ __('dashboard.new_students') }}</h3>
                             <ul class="list-inline two-part">
-                                <li>
+                                <!-- <li>
                                     <div id="sparklinedash2"></div>
+                                </li> -->
+                                <li>
+                                    <i class="fa fa-users" style="color: yellow;"></i>
                                 </li>
                                 <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span class="counter text-purple">869</span></li>
                             </ul>
@@ -42,10 +48,13 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">Unique Visitor</h3>
+                            <h3 class="box-title">{{ __('dashboard.total_teachers') }}</h3>
                             <ul class="list-inline two-part">
-                                <li>
+                                <!-- <li>
                                     <div id="sparklinedash3"></div>
+                                </li> -->
+                                <li>
+                                    <i class="fa fa-user" style="color: blue;"></i>
                                 </li>
                                 <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">911</span></li>
                             </ul>
@@ -58,7 +67,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <div class="white-box">
-                            <h3 class="box-title">Products Yearly Sales</h3>
+                            <h3 class="box-title">{{ __('dashboard.monthly_grades') }}</h3>
                             <ul class="list-inline text-right">
                                 <li>
                                     <h5><i class="fa fa-circle m-r-5 text-info"></i>Mac</h5> </li>
@@ -84,7 +93,7 @@
                                     <option>July 2017</option>
                                 </select>
                             </div>
-                            <h3 class="box-title">Recent sales</h3>
+                            <h3 class="box-title">{{ __('dashboard.recent_grades') }}</h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -159,7 +168,7 @@
                     <!-- .col -->
                     <div class="col-md-12 col-lg-8 col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Recent Comments</h3>
+                            <h3 class="box-title">{{ __('dashboard.recent_warnings') }}</h3>
                             <div class="comment-center p-t-10">
                                 <div class="comment-body">
                                     <div class="user-img"> <img src="../plugins/images/users/pawandeep.jpg" alt="user" class="img-circle">
@@ -193,7 +202,7 @@
                             <div class="sk-chat-widgets">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        CHAT LISTING
+                                    {{ __('dashboard.last_user_warnings') }}
                                     </div>
                                     <div class="panel-body">
                                         <ul class="chatonline">
