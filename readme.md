@@ -32,7 +32,7 @@ Thank you for considering contributing to Open Grades app! The contribution guid
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Open Grades, please send an e-mail to Taylor Otwell via [rafinha.tessarolo@hotmail.com](mailto:rafinha.tessarolo@hotmail.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Open Grades, please send an e-mail to Rafael Tessarolo via [rafinha.tessarolo@hotmail.com](mailto:rafinha.tessarolo@hotmail.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
