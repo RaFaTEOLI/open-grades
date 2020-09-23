@@ -38,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function format() {
-        return [
+        return (object) [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,

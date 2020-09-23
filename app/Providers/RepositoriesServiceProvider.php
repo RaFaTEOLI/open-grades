@@ -13,7 +13,8 @@ class RepositoriesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(InvitationLinkInterface::class, InvitationLinkRepository::class);
     }
 
     /**
@@ -23,6 +24,7 @@ class RepositoriesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //$this->app->bind(UserRepositoryInterface::class, UserRepository:class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(InvitationLinkInterface::class, InvitationLinkRepository::class);
     }
 }

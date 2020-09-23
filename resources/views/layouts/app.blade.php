@@ -62,7 +62,7 @@
                                 <img src="{{ asset('plugins/images/admin-text.png') }}" alt="home" class="dark-logo" />
                             <!-- This is light logo text -->
                                 <img src="{{ asset('plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
-                        </span> 
+                        </span>
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -72,10 +72,10 @@
                     </li>
                     <li>
                         <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            <input type="text" placeholder="Search..." class="form-control"> 
+                            <input type="text" placeholder="Search..." class="form-control">
                             <a href="">
                                 <i class="fa fa-search"></i>
-                            </a> 
+                            </a>
                         </form>
                     </li>
                     <li>
@@ -127,7 +127,7 @@
                      <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">Upgrade to Pro</a>
                 </div> -->
             </div>
-            
+
         </div>
         <!-- ============================================================== -->
         <!-- End Left Sidebar -->
@@ -136,6 +136,10 @@
         <!-- Page Content -->
         <!-- ============================================================== -->
         <div id="page-wrapper">
+            <input type="hidden" id="hasSuccess" value="{{ session()->has('success') }}">
+            <input type="hidden" id="hasError" value="{{ session()->has('error') }}">
+            <input type="hidden" id="success" value="{{ session('success') }}">
+            <input type="hidden" id="error" value="{{ session('error') }}">
             <div class="container-fluid">
                 @yield('content')
             </div>
@@ -156,7 +160,7 @@
     <!-- ============================================================== -->
     <script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="[{ asset('ample-admin/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('ample-admin/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- Menu Plugin JavaScript -->
     <script src="{{ asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
     <!--slimscroll JavaScript -->
@@ -175,5 +179,22 @@
     <script src="{{ asset('ample-admin/js/custom.min.js') }}"></script>
     <script src="{{ asset('ample-admin/js/dashboard1.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/toast-master/js/jquery.toast.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+        const hasSuccess = document.getElementById('hasSuccess').value;
+        const success = document.getElementById('success').value;
+        if (hasSuccess) {
+            $.toast({
+                heading: 'Open Grades',
+                text: success,
+                position: 'top-right',
+                loaderBg: '#fff',
+                icon: 'warning',
+                hideAfter: 3500,
+                stack: 6
+            });
+        }
+    });
+    </script>
 </body>
 </html>

@@ -19,4 +19,12 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/invitations', 'InvitationLinkController@index')->name('invitations');
+
+Route::get('/invitation', function() {
+    return view('admin/invitation');
+})->name('invitations.new');
+Route::get('/invitation/{id}', 'InvitationLinkController@show')->name('invitations.show');
+Route::post('/invitations', 'InvitationLinkController@store')->name('invitations');
+
 Route::get('lang/{locale}', 'LocalizationController@index');

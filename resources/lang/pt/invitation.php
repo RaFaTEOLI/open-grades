@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Message Language Lines
+    | Invitation Message Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during simple messages for various
@@ -13,7 +13,9 @@ return [
     |
     */
 
-    'welcome' => 'Welcome',
-    'description' => 'OpenGrades is an opensource application to manage class calendars, class grades and etc, it is made for students and teachers.',
-    'actions' => 'Actions'
+    'invitations' => 'Convites',
+    'user' => 'Usuário',
+    'link' => 'Link',
+    'type' => 'Tipo',
+    'created_at' => 'Gerado em'
 ];
