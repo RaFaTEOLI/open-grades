@@ -12,6 +12,7 @@ return [
     */
 
     'dashboard' => 'Dashboard',
+    'invitations' => 'Convites',
     'students' => 'Alunos',
     'teachers' => 'Professores',
     'calendars' => 'Calendários',

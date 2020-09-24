@@ -25,6 +25,7 @@ Route::get('/invitation', function() {
     return view('admin/invitation');
 })->name('invitations.new');
 Route::get('/invitation/{id}', 'InvitationLinkController@show')->name('invitations.show');
+Route::delete('/invitation/{id}', 'InvitationLinkController@destroy')->name('invitations.destroy');
 Route::post('/invitations', 'InvitationLinkController@store')->name('invitations');
 
 Route::get('lang/{locale}', 'LocalizationController@index');

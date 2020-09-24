@@ -27,29 +27,32 @@
             @csrf
             <form role="form" action="{{ route('invitations') }}" method="POST">
                 @csrf
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Type</label>
-                        <select name="type" class="form-control">
-                            <option value="STUDENT">Student</option>
-                            <option value="TEACHER">Teacher</option>
-                        </select>
-                        @if ($errors->get('type'))
-                        <p class="label-error">
-                            @foreach ($errors->get('type') as $error)
-
-                            <strong>{{ $error }}</strong>
-
-                            @endforeach
-                        </p>
-                        @endif
-                    </div>
+                @if (!empty($invitation))
+                <div class="form-group">
+                    <label>{{ __('invitation.link') }}</label>
+                    <input class="form-control" value="{{ $invitation->hash }}" readonly>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="submit" class="form-control btn btn-primary">Generate</button>
-                    </div>
+                @else
+                <div class="form-group">
+                    <label>{{ __('invitation.type') }}</label>
+                    <select name="type" class="form-control">
+                        <option value="STUDENT">{{ __('invitation.student') }}</option>
+                        <option value="TEACHER">{{ __('invitation.teacher') }}</option>
+                    </select>
+                    @if ($errors->get('type'))
+                    <p class="label-error">
+                        @foreach ($errors->get('type') as $error)
+
+                        <strong>{{ $error }}</strong>
+
+                        @endforeach
+                    </p>
+                    @endif
                 </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">{{ __('invitation.generate') }}</button>
+                </div>
+                @endif
             </form>
         </div>
     </div>

@@ -15,5 +15,6 @@ return [
 
     'welcome' => 'Bem-vindo',
     'description' => 'OpenGrades é uma aplicação opensource para gerenciar, calendários de aula, notas e etc, é feito para professores e alunos.',
-    'actions' => 'Ações'
+    'actions' => 'Ações',
+    'no_records' => 'Nenhum registro encontrado!',
 ];

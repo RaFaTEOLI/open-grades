@@ -17,5 +17,8 @@ return [
     'user' => 'Usuário',
     'link' => 'Link',
     'type' => 'Tipo',
-    'created_at' => 'Gerado em'
+    'created_at' => 'Gerado em',
+    'student' => 'Aluno',
+    'teacher' => 'Professor',
+    'generate' => 'Gerar',
 ];

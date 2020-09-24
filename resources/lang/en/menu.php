@@ -12,6 +12,7 @@ return [
     */
 
     'dashboard' => 'Dashboard',
+    'invitations' => 'Invitations',
     'students' => 'Students',
     'teachers' => 'Teachers',
     'calendars' => 'Calendars',

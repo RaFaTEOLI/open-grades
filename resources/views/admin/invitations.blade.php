@@ -22,6 +22,25 @@
                 <a type="button" href="{{ route('invitations.new') }}" class="btn btn-success pull-right row b-none"><i class="fa fa-plus"></i></a>
             </div>
             <h3 class="box-title">{{ __('invitation.invitations') }}</h3>
+            @if (is_array($errors))
+                @foreach ($errors as $error)
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {{ $error }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <br />
+                @endforeach
+            @elseif (!empty($error))
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            @endif
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -44,13 +63,20 @@
                             <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($invitation->created_at)) }}</span></td>
                             <td align="center">
                                 <div class="btn-group">
-                                    <a type="button" href="{{ route('invitations.show', ['id' => $invitation->id]) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <form action="{{ route('invitations.destroy', $invitation->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                @if (count($invitations) < 1)
+                <div style="text-align: center;">{{ __('messages.no_records') }}</div>
+                @endif
             </div>
         </div>
     </div>

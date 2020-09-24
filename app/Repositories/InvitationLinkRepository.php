@@ -30,7 +30,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
             ->where('used_at', null)
             ->get()
             ->first()
-            ->map->format();
+            ->format();
     }
 
     public function findByUserId($userId) {
@@ -48,9 +48,12 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
     }
 
     public function delete($id) {
-        $user = InvitationLink::where('id', $id)->delete();
-
-        return true;
+        try {
+            InvitationLink::findOrFail($id)->delete();
+            return true;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function register($request) {

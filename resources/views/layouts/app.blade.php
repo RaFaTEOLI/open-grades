@@ -101,6 +101,9 @@
                         <a href="dashboard.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>{{ __('menu.dashboard') }}</a>
                     </li>
                     <li>
+                        <a href="{{ route('invitations') }}" class="waves-effect"><i class="fa fa-link fa-fw" aria-hidden="true"></i>{{ __('menu.invitations') }}</a>
+                    </li>
+                    <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>{{ __('menu.students') }}</a>
                     </li>
                     <li>
@@ -189,8 +192,21 @@
                 text: success,
                 position: 'top-right',
                 loaderBg: '#fff',
-                icon: 'warning',
-                hideAfter: 3500,
+                icon: 'success',
+                hideAfter: 5000,
+                stack: 6
+            });
+        }
+
+        const hasError = document.getElementById('hasError').value;
+        const error = document.getElementById('error').value;
+        if (hasError) {
+            $.toast({
+                heading: 'Open Grades',
+                text: error,
+                position: 'top-right',
+                icon: 'error',
+                hideAfter: 5000,
                 stack: 6
             });
         }

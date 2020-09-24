@@ -34,9 +34,10 @@ class InvitationLinkController extends Controller
             }
 
             $input = $request->all();
-            $this->invitationLinkRepository->register($input);
+            $invitation = $this->invitationLinkRepository->register($input);
 
-            return redirect()->route('invitations')->withSuccess(__('actions.success'));
+            return view('admin/invitation', ["invitation" => $invitation]);
+            //return redirect()->route('invitations')->withSuccess(__('actions.success'));
         } catch (Exception $e) {
             return back()->with('error', __('actions.error'));
         }
@@ -55,8 +56,12 @@ class InvitationLinkController extends Controller
     }
 
     public function destroy($id) {
-        $this->invitationLinkRepository->delete($id);
+        try {
+            $this->invitationLinkRepository->delete($id);
 
-        return true;
+            return redirect()->route('invitations')->withSuccess(__('actions.success'));
+        } catch (Exception $e) {
+            return back()->with('error', __('actions.error'));
+        }
     }
 }

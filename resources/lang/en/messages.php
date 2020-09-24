@@ -15,5 +15,6 @@ return [
 
     'welcome' => 'Welcome',
     'description' => 'OpenGrades is an opensource application to manage class calendars, class grades and etc, it is made for students and teachers.',
-    'actions' => 'Actions'
+    'actions' => 'Actions',
+    'no_records' => 'No records found',
 ];
