@@ -1,3 +1,9 @@
+@if (Auth::user()->admin != 1)
+<script>
+    window.location = "{{ route('permission') }}";
+</script>
+<?php exit; ?>
+@endif
 @extends('layouts.app')
 
 @section('content')
@@ -12,9 +18,9 @@
         </ol>
     </div>
 </div>
-                <!-- ============================================================== -->
-                <!-- table -->
-                <!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- table -->
+<!-- ============================================================== -->
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
@@ -23,15 +29,15 @@
             </div>
             <h3 class="box-title">{{ __('invitation.invitations') }}</h3>
             @if (is_array($errors))
-                @foreach ($errors as $error)
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        {{ $error }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <br />
-                @endforeach
+            @foreach ($errors as $error)
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ $error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            @endforeach
             @elseif (!empty($error))
             <div class="alert alert-danger alert-dismissible" role="alert">
                 {{ error }}
@@ -58,7 +64,7 @@
                         <tr>
                             <td>{{ $invitation->id }}</td>
                             <td class="txt-oflo">{{ $invitation->user->name }}</td>
-                            <td>{{ $invitation->hash }}</td>
+                            <td>{{ $invitation->link }}</td>
                             <td class="txt-oflo">{{ $invitation->type }}</td>
                             <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($invitation->created_at)) }}</span></td>
                             <td align="center">
@@ -74,12 +80,12 @@
                         @endforeach
                     </tbody>
                 </table>
-                @if (count($invitations) < 1)
-                <div style="text-align: center;">{{ __('messages.no_records') }}</div>
-                @endif
+                @if (count($invitations) < 1) <div style="text-align: center;">{{ __('messages.no_records') }}
             </div>
+            @endif
         </div>
     </div>
+</div>
 </div>
 <!-- /.container-fluid -->
 @endsection

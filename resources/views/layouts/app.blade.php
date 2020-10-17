@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +29,7 @@
     <!-- color CSS -->
     <link href="{{ asset('ample-admin/css/colors/default.css') }}" id="theme" rel="stylesheet">
 </head>
+
 <body class="fix-header">
     <!-- ============================================================== -->
     <!-- Preloader -->
@@ -59,9 +61,9 @@
                         <!-- Logo text image you can use text also -->
                         <span class="hidden-xs">
                             <!-- This is dark logo text -->
-                                <img src="{{ asset('plugins/images/admin-text.png') }}" alt="home" class="dark-logo" />
+                            <img src="{{ asset('plugins/images/admin-text.png') }}" alt="home" class="dark-logo" />
                             <!-- This is light logo text -->
-                                <img src="{{ asset('plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
+                            <img src="{{ asset('plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
                         </span>
                     </a>
                 </div>
@@ -98,11 +100,13 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <a href="dashboard.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>{{ __('menu.dashboard') }}</a>
+                        <a href="{{ route('home') }}" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>{{ __('menu.dashboard') }}</a>
                     </li>
+                    @if (Auth::user()->admin == 1)
                     <li>
                         <a href="{{ route('invitations') }}" class="waves-effect"><i class="fa fa-link fa-fw" aria-hidden="true"></i>{{ __('menu.invitations') }}</a>
                     </li>
+                    @endif
                     <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>{{ __('menu.students') }}</a>
                     </li>
@@ -147,13 +151,13 @@
                 @yield('content')
             </div>
             <!-- /.container-fluid -->
-            </div>
-            <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page Content -->
-        <!-- ============================================================== -->
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
@@ -174,7 +178,7 @@
     <script src="{{ asset('plugins/bower_components/waypoints/lib/jquery.waypoints.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/counterup/jquery.counterup.min.js') }}"></script>
     <!-- chartist chart -->
-    <script src="{{ asset('plugins/bower_components/chartist-js/dist/chartist.min.js') }}"></script>
+    <script src="{{ asset('plugins/bower_components/chartist-js/dist/chartist.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js') }}"></script>
     <!-- Sparkline chart JavaScript -->
     <script src="{{ asset('plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
@@ -183,34 +187,35 @@
     <script src="{{ asset('ample-admin/js/dashboard1.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/toast-master/js/jquery.toast.js') }}"></script>
     <script>
-        $(document).ready(function () {
-        const hasSuccess = document.getElementById('hasSuccess').value;
-        const success = document.getElementById('success').value;
-        if (hasSuccess) {
-            $.toast({
-                heading: 'Open Grades',
-                text: success,
-                position: 'top-right',
-                loaderBg: '#fff',
-                icon: 'success',
-                hideAfter: 5000,
-                stack: 6
-            });
-        }
+        $(document).ready(function() {
+            const hasSuccess = document.getElementById('hasSuccess').value;
+            const success = document.getElementById('success').value;
+            if (hasSuccess) {
+                $.toast({
+                    heading: 'Open Grades',
+                    text: success,
+                    position: 'top-right',
+                    loaderBg: '#fff',
+                    icon: 'success',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            }
 
-        const hasError = document.getElementById('hasError').value;
-        const error = document.getElementById('error').value;
-        if (hasError) {
-            $.toast({
-                heading: 'Open Grades',
-                text: error,
-                position: 'top-right',
-                icon: 'error',
-                hideAfter: 5000,
-                stack: 6
-            });
-        }
-    });
+            const hasError = document.getElementById('hasError').value;
+            const error = document.getElementById('error').value;
+            if (hasError) {
+                $.toast({
+                    heading: 'Open Grades',
+                    text: error,
+                    position: 'top-right',
+                    icon: 'error',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            }
+        });
     </script>
 </body>
+
 </html>

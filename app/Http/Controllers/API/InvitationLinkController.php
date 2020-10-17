@@ -17,20 +17,22 @@ class InvitationLinkController extends Controller
         $this->invitationLinkRepository = (new InvitationLinkRepository());
     }
 
-    public function index() {
+    public function index()
+    {
         $invitations = $this->invitationLinkRepository->all();
 
         return response()->json($invitations, HttpStatus::SUCCESS);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'type' => 'required',
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['error'=> $validator->errors()], HttpStatus::BAD_REQUEST);
+                return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
             }
 
             $input = $request->all();
@@ -42,19 +44,22 @@ class InvitationLinkController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $invitation = $this->invitationLinkRepository->findById($id);
 
         return response()->json($invitation, HttpStatus::SUCCESS);
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         $invitation = $this->invitationLinkRepository->update($id, $data);
 
         return response()->json($invitation, HttpStatus::SUCCESS);
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $this->invitationLinkRepository->delete($id);
 
         return response()->noContent();

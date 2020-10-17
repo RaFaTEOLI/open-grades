@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\API;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -26,15 +28,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login() {
+    public function login()
+    {
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $success['token'] = $user->api_token;
             return response()->json(['success' => $success], HttpStatus::SUCCESS);
-        }
-        else{
-            return response()->json(['error'=> 'Unauthorized'], HttpStatus::UNAUTHORIZED);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], HttpStatus::UNAUTHORIZED);
         }
     }
 
@@ -54,7 +56,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=> $validator->errors()], HttpStatus::BAD_REQUEST);
+            return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
         }
 
         $input = $request->all();
@@ -64,9 +66,9 @@ class UserController extends Controller
         $user = $this->userRepository->register($input);
 
         $success['token'] =  hash('sha256', $token);
-        $success['user'] = $user;
+        $success['user'] = $user->format();
 
-        return response()->json(['success'=> $success], HttpStatus::CREATED);
+        return response()->json(['success' => $success], HttpStatus::CREATED);
     }
     /**
      * details api

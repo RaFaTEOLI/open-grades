@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\StudentController;
+use App\InvitationLink;
 use App\Repositories\UserRepositoryInterface;
 use App\User;
 use App\Student;
@@ -11,12 +12,14 @@ use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class UserRepository implements UserRepositoryInterface {
+class UserRepository implements UserRepositoryInterface
+{
 
     /*
         Get All Active Users
     */
-    public function all() {
+    public function all()
+    {
         return User::where('deleted_at', null)
             ->get()
             ->map->format();
@@ -25,46 +28,58 @@ class UserRepository implements UserRepositoryInterface {
     /*
         Get An User By Id
     */
-    public function findById($id) {
+    public function findById($id)
+    {
         return User::findOrFail($id)
             ->where('deleted_at', null)
             ->get()
             ->first()
             ->format();
     }
-    
-    public function findByUsername($username) {
 
+    public function findByUsername($username)
+    {
     }
 
-    public function update($userId, $set) {
+    public function update($userId, $set)
+    {
         $user = User::where('id', $userId)->first();
 
         $user->update($set);
     }
 
-    public function delete($userId) {
+    public function delete($userId)
+    {
         $user = User::where('id', $userId)->delete();
 
         return true;
     }
 
-    public function register($request) {
+    public function register($request)
+    {
         try {
-            $user = DB::transaction(function () use($request) {
+            $user = DB::transaction(function () use ($request) {
                 $request['password'] = Hash::make($request['password']);
 
-                // Separates the Type
-                $type = $request["type"];
-                unset($request["type"]);
+                if (isset($request["hash"])) {
+                    $invite = InvitationLink::where('hash', $request["hash"])->get()->first();
+                    if (!empty($invite)) {
+                        $type = $invite->type;
+                    }
+                    unset($request["hash"]);
+                } else {
+                    // Separates the Type
+                    $type = $request["type"];
+                    unset($request["type"]);
+                }
 
                 // Saves the User
                 $user = User::create($request);
-                
+
                 // Saves the User's Type
                 $this->createType($type, $user->id);
 
-                return $user->format();
+                return $user;
             });
             return $user;
         } catch (Exception $e) {
@@ -72,7 +87,8 @@ class UserRepository implements UserRepositoryInterface {
         }
     }
 
-    public function createType($type, $userId) {
+    public function createType($type, $userId)
+    {
         if ($type === 'TEACHER') {
             $this->createTeacher($userId);
         } else if ($type === 'STUDENT') {
@@ -82,7 +98,8 @@ class UserRepository implements UserRepositoryInterface {
         }
     }
 
-    public function createStudent($userId) {
+    public function createStudent($userId)
+    {
         $studentController = new StudentController();
 
         $typeData = [
@@ -93,7 +110,8 @@ class UserRepository implements UserRepositoryInterface {
         return Student::create($typeData);
     }
 
-    public function createTeacher($userId) {
+    public function createTeacher($userId)
+    {
         $studentController = new StudentController();
 
         $typeData = [

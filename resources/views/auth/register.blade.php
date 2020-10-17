@@ -11,6 +11,9 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+                        @if (isset($_GET["hash"]))
+                        <input type="hidden" name="hash" value="<?= $_GET["hash"] ?>">
+                        @endif
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('login_register.name') }}</label>
 

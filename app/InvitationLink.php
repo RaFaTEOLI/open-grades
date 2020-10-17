@@ -25,13 +25,20 @@ class InvitationLink extends Model
         return $this->hasOne('App\User', 'id', 'user_id');
     }
 
-    public function format() {
+    public function format()
+    {
         return (object) [
             'id' => $this->id,
             'user' => $this->user->format(),
             'hash' => $this->hash,
+            'link' => $this->getLinkFromHash($this->hash),
             'type' => $this->type,
             'created_at' => $this->created_at,
         ];
+    }
+
+    public static function getLinkFromHash($hash)
+    {
+        return env('APP_URL') . "/register/?hash={$hash}";
     }
 }

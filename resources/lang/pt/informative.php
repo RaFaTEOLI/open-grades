@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Message Language Lines
+    | Informative Message Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during simple messages for various
@@ -13,9 +13,8 @@ return [
     |
     */
 
-    'welcome' => 'Welcome',
-    'description' => 'OpenGrades is an opensource application to manage class calendars, class grades and etc, it is made for students and teachers.',
-    'actions' => 'Actions',
-    'no_records' => 'No records found',
-    'copied' => 'Copied text to clipboard',
+    'forbidden' => 'Você não pode acessar essa página!',
+    'unauthorized' => 'Você não possui permissão para acessar essa página!',
+    'not_found' => 'Essa página não existe',
+    'back_home' => "Voltar para ínicio"
 ];

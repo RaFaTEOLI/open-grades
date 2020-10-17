@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
-class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
+class InvitationLinkRepository implements InvitationLinkRepositoryInterface
+{
 
     /**
      * Get All Active Invitation Links
      */
-    public function all() {
+    public function all()
+    {
         return InvitationLink::where('used_at', null)
             ->with('user')
             ->get()
@@ -25,7 +27,8 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
     /**
      * Get An Invitation Link By Id
      */
-    public function findById($id) {
+    public function findById($id)
+    {
         return InvitationLink::findOrFail($id)
             ->where('used_at', null)
             ->get()
@@ -33,21 +36,24 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
             ->format();
     }
 
-    public function findByUserId($userId) {
+    public function findByUserId($userId)
+    {
         return InvitationLink::where('user_id', $userId)
-        ->where('used_at', null)
-        ->get()
-        ->first()
-        ->map->format();
+            ->where('used_at', null)
+            ->get()
+            ->first()
+            ->map->format();
     }
 
-    public function update($id, $set) {
+    public function update($id, $set)
+    {
         $user = InvitationLink::where('id', $id)->first();
 
         $user->update($set);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         try {
             InvitationLink::findOrFail($id)->delete();
             return true;
@@ -56,7 +62,8 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
         }
     }
 
-    public function register($request) {
+    public function register($request)
+    {
         try {
             // Validates if logged user is admin
             $user = User::where('id', Auth::id())->where('admin', 1)->first();
@@ -68,13 +75,16 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface {
             $request["hash"] = $this->generateHash();
 
             $invitation = InvitationLink::create($request);
+            $invitation->link = InvitationLink::getLinkFromHash($invitation->hash);
+
             return $invitation;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
 
-    public function generateHash() {
+    public function generateHash()
+    {
         $hash = str_replace('$', '', Hash::make(Carbon::now()));
         $hash = str_replace('/', '', $hash);
         $hash = str_replace('.', '', $hash);

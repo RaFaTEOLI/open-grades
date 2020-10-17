@@ -14,9 +14,9 @@
         </ol>
     </div>
 </div>
-                <!-- ============================================================== -->
-                <!-- table -->
-                <!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- table -->
+<!-- ============================================================== -->
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
@@ -30,7 +30,10 @@
                 @if (!empty($invitation))
                 <div class="form-group">
                     <label>{{ __('invitation.link') }}</label>
-                    <input class="form-control" value="{{ $invitation->hash }}" readonly>
+                    <input id="link" class="form-control" value="{{ $invitation->link }}" readonly>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="copyToClipboard()" class="btn btn-success"><i class="fa fa-clipboard"></i> {{ __('actions.copy') }}</button>
                 </div>
                 @else
                 <div class="form-group">
@@ -58,4 +61,20 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+<script>
+    function copyToClipboard() {
+        const inputToCopy = document.querySelector('#link');
+        inputToCopy.select();
+        document.execCommand("copy");
+        $.toast({
+            heading: 'Open Grades',
+            text: '<?= __('messages.copied') ?>',
+            position: 'top-right',
+            loaderBg: '#fff',
+            icon: 'success',
+            hideAfter: 5000,
+            stack: 6
+        });
+    }
+</script>
 @endsection

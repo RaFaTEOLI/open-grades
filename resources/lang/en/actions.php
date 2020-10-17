@@ -15,4 +15,5 @@ return [
 
     'success' => 'Successfully saved!',
     'error' => 'There was an error while trying to perform action!',
+    'copy' => 'Copy',
 ];

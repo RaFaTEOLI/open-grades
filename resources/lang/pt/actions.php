@@ -15,4 +15,5 @@ return [
 
     'success' => 'Ação realizada com sucesso!',
     'error' => 'Não foi possível realizar a ação!',
+    'copy' => 'Copiar',
 ];

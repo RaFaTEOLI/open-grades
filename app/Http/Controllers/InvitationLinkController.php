@@ -17,13 +17,15 @@ class InvitationLinkController extends Controller
         $this->invitationLinkRepository = (new InvitationLinkRepository());
     }
 
-    public function index() {
+    public function index()
+    {
         $invitations = $this->invitationLinkRepository->all();
 
         return view('admin/invitations', ["invitations" => $invitations]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'type' => 'required',
@@ -43,19 +45,22 @@ class InvitationLinkController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $invitation = $this->invitationLinkRepository->findById($id);
 
         return view('admin/invitation', ["invitation" => $invitation]);
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         $invitation = $this->invitationLinkRepository->update($id, $data);
 
         return $invitation;
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         try {
             $this->invitationLinkRepository->delete($id);
 

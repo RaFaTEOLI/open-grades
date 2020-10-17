@@ -322,9 +322,12 @@ var Chartist = {
 
     width = width || '100%';
     height = height || '100%';
-
+    
     // Check if there is a previous SVG element in the container that contains the Chartist XML namespace and remove it
     // Since the DOM API does not support namespaces we need to manually search the returned list http://www.w3.org/TR/selectors-api/
+    if (!container) {
+      return;
+    }
     Array.prototype.slice.call(container.querySelectorAll('svg')).filter(function filterChartistSvgObjects(svg) {
       return svg.getAttributeNS(Chartist.namespaces.xmlns, 'ct');
     }).forEach(function removePreviousElement(svg) {
@@ -3084,6 +3087,9 @@ var Chartist = {
     // Create new svg object
     this.svg = Chartist.createSvg(this.container, options.width, options.height, options.classNames.chart);
     // Create groups for labels, grid and series
+    if (!this.svg) {
+      return;
+    }
     var gridGroup = this.svg.elem('g').addClass(options.classNames.gridGroup);
     var seriesGroup = this.svg.elem('g');
     var labelGroup = this.svg.elem('g').addClass(options.classNames.labelGroup);

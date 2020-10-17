@@ -19,9 +19,18 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/invitations', 'InvitationLinkController@index')->name('invitations');
+/**
+ * Informative Routes
+ */
+Route::get('/permission', function () {
+    return view('informative/permission');
+})->name('permission');
 
-Route::get('/invitation', function() {
+/**
+ * Invitations
+ */
+Route::get('/invitations', 'InvitationLinkController@index')->name('invitations');
+Route::get('/invitation', function () {
     return view('admin/invitation');
 })->name('invitations.new');
 Route::get('/invitation/{id}', 'InvitationLinkController@show')->name('invitations.show');
