@@ -120,6 +120,7 @@ return [
     'invalid_card' => 'Cartão inválido',
     'username' => 'Este nome de usuário já está em uso',
     'no_space' => 'Esse campo não pode conter espaços',
+    'invalid_link' => 'Link inválido',
 
     /*
     |--------------------------------------------------------------------------

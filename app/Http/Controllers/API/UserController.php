@@ -7,14 +7,16 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use App\Http\Controllers\API\HttpStatus;
 use App\Repositories\UserRepository;
-use Illuminate\Foundation\Console\Presets\React;
-use Illuminate\Support\Facades\Hash;
+use App\Rules\ValidLink;
+use Exception;
 
 class UserController extends Controller
 {
+    use RegistersUsers;
 
     private $userRepository;
 
@@ -47,28 +49,35 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        $token = Str::random(60);
+        try {
+            $token = Str::random(60);
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-        ]);
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+                'hash' => ['required', new ValidLink],
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
+            }
+
+            $input = $request->all();
+
+            $input['api_token'] = $token;
+
+            $user = $this->userRepository->register($input);
+            // Sends Email Verification
+            $user->sendEmailVerificationNotification();
+
+            $success['token'] =  hash('sha256', $token);
+            $success['user'] = $user->format();
+
+            return response()->json(['success' => $success], HttpStatus::CREATED);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
-
-        $input = $request->all();
-
-        $input['api_token'] = $token;
-
-        $user = $this->userRepository->register($input);
-
-        $success['token'] =  hash('sha256', $token);
-        $success['user'] = $user->format();
-
-        return response()->json(['success' => $success], HttpStatus::CREATED);
     }
     /**
      * details api

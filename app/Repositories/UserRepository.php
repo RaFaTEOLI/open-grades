@@ -8,6 +8,7 @@ use App\Repositories\UserRepositoryInterface;
 use App\User;
 use App\Student;
 use App\Teacher;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -57,15 +58,15 @@ class UserRepository implements UserRepositoryInterface
 
     public function register($request)
     {
+        $invitationLinkRepository = new InvitationLinkRepository();
         try {
-            $user = DB::transaction(function () use ($request) {
+            $user = DB::transaction(function () use ($request, $invitationLinkRepository) {
                 $request['password'] = Hash::make($request['password']);
 
                 if (isset($request["hash"])) {
-                    $invite = InvitationLink::where('hash', $request["hash"])->get()->first();
-                    if (!empty($invite)) {
-                        $type = $invite->type;
-                    }
+                    $invite = $invitationLinkRepository->getValidatedHash($request["hash"]);
+                    $type = $invite->type;
+
                     unset($request["hash"]);
                 } else {
                     // Separates the Type
@@ -78,6 +79,11 @@ class UserRepository implements UserRepositoryInterface
 
                 // Saves the User's Type
                 $this->createType($type, $user->id);
+
+                // Mark Link as Used
+                if (!empty($invite)) {
+                    $invite->update(['used_at' => Carbon::now()]);
+                }
 
                 return $user;
             });
