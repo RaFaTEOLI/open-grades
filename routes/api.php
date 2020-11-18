@@ -24,4 +24,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('invitations', 'API\InvitationLinkController@index');
     Route::post('invitations', 'API\InvitationLinkController@store');
+
+    Route::get('configurations', 'API\ConfigurationController@index');
+    Route::post('configurations', 'API\ConfigurationController@store');
+    Route::put('configurations/{id}', 'API\ConfigurationController@update');
+    Route::delete('configurations/{id}', 'API\ConfigurationController@destroy');
 });

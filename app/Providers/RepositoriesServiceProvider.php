@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use League\CommonMark\Util\ConfigurationInterface;
 
 class RepositoriesServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,7 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(InvitationLinkInterface::class, InvitationLinkRepository::class);
+        $this->app->bind(ConfigurationRepositoryInterface::class, ConfigurationRepository::class);
     }
 
     /**
@@ -26,5 +28,6 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(InvitationLinkInterface::class, InvitationLinkRepository::class);
+        $this->app->bind(ConfigurationRepositoryInterface::class, ConfigurationRepository::class);
     }
 }

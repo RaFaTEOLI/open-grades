@@ -37,4 +37,10 @@ Route::get('/invitation/{id}', 'InvitationLinkController@show')->name('invitatio
 Route::delete('/invitation/{id}', 'InvitationLinkController@destroy')->name('invitations.destroy');
 Route::post('/invitations', 'InvitationLinkController@store')->name('invitations');
 
+/**
+ * Configuration
+ */
+Route::get('/configuration', 'ConfigurationController@index')->name('configuration');
+Route::put('/configuration/{id}', 'ConfigurationController@update')->name('configuration.update');
+
 Route::get('lang/{locale}', 'LocalizationController@index');

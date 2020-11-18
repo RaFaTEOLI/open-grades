@@ -135,10 +135,11 @@
                     <li>
                         <a href="blank.html" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>{{ __('menu.subjects') }}</a>
                     </li>
+                    @if (Auth::user()->admin == 1)
                     <li>
-                        <a href="404.html" class="waves-effect"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>{{ __('menu.configuration') }}</a>
+                        <a href="{{ route('configuration') }}" class="waves-effect"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>{{ __('menu.configuration') }}</a>
                     </li>
-
+                    @endif
                 </ul>
                 <!-- <div class="center p-20">
                      <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">Upgrade to Pro</a>
