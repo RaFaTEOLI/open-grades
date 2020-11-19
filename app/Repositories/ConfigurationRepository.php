@@ -24,20 +24,17 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
      */
     public function findById($id)
     {
-        return Configuration::findOrFail($id)
-            ->get()
-            ->first()
-            ->format();
+        return Configuration::findOrFail($id)->format();
     }
 
     public function update($id, $set)
     {
         try {
-            $user = Configuration::findOrFail($id)->first();
+            $configuration = Configuration::findOrFail($id);
 
-            $user->update($set);
+            $configuration->update($set);
         } catch (Exception $e) {
-            throw new Exception('Configuration not found');
+            throw new Exception($e->getMessage());
         }
     }
 
