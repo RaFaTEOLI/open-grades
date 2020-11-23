@@ -23,18 +23,6 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * Testing configuration show
-     *
-     * @return void
-     */
-    public function testConfigurationShow()
-    {
-        $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/configurations/1');
-        $response->assertStatus(200);
-    }
-
-    /**
      * Testing configuration creation
      *
      * @return void
@@ -47,6 +35,18 @@ class ConfigurationTest extends TestCase
     }
 
     /**
+     * Testing configuration show
+     *
+     * @return void
+     */
+    public function testConfigurationShow()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/configurations/1');
+        $response->assertStatus(200);
+    }    
+
+    /**
      * Testing configuration update
      *
      * @return void
@@ -54,7 +54,7 @@ class ConfigurationTest extends TestCase
     public function testConfigurationUpdate()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('PUT', env('APP_API') . '/configurations/3', ["name" => "test_config-{$this->faker->name}", "value" => "0"]);
+        $response = $this->actingAs($user, 'api')->json('PUT', env('APP_API') . '/configurations/1', ["name" => "test_config-{$this->faker->name}", "value" => "0"]);
         $response->assertStatus(204);
     }
 
@@ -66,7 +66,7 @@ class ConfigurationTest extends TestCase
     public function testConfigurationDelete()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . '/configurations/2');
+        $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . '/configurations/6');
         $response->assertStatus(204);
     }
 }

@@ -32,5 +32,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('configurations/{id}', 'API\ConfigurationController@update');
     Route::delete('configurations/{id}', 'API\ConfigurationController@destroy');
 
-    Route::post('sendMessage', 'API\TelegramController@store');
+    Route::post('messages', 'API\TelegramController@store');
+    Route::get('messages', 'API\TelegramController@index');
+    Route::get('messages/{id}', 'API\TelegramController@show');
 });
