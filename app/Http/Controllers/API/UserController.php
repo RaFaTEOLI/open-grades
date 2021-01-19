@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\API\HttpStatus;
 use App\Repositories\UserRepository;
 use App\Rules\ValidLink;
+use App\Services\CreateUserService;
 use Exception;
 
 class UserController extends Controller
@@ -66,7 +67,9 @@ class UserController extends Controller
 
             $input['api_token'] = $token;
 
-            $user = $this->userRepository->register($input);
+            $createUserService = new CreateUserService();
+            $user = $createUserService->createUser($input);
+
             // Sends Email Verification
             $user->sendEmailVerificationNotification();
 

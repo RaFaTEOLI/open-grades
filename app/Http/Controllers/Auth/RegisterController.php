@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use App\Rules\ValidLink;
+use App\Services\CreateUserService;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -68,8 +69,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $userRepository = new UserRepository();
-        return $userRepository->register($data);
+        $createUserService = new CreateUserService();
+        return $createUserService->createUser($data);
         // return User::create([
         //     'name' => $data['name'],
         //     'email' => $data['email'],

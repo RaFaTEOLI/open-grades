@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\TelegramRepository;
 use App\Repositories\TelegramRepositoryInterface;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
-use League\CommonMark\Util\ConfigurationInterface;
 
 class RepositoriesServiceProvider extends ServiceProvider
 {
