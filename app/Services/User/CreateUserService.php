@@ -18,7 +18,7 @@ class CreateUserService
         $this->userRepository = (new UserRepository());
     }
 
-    public function createUser(array $request) {
+    public function execute(array $request) {
         $invitationLinkRepository = new InvitationLinkRepository();
 
         try {

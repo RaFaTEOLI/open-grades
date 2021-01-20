@@ -68,7 +68,7 @@ class UserController extends Controller
             $input['api_token'] = $token;
 
             $createUserService = new CreateUserService();
-            $user = $createUserService->createUser($input);
+            $user = $createUserService->execute($input);
 
             // Sends Email Verification
             $user->sendEmailVerificationNotification();

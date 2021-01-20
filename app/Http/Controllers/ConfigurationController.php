@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ConfigurationRepository;
+use App\Services\CreateConfigurationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
@@ -27,6 +28,8 @@ class ConfigurationController extends Controller
     public function store(Request $request)
     {
         try {
+            $createConfigurationService = new CreateConfigurationService();
+
             $validator = Validator::make($request->all(), [
                 'name' => 'string|required',
                 'value' => 'string|required'
@@ -37,7 +40,8 @@ class ConfigurationController extends Controller
             }
 
             $input = $request->all();
-            $this->configurationRepository->register($input);
+
+            $createConfigurationService->execute($input);
 
             return redirect()->route('configuration')->withSuccess(__('actions.success'));
         } catch (Exception $e) {

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Configuration;
-use App\Http\Controllers\Auth\AdminController;
 use App\Repositories\ConfigurationRepositoryInterface;
 use Exception;
 
@@ -51,8 +50,6 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
     public function register($request)
     {
         try {
-            AdminController::isAdminOrFail();
-
             return Configuration::create($request);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());

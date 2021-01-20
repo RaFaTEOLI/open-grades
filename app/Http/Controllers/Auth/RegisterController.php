@@ -70,7 +70,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $createUserService = new CreateUserService();
-        return $createUserService->createUser($data);
+        return $createUserService->execute($data);
         // return User::create([
         //     'name' => $data['name'],
         //     'email' => $data['email'],
