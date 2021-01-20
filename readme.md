@@ -13,6 +13,7 @@ We believe that every school or independent teacher should have access to an eas
 - Generate grades, classes, presences reports.
 - Notify your students.
 - Create warnings for bad behavior and etc.
+- Charge your students with our payment's system
 
 ## Our Team
 
