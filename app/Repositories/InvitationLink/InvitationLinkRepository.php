@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\InvitationLink;
 
-use App\Repositories\InvitationLinkRepositoryInterface;
-use App\InvitationLink;
+use App\Repositories\InvitationLink\InvitationLinkRepositoryInterface;
+use App\Models\InvitationLink;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use App\User;
 
 class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 {
@@ -65,15 +63,6 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
     public function register($request)
     {
         try {
-            // Validates if logged user is admin
-            $user = User::where('id', Auth::id())->where('admin', 1)->first();
-
-            if (!$user) throw new Exception('User is not admin');
-
-            $request["user_id"] = $user->id;
-
-            $request["hash"] = $this->generateHash();
-
             $invitation = InvitationLink::create($request);
             $invitation->link = InvitationLink::getLinkFromHash($invitation->hash);
 

@@ -4,15 +4,14 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use App\Http\Controllers\API\HttpStatus;
-use App\Repositories\UserRepository;
+use App\Repositories\User\UserRepository;
 use App\Rules\ValidLink;
-use App\Services\CreateUserService;
+use App\Services\User\CreateUserService;
 use Exception;
 
 class UserController extends Controller

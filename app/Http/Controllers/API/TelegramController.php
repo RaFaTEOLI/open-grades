@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\TelegramRepository;
+use App\Repositories\Telegram\TelegramRepository;
+use App\Services\Telegram\CreateMessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Http;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +29,8 @@ class TelegramController extends Controller
     public function store(Request $request)
     {
         try {
+            $createMessageService = new CreateMessageService();
+
             $validator = Validator::make($request->all(), [
                 'message' => 'string|required',
             ]);
@@ -39,10 +41,8 @@ class TelegramController extends Controller
 
             $input = $request->all();
 
-            Http::get("https://api.telegram.org/bot".env('BOT_KEY')."/sendMessage?chat_id=".env('CHANNEL_ID')."&text=".$input["message"]);
-
             $input["user_id"] = Auth::id();
-            $result = $this->telegramRepository->register($input);
+            $result = $createMessageService->execute($input);
 
             return response()->json($result, HttpStatus::CREATED);
         } catch (Exception $e) {

@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use App\InvitationLink;
-use App\Repositories\InvitationLinkRepository;
+use App\Models\InvitationLink;
+use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidLink implements Rule

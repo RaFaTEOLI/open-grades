@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
-use App\Repositories\UserRepository;
-use App\Repositories\InvitationLinkRepository;
+namespace App\Services\User;
+use App\Repositories\User\UserRepository;
+use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
-use App\User;
+use App\Models\User;
 use Exception;
 
 class CreateUserService

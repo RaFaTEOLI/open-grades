@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Configuration;
 
-use App\Configuration;
-use App\Repositories\ConfigurationRepositoryInterface;
+use App\Models\Configuration;
+use App\Repositories\Configuration\ConfigurationRepositoryInterface;
 use Exception;
 
 class ConfigurationRepository implements ConfigurationRepositoryInterface

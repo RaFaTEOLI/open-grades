@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
 
 class ConfigurationTest extends TestCase
 {
@@ -44,7 +44,7 @@ class ConfigurationTest extends TestCase
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/configurations/1');
         $response->assertStatus(200);
-    }    
+    }
 
     /**
      * Testing configuration update

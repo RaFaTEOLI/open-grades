@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Telegram;
 
 interface TelegramRepositoryInterface {
     public function all();

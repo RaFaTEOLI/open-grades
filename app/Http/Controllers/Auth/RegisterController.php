@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
 use App\Rules\ValidLink;
-use App\Services\CreateUserService;
-use Exception;
-use Illuminate\Support\Facades\Hash;
+use App\Services\User\CreateUserService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -65,7 +60,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\ConfigurationRepository;
-use App\Services\CreateConfigurationService;
+use App\Repositories\Configuration\ConfigurationRepository;
+use App\Services\Configuration\CreateConfigurationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;

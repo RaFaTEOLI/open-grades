@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\InvitationLinkRepository;
+use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Http\Request;
+use App\Services\InvitationLink\CreateInvitationLinkService;
 
 class InvitationLinkController extends Controller
 {
@@ -27,6 +28,8 @@ class InvitationLinkController extends Controller
     public function store(Request $request)
     {
         try {
+            $createInvitationLinkService = new CreateInvitationLinkService();
+
             $validator = Validator::make($request->all(), [
                 'type' => 'required',
             ]);
@@ -36,7 +39,7 @@ class InvitationLinkController extends Controller
             }
 
             $input = $request->all();
-            $invitation = $this->invitationLinkRepository->register($input);
+            $invitation = $createInvitationLinkService->execute($input);
 
             return response()->json($invitation, HttpStatus::CREATED);
         } catch (Exception $e) {

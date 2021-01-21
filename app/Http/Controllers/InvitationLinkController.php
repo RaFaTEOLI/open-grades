@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Repositories\InvitationLinkRepository;
+use App\Repositories\InvitationLink\InvitationLinkRepository;
+use App\Services\InvitationLink\CreateInvitationLinkService;
 use Exception;
 
 class InvitationLinkController extends Controller
@@ -27,6 +28,8 @@ class InvitationLinkController extends Controller
     public function store(Request $request)
     {
         try {
+            $createInvitationLinkService = new CreateInvitationLinkService();
+
             $validator = Validator::make($request->all(), [
                 'type' => 'required',
             ]);
@@ -36,10 +39,10 @@ class InvitationLinkController extends Controller
             }
 
             $input = $request->all();
-            $invitation = $this->invitationLinkRepository->register($input);
+
+            $invitation = $createInvitationLinkService->execute($input);
 
             return view('admin/invitation', ["invitation" => $invitation]);
-            //return redirect()->route('invitations')->withSuccess(__('actions.success'));
         } catch (Exception $e) {
             return back()->with('error', __('actions.error'));
         }

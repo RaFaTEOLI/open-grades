@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Telegram;
 
-use App\Telegram;
-use App\Http\Controllers\Auth\AdminController;
-use App\Repositories\TelegramRepositoryInterface;
+use App\Models\Telegram;
+use App\Repositories\Telegram\TelegramRepositoryInterface;
 use Exception;
 
 class TelegramRepository implements TelegramRepositoryInterface
@@ -41,8 +40,6 @@ class TelegramRepository implements TelegramRepositoryInterface
     public function register($request)
     {
         try {
-            AdminController::isAdminOrFail();
-
             return Telegram::create($request);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());

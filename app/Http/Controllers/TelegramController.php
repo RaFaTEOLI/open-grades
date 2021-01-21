@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\TelegramRepository;
+use App\Repositories\Telegram\TelegramRepository;
+use App\Services\Telegram\CreateMessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
@@ -27,6 +28,8 @@ class TelegramController extends Controller
     public function store(Request $request)
     {
         try {
+            $createMessageService = new CreateMessageService();
+
             $validator = Validator::make($request->all(), [
                 'message' => 'string|required',
             ]);
@@ -36,7 +39,7 @@ class TelegramController extends Controller
             }
 
             $input = $request->all();
-            $this->telegramRepository->register($input);
+            $createMessageService->execute($input);
 
             return redirect()->route('message')->withSuccess(__('actions.success'));
         } catch (Exception $e) {

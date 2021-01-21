@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Configuration;
 
-use App\Repositories\ConfigurationRepository;
-use App\Configuration;
+use App\Repositories\Configuration\ConfigurationRepository;
 use App\Http\Controllers\Auth\AdminController;
 use Exception;
 

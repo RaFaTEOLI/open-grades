@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\InvitationLink;
 
 interface InvitationLinkRepositoryInterface {
     public function all();

@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\User;
 
 use App\Http\Controllers\StudentController;
-use App\InvitationLink;
-use App\Repositories\UserRepositoryInterface;
-use App\User;
-use App\Student;
-use App\Teacher;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Models\User;
+use App\Models\Student;
+use App\Models\Teacher;
 use Exception;
 
 class UserRepository implements UserRepositoryInterface
