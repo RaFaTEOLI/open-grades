@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Integration;
+namespace Tests\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
 use Illuminate\Foundation\Testing\WithFaker;

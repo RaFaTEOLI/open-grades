@@ -13,6 +13,10 @@
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
 
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration</directory>
+        </testsuite>
+
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
@@ -30,4 +34,9 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
     </php>
+    <logging>
+        <log type="coverage-html" target="./report" charset="UTF-8"
+        yui="true" highlight="true"
+        lowUpperBound="50" highLowerBound="80" />
+    </logging>
 </phpunit>
