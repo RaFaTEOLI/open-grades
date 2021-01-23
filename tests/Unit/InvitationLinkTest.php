@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 
-class UserTest extends TestCase
+class InvitationLinkTest extends TestCase
 {
     use DatabaseTransactions;
     use WithFaker;
