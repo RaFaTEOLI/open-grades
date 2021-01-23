@@ -1,22 +1,24 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Feature\Integration;
 
 use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\API\HttpStatus;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class UserTest extends TestCase
 {
     use DatabaseTransactions;
+    use WithFaker;
     /**
      * It should return the list of users
      *
      * @return void
      */
-    public function testUsersList()
+    public function testShouldFetchListOfUsers()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/users');
@@ -29,9 +31,14 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserShow()
+    public function testShouldFetchUserById()
     {
         $user = User::find(1);
+        User::create([
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('12345678')
+        ]);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/users/1');
 
         $response->assertStatus(HttpStatus::SUCCESS);
@@ -42,20 +49,17 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testConfigurationUpdate()
+    public function testShouldUpdateAnUser()
     {
         $user = User::find(1);
         $userToUpdate = User::create([
-                'name' => $this->faker->name,
-                'email' => $this->faker->unique()->safeEmail,
-                'password' => Hash::make('12345678')
-            ]);
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('12345678')
+        ]);
 
         $response = $this->actingAs($user, 'api')->json('PUT', env('APP_API') . "/users/{$userToUpdate->id}", ["name" => "UpdatedName"]);
-        $response->assertStatus(HttpStatus::SUCCESS);
-        $response->assertJson([
-            "name" => "UpdateName"
-        ]);
+        $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 
     /**
@@ -63,7 +67,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUnauthorizedUser()
+    public function testShouldNotReturnUsersBecauseUserIsNotAuthorized()
     {
         $response = $this->json('GET', env('APP_API') . '/users');
 
@@ -75,7 +79,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserRegisterWithoutValidLink()
+    public function testShouldNotCreateANewUserBecauseHashIsInvalid()
     {
         $user = [
             "name" => $this->faker->name,
@@ -93,7 +97,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserRegisterWithExistingEmail()
+    public function testShouldNotCreateANewUserBecauseEmailAlreadyExists()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/invitations', ["type" => "TEACHER"]);

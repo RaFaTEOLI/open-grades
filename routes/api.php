@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('users/{id}', 'API\UserController@show');
     Route::get('users', 'API\UserController@all');
+    Route::put('users/{id}', 'API\UserController@update');
 
     Route::get('invitations', 'API\InvitationLinkController@index');
     Route::get('invitations/{id}', 'API\InvitationLinkController@show');

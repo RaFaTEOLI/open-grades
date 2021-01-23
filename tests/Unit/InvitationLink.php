@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Services\InvitationLink\CreateInvitationLinkService;
-use App\Services\User\CreateUserService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,11 +14,11 @@ class UserTest extends TestCase
     use WithFaker;
 
     /**
-     * It should create a new user
+     * It should create a new invitation link
      *
      * @return void
      */
-    public function testShouldCreateANewUser()
+    public function testShouldCreateANewInvitationLink()
     {
         $user = factory(User::class)->create();
 
@@ -27,13 +26,7 @@ class UserTest extends TestCase
 
         $invitationLink = (new CreateInvitationLinkService($user))->execute(['type' => 'STUDENT']);
 
-        $createdUser = (new CreateUserService())->execute([
-            "name" => $this->faker->name,
-            "email" => $this->faker->unique()->safeEmail,
-            "password" => '12345678',
-            "hash" => $invitationLink->hash
-        ]);
-
-        $this->assertTrue(is_numeric($createdUser->id));
+        $this->assertTrue(is_numeric($invitationLink->id));
+        $this->assertTrue((strlen($invitationLink->hash) > 42));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Feature\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -14,7 +14,7 @@ class AuthenticationTest extends TestCase
      *
      * @return void
      */
-    public function testLogin()
+    public function testShouldLogUserIn()
     {
         $user = [
             "email" => "opengrades@gmail.com",
@@ -37,7 +37,7 @@ class AuthenticationTest extends TestCase
      *
      * @return void
      */
-    public function testLoginFailed()
+    public function testShoutNotLogUserInBecauseOfWrongCredentials()
     {
         $user = [
             "email" => "itdoesntexist@gmail.com",

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Feature\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -15,7 +15,7 @@ class InvitationLinkTest extends TestCase
      *
      * @return void
      */
-    public function testStudentInvitationLinkRegister()
+    public function testShouldCreateANewInvitationLinkForStudent()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/invitations', ["type" => "STUDENT"]);
@@ -28,7 +28,7 @@ class InvitationLinkTest extends TestCase
      *
      * @return void
      */
-    public function testTeacherInvitationLinkRegister()
+    public function testShouldCreateANewInvitationLinkForTeacher()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/invitations', ["type" => "TEACHER"]);

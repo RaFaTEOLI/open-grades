@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Feature\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,7 +17,7 @@ class TelegramTest extends TestCase
      *
      * @return void
      */
-    public function testMessageRegister()
+    public function testShouldCreateANewMessage()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/messages', ["message" => "Test Message - {$this->faker->sentences[0]}"]);
@@ -29,7 +29,7 @@ class TelegramTest extends TestCase
      *
      * @return void
      */
-    public function testMessagesFetch()
+    public function testShouldFetchMessages()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/messages');
@@ -41,7 +41,7 @@ class TelegramTest extends TestCase
      *
      * @return void
      */
-    public function testMessageShow()
+    public function testShouldFetchMessageById()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/messages/1');

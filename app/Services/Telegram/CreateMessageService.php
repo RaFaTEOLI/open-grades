@@ -3,7 +3,7 @@
 namespace App\Services\Telegram;
 
 use App\Http\Controllers\Auth\AdminController;
-use App\Repositories\TelegramRepository;
+use App\Repositories\Telegram\TelegramRepository;
 use Exception;
 use Illuminate\Support\Facades\Http;
 

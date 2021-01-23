@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Feature\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
+use App\Models\Configuration;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class ConfigurationTest extends TestCase
 {
@@ -18,7 +18,7 @@ class ConfigurationTest extends TestCase
      *
      * @return void
      */
-    public function testConfigurationFetch()
+    public function testShouldFetchAllConfigurations()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/configurations');
@@ -30,7 +30,7 @@ class ConfigurationTest extends TestCase
      *
      * @return void
      */
-    public function testConfigurationRegister()
+    public function testShouldCreateANewConfiguration()
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/configurations', ["name" => "test_config-{$this->faker->name}", "value" => "1"]);
@@ -42,9 +42,14 @@ class ConfigurationTest extends TestCase
      *
      * @return void
      */
-    public function testConfigurationShow()
+    public function testShouldFetchAConfigurationById()
     {
         $user = User::find(1);
+        Configuration::create([
+            'name' => $this->faker->name,
+            'value' => '1'
+        ]);
+
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/configurations/1');
         $response->assertStatus(HttpStatus::SUCCESS);
     }
@@ -54,30 +59,27 @@ class ConfigurationTest extends TestCase
      *
      * @return void
      */
-    public function testConfigurationUpdate()
+    public function testShouldUpdateAConfigurationById()
     {
         $user = User::find(1);
-        $configToUpdate = User::create([
-                'name' => $this->faker->name,
-                'value' => '1'
-            ]);
+        $configToUpdate = Configuration::create([
+            'name' => $this->faker->name,
+            'value' => '1'
+        ]);
 
         $response = $this->actingAs($user, 'api')->json('PUT', env('APP_API') . "/configurations/{$configToUpdate->id}", ["value" => "0"]);
-        $response->assertStatus(HttpStatus::SUCCESS);
-        $response->assertJson([
-            "value" => "0"
-        ]);
+        $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 
     /**
-     * It should deletea configuration
+     * It should delete a configuration
      *
      * @return void
      */
-    public function testConfigurationDelete()
+    public function testShouldDeleteAConfigurationById()
     {
         $user = User::find(1);
-        $configToDelete = User::create([
+        $configToDelete = Configuration::create([
             'name' => $this->faker->name,
             'value' => '1'
         ]);

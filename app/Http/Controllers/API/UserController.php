@@ -80,6 +80,25 @@ class UserController extends Controller
             return response()->json(['error' => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
     }
+
+    /**
+     * update user by id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update($id, Request $request)
+    {
+        try {
+            $input = $request->all();
+
+            $this->userRepository->update($id, $input);
+
+            return response()->noContent();
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
+    }
+
     /**
      * details api
      *
