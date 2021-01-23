@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Integration;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\API\HttpStatus;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
+    use DatabaseTransactions;
     /**
      * Testing login
      *
@@ -23,7 +24,7 @@ class AuthenticationTest extends TestCase
         $response = $this->json('POST', env('APP_API') . '/login', $user);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(HttpStatus::SUCCESS)
             ->assertJsonStructure([
                 'success' => [
                     'token'
@@ -46,7 +47,7 @@ class AuthenticationTest extends TestCase
         $response = $this->json('POST', env('APP_API') . '/login', $user);
 
         $response
-            ->assertStatus(401)
+            ->assertStatus(HttpStatus::UNAUTHORIZED)
             ->assertJson([
                 'error' => 'Unauthorized'
             ]);

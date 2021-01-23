@@ -1,17 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Integration;
 
+use App\Http\Controllers\API\HttpStatus;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TelegramTest extends TestCase
 {
     use WithFaker;
-
+    use DatabaseTransactions;
     /**
-     * Testing message creation
+     * It should create a message
      *
      * @return void
      */
@@ -19,11 +21,11 @@ class TelegramTest extends TestCase
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/messages', ["message" => "Test Message - {$this->faker->sentences[0]}"]);
-        $response->assertStatus(201);
+        $response->assertStatus(HttpStatus::CREATED);
     }
 
     /**
-     * Testing messages fetch
+     * It should return messages
      *
      * @return void
      */
@@ -31,11 +33,11 @@ class TelegramTest extends TestCase
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/messages');
-        $response->assertStatus(200);
+        $response->assertStatus(HttpStatus::SUCCESS);
     }
 
     /**
-     * Testing message show
+     * It should return a message by id
      *
      * @return void
      */
@@ -43,6 +45,6 @@ class TelegramTest extends TestCase
     {
         $user = User::find(1);
         $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/messages/1');
-        $response->assertStatus(200);
+        $response->assertStatus(HttpStatus::SUCCESS);
     }
 }

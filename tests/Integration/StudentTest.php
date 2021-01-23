@@ -1,24 +1,26 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Integration;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Http\Controllers\API\HttpStatus;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 
-class TeacherTest extends TestCase
+class StudentTest extends TestCase
 {
     use WithFaker;
+    use DatabaseTransactions;
     /**
-     * Testing teacher creation
+     * It should create a new student
      *
      * @return void
      */
-    public function testTeacherRegister()
+    public function testStudentRegister()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/invitations', ["type" => "TEACHER"]);
+        $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/invitations', ["type" => "STUDENT"]);
 
         $student = [
             "name" => $this->faker->name,
@@ -29,6 +31,6 @@ class TeacherTest extends TestCase
 
         $response = $this->json('POST', env('APP_API') . '/register', $student);
 
-        $response->assertStatus(201);
+        $response->assertStatus(HttpStatus::CREATED);
     }
 }
