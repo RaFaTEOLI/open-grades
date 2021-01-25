@@ -39,7 +39,7 @@ The Open Grades app is open-source software licensed under the [MIT license](htt
 
 ## How To Install
 
-**Using Docker**
+**Using Docker**\
     - `docker-compose build app`\
     - `docker-compose up -d`\
     - `docker-compose exec app composer install`\
@@ -48,7 +48,7 @@ The Open Grades app is open-source software licensed under the [MIT license](htt
     - `docker-compose exec app php artisan db:seed`\
     - Then Access: server_domain_or_IP:8000\
     
-**Without Docker**
+**Without Docker**\
     - `composer install`\
     - `php artisan key:generate`\
     - `php artisan migrate`\
