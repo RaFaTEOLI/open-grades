@@ -40,6 +40,7 @@ The Open Grades app is open-source software licensed under the [MIT license](htt
 ## How To Install
 
 **Using Docker**\
+    - `cp .env.example .env`\
     - `docker-compose build app`\
     - `docker-compose up -d`\
     - `docker-compose exec app composer install`\
