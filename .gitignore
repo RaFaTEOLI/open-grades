@@ -5,6 +5,7 @@
 /vendor
 /report
 /reports
+/docker-compose/mysql/
 .env
 .env.backup
 .phpunit.result.cache
