@@ -25,13 +25,15 @@ class UserTest extends TestCase
 
         $this->actingAs($user);
 
-        $invitationLink = (new CreateInvitationLinkService($user))->execute(['type' => 'STUDENT']);
+        $invitationLink = (new CreateInvitationLinkService($user))->execute([
+            "type" => "STUDENT",
+        ]);
 
         $createdUser = (new CreateUserService())->execute([
             "name" => $this->faker->name,
             "email" => $this->faker->unique()->safeEmail,
-            "password" => '12345678',
-            "hash" => $invitationLink->hash
+            "password" => "12345678",
+            "hash" => $invitationLink->hash,
         ]);
 
         $this->assertTrue(is_numeric($createdUser->id));
