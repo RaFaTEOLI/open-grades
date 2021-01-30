@@ -15,18 +15,14 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin'
-    ];
+    protected $fillable = ["name", "email", "password", "api_token", "admin"];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
     /**
      * The attributes that should be cast to native types.
@@ -34,18 +30,19 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        "email_verified_at" => "datetime",
     ];
 
-    public function format() {
+    public function format()
+    {
         return (object) [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'photo' => $this->photo,
-            'admin' => $this->admin,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            "id" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "photo" => $this->photo,
+            "admin" => $this->admin,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at,
         ];
     }
 }

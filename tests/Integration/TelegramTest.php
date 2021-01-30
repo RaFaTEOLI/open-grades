@@ -3,6 +3,7 @@
 namespace Tests\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
+use App\Models\Telegram;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
@@ -20,7 +21,11 @@ class TelegramTest extends TestCase
     public function testShouldCreateANewMessage()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/messages', ["message" => "Test Message - {$this->faker->sentences[0]}"]);
+        $response = $this->actingAs($user, "api")->json(
+            "POST",
+            env("APP_API") . "/messages",
+            ["message" => "Test Message - {$this->faker->sentences[0]}"],
+        );
         $response->assertStatus(HttpStatus::CREATED);
     }
 
@@ -32,7 +37,10 @@ class TelegramTest extends TestCase
     public function testShouldFetchMessages()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/messages');
+        $response = $this->actingAs($user, "api")->json(
+            "GET",
+            env("APP_API") . "/messages",
+        );
         $response->assertStatus(HttpStatus::SUCCESS);
     }
 
@@ -44,7 +52,13 @@ class TelegramTest extends TestCase
     public function testShouldFetchMessageById()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/messages/1');
+
+        $telegramMessage = factory(Telegram::class)->create();
+
+        $response = $this->actingAs($user, "api")->json(
+            "GET",
+            env("APP_API") . "/messages/{$telegramMessage->id}",
+        );
         $response->assertStatus(HttpStatus::SUCCESS);
     }
 }

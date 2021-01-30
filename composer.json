@@ -40,7 +40,9 @@
             "App\\": "app/",
             "App\\Repositories\\": "app/Repositories/",
             "App\\Models\\": "app/Models/",
-            "App\\Services\\": "app/Services/"
+            "App\\Services\\": "app/Services/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeds\\": "database/seeds/"
         },
         "classmap": [
             "database/seeds",
