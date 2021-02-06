@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Configuration;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Services\Configuration\CreateConfigurationService;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class ConfigurationController extends Controller
 
     public function __construct()
     {
-        $this->configurationRepository = (new ConfigurationRepository());
+        $this->configurationRepository = new ConfigurationRepository();
     }
 
     public function index()
@@ -30,13 +31,16 @@ class ConfigurationController extends Controller
         try {
             $createConfigurationService = new CreateConfigurationService();
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'string|required',
-                'value' => 'string|required'
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                Configuration::validationRules(),
+            );
 
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
+                return response()->json(
+                    ["error" => $validator->errors()],
+                    HttpStatus::BAD_REQUEST,
+                );
             }
 
             $input = $request->all();
@@ -44,7 +48,10 @@ class ConfigurationController extends Controller
 
             return response()->json($configuration, HttpStatus::CREATED);
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::UNAUTHORIZED,
+            );
         }
     }
 
@@ -57,7 +64,10 @@ class ConfigurationController extends Controller
 
             return response()->json($configuration, HttpStatus::SUCCESS);
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 
@@ -70,7 +80,10 @@ class ConfigurationController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 
@@ -81,7 +94,10 @@ class ConfigurationController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 }

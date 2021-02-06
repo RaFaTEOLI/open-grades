@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shanmuga\LaravelEntrust\Traits\LaravelEntrustUserTrait;
+use App\Rules\ValidLink;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -34,6 +35,20 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         "email_verified_at" => "datetime",
     ];
+
+    /**
+     * Validation Rules Array.
+     *
+     */
+    public static function validationRules()
+    {
+        return [
+            "name" => "required",
+            "email" => "required|email|unique:users",
+            "password" => "required",
+            "hash" => ["required", new ValidLink()],
+        ];
+    }
 
     public function format()
     {

@@ -13,20 +13,30 @@ class Configuration extends Model
      */
     protected $table = "configuration";
 
-    protected $fillable = [
-        'name', 'value'
-    ];
+    protected $fillable = ["name", "value"];
 
     public $timestamps = true;
+
+    /**
+     * Validation Rules Array.
+     *
+     */
+    public static function validationRules()
+    {
+        return [
+            "name" => "string|required",
+            "value" => "string|required",
+        ];
+    }
 
     public function format()
     {
         return (object) [
-            'id' => $this->id,
-            'name' => $this->name,
-            'value' => $this->value,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            "id" => $this->id,
+            "name" => $this->name,
+            "value" => $this->value,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at,
         ];
     }
 }

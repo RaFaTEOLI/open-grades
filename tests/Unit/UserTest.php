@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Role;
 
 class UserTest extends TestCase
 {
@@ -22,6 +23,9 @@ class UserTest extends TestCase
     public function testShouldCreateANewUser()
     {
         $user = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
 
         $this->actingAs($user);
 

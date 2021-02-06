@@ -13,6 +13,7 @@ use App\Repositories\User\UserRepository;
 use App\Rules\ValidLink;
 use App\Services\User\CreateUserService;
 use Exception;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->userRepository = (new UserRepository());
+        $this->userRepository = new UserRepository();
     }
 
     /**
@@ -32,12 +33,23 @@ class UserController extends Controller
      */
     public function login()
     {
-        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+        if (
+            Auth::attempt([
+                "email" => request("email"),
+                "password" => request("password"),
+            ])
+        ) {
             $user = Auth::user();
-            $success['token'] = $user->api_token;
-            return response()->json(['success' => $success], HttpStatus::SUCCESS);
+            $success["token"] = $user->api_token;
+            return response()->json(
+                ["success" => $success],
+                HttpStatus::SUCCESS,
+            );
         } else {
-            return response()->json(['error' => 'Unauthorized'], HttpStatus::UNAUTHORIZED);
+            return response()->json(
+                ["error" => "Unauthorized"],
+                HttpStatus::UNAUTHORIZED,
+            );
         }
     }
 
@@ -51,20 +63,21 @@ class UserController extends Controller
         try {
             $token = Str::random(60);
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required',
-                'hash' => ['required', new ValidLink],
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                User::validationRules(),
+            );
 
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
+                return response()->json(
+                    ["error" => $validator->errors()],
+                    HttpStatus::BAD_REQUEST,
+                );
             }
 
             $input = $request->all();
 
-            $input['api_token'] = $token;
+            $input["api_token"] = $token;
 
             $createUserService = new CreateUserService();
             $user = $createUserService->execute($input);
@@ -72,12 +85,18 @@ class UserController extends Controller
             // Sends Email Verification
             $user->sendEmailVerificationNotification();
 
-            $success['token'] =  hash('sha256', $token);
-            $success['user'] = $user->format();
+            $success["token"] = hash("sha256", $token);
+            $success["user"] = $user->format();
 
-            return response()->json(['success' => $success], HttpStatus::CREATED);
+            return response()->json(
+                ["success" => $success],
+                HttpStatus::CREATED,
+            );
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["error" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 
@@ -95,7 +114,10 @@ class UserController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 
@@ -107,7 +129,7 @@ class UserController extends Controller
     public function details()
     {
         $user = Auth::user();
-        return response()->json(['success' => $user], HttpStatus::SUCCESS);
+        return response()->json(["success" => $user], HttpStatus::SUCCESS);
     }
 
     /**

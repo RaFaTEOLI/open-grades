@@ -17,6 +17,17 @@ class Telegram extends Model
         return $this->hasOne("App\Models\User", "id", "user_id");
     }
 
+    /**
+     * Validation Rules Array.
+     *
+     */
+    public static function validationRules()
+    {
+        return [
+            "message" => "string|required",
+        ];
+    }
+
     public function format()
     {
         return (object) [

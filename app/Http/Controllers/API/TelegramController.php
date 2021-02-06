@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Telegram;
 use App\Repositories\Telegram\TelegramRepository;
 use App\Services\Telegram\CreateMessageService;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class TelegramController extends Controller
 
     public function __construct()
     {
-        $this->telegramRepository = (new TelegramRepository());
+        $this->telegramRepository = new TelegramRepository();
     }
 
     public function index()
@@ -31,12 +32,16 @@ class TelegramController extends Controller
         try {
             $createMessageService = new CreateMessageService();
 
-            $validator = Validator::make($request->all(), [
-                'message' => 'string|required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                Telegram::validationRules(),
+            );
 
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], HttpStatus::BAD_REQUEST);
+                return response()->json(
+                    ["error" => $validator->errors()],
+                    HttpStatus::BAD_REQUEST,
+                );
             }
 
             $input = $request->all();
@@ -46,7 +51,10 @@ class TelegramController extends Controller
 
             return response()->json($result, HttpStatus::CREATED);
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::UNAUTHORIZED,
+            );
         }
     }
 
@@ -59,7 +67,10 @@ class TelegramController extends Controller
 
             return response()->json($result, HttpStatus::SUCCESS);
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 
@@ -72,7 +83,10 @@ class TelegramController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+            return response()->json(
+                ["message" => $e->getMessage()],
+                HttpStatus::BAD_REQUEST,
+            );
         }
     }
 }

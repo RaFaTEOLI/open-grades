@@ -11,9 +11,7 @@ class InvitationLink extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'user_id', 'type', 'hash', 'used_at'
-    ];
+    protected $fillable = ["user_id", "type", "hash", "used_at"];
 
     public $timestamps = true;
 
@@ -22,23 +20,34 @@ class InvitationLink extends Model
      */
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
+        return $this->hasOne("App\Models\User", "id", "user_id");
+    }
+
+    /**
+     * Validation Rules Array.
+     *
+     */
+    public static function validationRules()
+    {
+        return [
+            "type" => "required",
+        ];
     }
 
     public function format()
     {
         return (object) [
-            'id' => $this->id,
-            'user' => $this->user->format(),
-            'hash' => $this->hash,
-            'link' => $this->getLinkFromHash($this->hash),
-            'type' => $this->type,
-            'created_at' => $this->created_at,
+            "id" => $this->id,
+            "user" => $this->user->format(),
+            "hash" => $this->hash,
+            "link" => $this->getLinkFromHash($this->hash),
+            "type" => $this->type,
+            "created_at" => $this->created_at,
         ];
     }
 
     public static function getLinkFromHash($hash)
     {
-        return env('APP_URL') . "/register/?hash={$hash}";
+        return env("APP_URL") . "/register/?hash={$hash}";
     }
 }

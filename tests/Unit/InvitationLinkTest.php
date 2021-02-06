@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Role;
 
 class InvitationLinkTest extends TestCase
 {
@@ -22,11 +23,16 @@ class InvitationLinkTest extends TestCase
     {
         $user = factory(User::class)->create();
 
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+
         $this->actingAs($user);
 
-        $invitationLink = (new CreateInvitationLinkService($user))->execute(['type' => 'STUDENT']);
+        $invitationLink = (new CreateInvitationLinkService($user))->execute([
+            "type" => "STUDENT",
+        ]);
 
         $this->assertTrue(is_numeric($invitationLink->id));
-        $this->assertTrue((strlen($invitationLink->hash) > 42));
+        $this->assertTrue(strlen($invitationLink->hash) > 42);
     }
 }

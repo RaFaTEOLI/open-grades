@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configuration;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Services\Configuration\CreateConfigurationService;
 use Illuminate\Http\Request;
@@ -14,15 +15,17 @@ class ConfigurationController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
-        $this->configurationRepository = (new ConfigurationRepository());
+        $this->middleware(["auth", "verified"]);
+        $this->configurationRepository = new ConfigurationRepository();
     }
 
     public function index()
     {
         $configurations = $this->configurationRepository->all();
 
-        return view('configuration/configurations', ["configurations" => $configurations]);
+        return view("configuration/configurations", [
+            "configurations" => $configurations,
+        ]);
     }
 
     public function store(Request $request)
@@ -30,22 +33,26 @@ class ConfigurationController extends Controller
         try {
             $createConfigurationService = new CreateConfigurationService();
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'string|required',
-                'value' => 'string|required'
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                Configuration::validationRules(),
+            );
 
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()
+                    ->back()
+                    ->withErrors($validator->errors());
             }
 
             $input = $request->all();
 
             $createConfigurationService->execute($input);
 
-            return redirect()->route('configuration')->withSuccess(__('actions.success'));
+            return redirect()
+                ->route("configuration")
+                ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
-            return back()->with('error', __('actions.error'));
+            return back()->with("error", __("actions.error"));
         }
     }
 
@@ -62,7 +69,9 @@ class ConfigurationController extends Controller
 
         $configuration = $this->configurationRepository->update($id, $input);
 
-        return redirect()->route('configuration')->withSuccess(__('actions.success'));
+        return redirect()
+            ->route("configuration")
+            ->withSuccess(__("actions.success"));
     }
 
     public function destroy($id)
@@ -70,9 +79,11 @@ class ConfigurationController extends Controller
         try {
             $this->configurationRepository->delete($id);
 
-            return redirect()->route('configuration')->withSuccess(__('actions.success'));
+            return redirect()
+                ->route("configuration")
+                ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
-            return back()->with('error', __('actions.error'));
+            return back()->with("error", __("actions.error"));
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvitationLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
@@ -14,15 +15,15 @@ class InvitationLinkController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
-        $this->invitationLinkRepository = (new InvitationLinkRepository());
+        $this->middleware(["auth", "verified"]);
+        $this->invitationLinkRepository = new InvitationLinkRepository();
     }
 
     public function index()
     {
         $invitations = $this->invitationLinkRepository->all();
 
-        return view('admin/invitations', ["invitations" => $invitations]);
+        return view("admin/invitations", ["invitations" => $invitations]);
     }
 
     public function store(Request $request)
@@ -30,21 +31,24 @@ class InvitationLinkController extends Controller
         try {
             $createInvitationLinkService = new CreateInvitationLinkService();
 
-            $validator = Validator::make($request->all(), [
-                'type' => 'required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                InvitationLink::validationRules(),
+            );
 
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()
+                    ->back()
+                    ->withErrors($validator->errors());
             }
 
             $input = $request->all();
 
             $invitation = $createInvitationLinkService->execute($input);
 
-            return view('admin/invitation', ["invitation" => $invitation]);
+            return view("admin/invitation", ["invitation" => $invitation]);
         } catch (Exception $e) {
-            return back()->with('error', __('actions.error'));
+            return back()->with("error", __("actions.error"));
         }
     }
 
@@ -52,7 +56,7 @@ class InvitationLinkController extends Controller
     {
         $invitation = $this->invitationLinkRepository->findById($id);
 
-        return view('admin/invitation', ["invitation" => $invitation]);
+        return view("admin/invitation", ["invitation" => $invitation]);
     }
 
     public function update($id, $data)
@@ -67,9 +71,11 @@ class InvitationLinkController extends Controller
         try {
             $this->invitationLinkRepository->delete($id);
 
-            return redirect()->route('invitations')->withSuccess(__('actions.success'));
+            return redirect()
+                ->route("invitations")
+                ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
-            return back()->with('error', __('actions.error'));
+            return back()->with("error", __("actions.error"));
         }
     }
 }
