@@ -1,6 +1,6 @@
 {
     "phpVersion": "7.4",
-    "printWidth": 80,
+    "printWidth": 90,
     "trailingComma": "none",
     "tabWidth": 4,
     "semi": true,

@@ -13,7 +13,6 @@ $factory->define(User::class, function (Faker $faker) {
         "name" => $faker->name,
         "email" => $faker->unique()->safeEmail,
         "password" => Hash::make("password"),
-        "api_token" => Str::random(60),
         "email_verified_at" => Carbon::today(),
         "created_at" => Carbon::today(),
     ];

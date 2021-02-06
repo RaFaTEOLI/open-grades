@@ -18,18 +18,14 @@ class AuthenticationTest extends TestCase
     {
         $user = [
             "email" => "opengrades@gmail.com",
-            "password" => "password"
+            "password" => "password",
         ];
 
-        $response = $this->json('POST', env('APP_API') . '/login', $user);
+        $response = $this->json("POST", env("APP_API") . "/login", $user);
 
         $response
             ->assertStatus(HttpStatus::SUCCESS)
-            ->assertJsonStructure([
-                'success' => [
-                    'token'
-                ]
-            ]);
+            ->assertJsonStructure(["access_token", "token_type", "expires_in"]);
     }
 
     /**
@@ -41,15 +37,13 @@ class AuthenticationTest extends TestCase
     {
         $user = [
             "email" => "itdoesntexist@gmail.com",
-            "password" => "password"
+            "password" => "password",
         ];
 
-        $response = $this->json('POST', env('APP_API') . '/login', $user);
+        $response = $this->json("POST", env("APP_API") . "/login", $user);
 
-        $response
-            ->assertStatus(HttpStatus::UNAUTHORIZED)
-            ->assertJson([
-                'error' => 'Unauthorized'
-            ]);
+        $response->assertStatus(HttpStatus::UNAUTHORIZED)->assertJson([
+            "error" => "Unauthorized",
+        ]);
     }
 }

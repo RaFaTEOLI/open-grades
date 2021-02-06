@@ -20,7 +20,6 @@ class UserSeeder extends Seeder
             "name" => "admin",
             "email" => "opengrades@gmail.com",
             "password" => Hash::make("password"),
-            "api_token" => Str::random(60),
             "email_verified_at" => Carbon::today(),
             "created_at" => Carbon::today(),
         ]);

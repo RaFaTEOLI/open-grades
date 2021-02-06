@@ -33,18 +33,13 @@ class UserController extends Controller
      */
     public function login()
     {
-        if (
-            Auth::attempt([
-                "email" => request("email"),
-                "password" => request("password"),
-            ])
-        ) {
-            $user = Auth::user();
-            $success["token"] = $user->api_token;
-            return response()->json(
-                ["success" => $success],
-                HttpStatus::SUCCESS,
-            );
+        $userLoginAttempt = auth("api")->attempt([
+            "email" => request("email"),
+            "password" => request("password"),
+        ]);
+
+        if ($userLoginAttempt) {
+            return $this->createNewToken($userLoginAttempt);
         } else {
             return response()->json(
                 ["error" => "Unauthorized"],
@@ -61,12 +56,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
-            $token = Str::random(60);
-
-            $validator = Validator::make(
-                $request->all(),
-                User::validationRules(),
-            );
+            $validator = Validator::make($request->all(), User::validationRules());
 
             if ($validator->fails()) {
                 return response()->json(
@@ -77,27 +67,61 @@ class UserController extends Controller
 
             $input = $request->all();
 
-            $input["api_token"] = $token;
-
             $createUserService = new CreateUserService();
             $user = $createUserService->execute($input);
 
             // Sends Email Verification
             $user->sendEmailVerificationNotification();
 
-            $success["token"] = hash("sha256", $token);
-            $success["user"] = $user->format();
-
-            return response()->json(
-                ["success" => $success],
-                HttpStatus::CREATED,
-            );
+            return response()->json($user->format(), HttpStatus::CREATED);
         } catch (Exception $e) {
             return response()->json(
                 ["error" => $e->getMessage()],
                 HttpStatus::BAD_REQUEST,
             );
         }
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth("api")->logout();
+
+        return response()->json(["message" => "User successfully signed out"]);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->createNewToken(auth("api")->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function createNewToken($token)
+    {
+        return response()->json([
+            "access_token" => $token,
+            "token_type" => "bearer",
+            "expires_in" =>
+                auth("api")
+                    ->factory()
+                    ->getTTL() * 60,
+            "user" => auth("api")->user(),
+        ]);
     }
 
     /**
@@ -129,7 +153,7 @@ class UserController extends Controller
     public function details()
     {
         $user = Auth::user();
-        return response()->json(["success" => $user], HttpStatus::SUCCESS);
+        return response()->json($user, HttpStatus::SUCCESS);
     }
 
     /**

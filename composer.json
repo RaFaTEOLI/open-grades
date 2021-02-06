@@ -17,7 +17,8 @@
         "laravel/legacy-factories": "^1.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "shanmuga/laravel-entrust": "^2.1"
+        "shanmuga/laravel-entrust": "^2.1",
+        "tymon/jwt-auth": "^1.0.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

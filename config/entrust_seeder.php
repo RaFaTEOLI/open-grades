@@ -32,7 +32,6 @@ return [
                 "email" => "opengrades@gmail.com",
                 "password" => "password",
                 "email_verified_at" => "2021-02-05 22:29:50",
-                "api_token" => Str::random(60),
             ],
         ],
     ],
