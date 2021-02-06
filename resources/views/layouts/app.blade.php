@@ -112,7 +112,7 @@
                     <li style="padding: 70px 0 0;">
                         <a href="{{ route('home') }}" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>{{ __('menu.dashboard') }}</a>
                     </li>
-                    @if (Auth::user()->admin == 1)
+                    @if (Auth::user()->hasRole("admin"))
                     <li>
                         <a href="{{ route('invitations') }}" class="waves-effect"><i class="fa fa-link fa-fw" aria-hidden="true"></i>{{ __('menu.invitations') }}</a>
                     </li>
