@@ -45,6 +45,15 @@ services:
         networks:
             - opengrades
 
+    redis:
+        image: redis:alpine
+        container_name: ${APP_NAME}-redis
+        restart: unless-stopped
+        command: redis-server --appendonly yes --requirepass "${REDIS_PASSWORD}"
+        volumes:
+            - ./docker-compose/redis:/data
+        ports:
+            - "8002:6379"
 networks:
     opengrades:
         driver: bridge
