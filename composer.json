@@ -16,7 +16,8 @@
         "laravel/framework": "^8.0",
         "laravel/legacy-factories": "^1.1",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0"
+        "laravel/ui": "^3.0",
+        "shanmuga/laravel-entrust": "^2.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -42,11 +43,12 @@
             "App\\Models\\": "app/Models/",
             "App\\Services\\": "app/Services/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeds\\": "database/seeds/"
+            "Database\\Seeders\\": "database/seeders/"
         },
         "classmap": [
-            "database/seeds",
-            "database/factories"
+            "database/seeders",
+            "database/factories",
+            "database/migrations"
         ]
     },
     "autoload-dev": {

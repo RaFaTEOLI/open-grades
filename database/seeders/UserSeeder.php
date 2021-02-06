@@ -16,14 +16,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' =>  'admin',
-            'email' => 'opengrades@gmail.com',
-            'password' => Hash::make('password'),
-            'api_token' => Str::random(60),
-            'email_verified_at' => Carbon::today(),
-            'admin' => true,
-            'created_at' => Carbon::today(),
+        DB::table("users")->insert([
+            "name" => "admin",
+            "email" => "opengrades@gmail.com",
+            "password" => Hash::make("password"),
+            "api_token" => Str::random(60),
+            "email_verified_at" => Carbon::today(),
+            "created_at" => Carbon::today(),
         ]);
     }
 }

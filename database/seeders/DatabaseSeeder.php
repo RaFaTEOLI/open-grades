@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\LaravelEntrustSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,5 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
         $this->call(ConfigurationSeeder::class);
+        $this->call(LaravelEntrustSeeder::class);
     }
 }

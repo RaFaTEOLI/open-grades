@@ -13,17 +13,29 @@ class CreateClassesTable extends Migration
      */
     public function up()
     {
-        Schema::create('classes', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('year_id');
-            $table->unsignedBigInteger('subject_id');
-            $table->unsignedBigInteger('grade_id');
-            $table->unsignedBigInteger('teacher_id');
+        Schema::create("classes", function (Blueprint $table) {
+            $table->bigIncrements("id");
+            $table->unsignedBigInteger("year_id");
+            $table->unsignedBigInteger("subject_id");
+            $table->unsignedBigInteger("grade_id");
+            $table->unsignedBigInteger("user_id");
 
-            $table->foreign('year_id')->references('id')->on('years');
-            $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->foreign('grade_id')->references('id')->on('grades');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table
+                ->foreign("year_id")
+                ->references("id")
+                ->on("years");
+            $table
+                ->foreign("subject_id")
+                ->references("id")
+                ->on("subjects");
+            $table
+                ->foreign("grade_id")
+                ->references("id")
+                ->on("grades");
+            $table
+                ->foreign("user_id")
+                ->references("id")
+                ->on("users");
         });
     }
 
@@ -34,6 +46,6 @@ class CreateClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists("classes");
     }
 }

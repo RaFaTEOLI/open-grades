@@ -13,15 +13,21 @@ class CreateStudentsExamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('students_exams', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('exam_id');
-            $table->double('weight', 15, 8);
+        Schema::create("students_exams", function (Blueprint $table) {
+            $table->bigIncrements("id");
+            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("exam_id");
+            $table->double("weight", 15, 8);
             $table->timestamps();
 
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('exam_id')->references('id')->on('exams');
+            $table
+                ->foreign("user_id")
+                ->references("id")
+                ->on("users");
+            $table
+                ->foreign("exam_id")
+                ->references("id")
+                ->on("exams");
         });
     }
 
@@ -32,6 +38,6 @@ class CreateStudentsExamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students_exams');
+        Schema::dropIfExists("students_exams");
     }
 }

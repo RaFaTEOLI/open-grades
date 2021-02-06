@@ -11,9 +11,12 @@ use Exception;
 class AdminController extends Controller
 {
     // Validates if logged user is admin
-    public static function isAdminOrFail() {
-        $user = User::where('id', Auth::id())->where('admin', 1)->first();
+    public static function isAdminOrFail()
+    {
+        $hasRole = Auth::user()->hasRole("admin");
 
-        if (!$user) throw new Exception('User is not admin');
+        if (!$hasRole) {
+            throw new Exception("User is not admin");
+        }
     }
 }

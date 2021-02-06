@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1203482bf471f58855324d81821abd8",
+    "content-hash": "987ff35b95556979060b07523c6c611f",
     "packages": [
         {
             "name": "brick/math",
@@ -2655,6 +2655,70 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "shanmuga/laravel-entrust",
+            "version": "v2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shanmuga3/laravel-entrust.git",
+                "reference": "38bb80535d932127ab86e48c05155a290e7292fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shanmuga3/laravel-entrust/zipball/38bb80535d932127ab86e48c05155a290e7292fb",
+                "reference": "38bb80535d932127ab86e48c05155a290e7292fb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.5|^6|^7|^8",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0|^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Shanmuga\\LaravelEntrust\\LaravelEntrustServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelEntrust": "Shanmuga\\LaravelEntrust\\Facades\\LaravelEntrustFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shanmuga\\LaravelEntrust\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shanmugarajan",
+                    "email": "shanmugarajan.33@gmail.com"
+                }
+            ],
+            "description": "This package provides a flexible solution to add ACL to Laravel",
+            "keywords": [
+                "acl",
+                "authorization",
+                "entrust",
+                "laravel",
+                "laravel-entrust",
+                "permissions",
+                "php",
+                "roles"
+            ],
+            "support": {
+                "issues": "https://github.com/shanmuga3/laravel-entrust/issues",
+                "source": "https://github.com/shanmuga3/laravel-entrust/tree/v2.1"
+            },
+            "time": "2021-02-01T06:10:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
