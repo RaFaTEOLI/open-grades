@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services\User;
+
+use App\Http\Controllers\Auth\AdminController;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\RolesRepository\RolesRepository;
@@ -13,6 +15,7 @@ class UpdateUserRoleService
     public function execute(array $request)
     {
         try {
+            AdminController::isAdminOrFail();
             $user = DB::transaction(function () use ($request) {
                 $user = User::where("id", $request["userId"])
                     ->where("deleted_at", null)

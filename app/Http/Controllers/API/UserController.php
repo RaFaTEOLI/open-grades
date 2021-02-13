@@ -155,6 +155,22 @@ class UserController extends Controller
     }
 
     /**
+     * Remove an user
+     *
+     * @return void
+     */
+    public function destroy($id)
+    {
+        try {
+            $this->userRepository->delete($id);
+
+            return response()->noContent();
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
+        }
+    }
+
+    /**
      * Show all users
      *
      * @return \Illuminate\Http\Response

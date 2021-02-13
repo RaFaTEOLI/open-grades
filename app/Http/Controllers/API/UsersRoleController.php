@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Services\User\UpdateUserRoleService;
 use App\Services\User\RemoveUserRoleService;
-use Exception;
 
 class UsersRoleController extends Controller
 {
@@ -21,19 +22,15 @@ class UsersRoleController extends Controller
             );
 
             if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator->errors());
+                return response()->json(["error" => $validator->errors()], HttpStatus::BAD_REQUEST);
             }
 
             $updateUserRoleService = new UpdateUserRoleService();
             $updateUserRoleService->execute(["userId" => $userId, "roleId" => $roleId]);
 
-            return redirect()
-                ->route("users.show", ["id" => $userId])
-                ->withSuccess(__("actions.success"));
+            return response()->noContent();
         } catch (Exception $e) {
-            return back()->with("error", __("actions.error"));
+            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
         }
     }
 
@@ -57,11 +54,9 @@ class UsersRoleController extends Controller
             $removeUserRoleService = new RemoveUserRoleService();
             $removeUserRoleService->execute(["userId" => $userId, "roleId" => $roleId]);
 
-            return redirect()
-                ->route("users.show", ["id" => $userId])
-                ->withSuccess(__("actions.success"));
+            return response()->noContent();
         } catch (Exception $e) {
-            return back()->with("error", __("actions.error"));
+            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
         }
     }
 }

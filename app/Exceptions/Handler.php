@@ -50,10 +50,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof HttpException && $exception->getStatusCode() == 403) {
             return redirect("/403");
-        } elseif (
-            $exception instanceof HttpException &&
-            $exception->getStatusCode() == 401
-        ) {
+        } elseif ($exception instanceof HttpException && $exception->getStatusCode() == 401) {
             return redirect("/401");
         }
         return parent::render($request, $exception);

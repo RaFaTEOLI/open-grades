@@ -3,11 +3,10 @@
 /**
  * This file is part of Laravel Entrust,
  * Handle Role-based Permissions for Laravel.
- * 
+ *
  */
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Migration Suffix
@@ -20,7 +19,7 @@ return [
     | The key in the array is the name of the relationship inside the roles and permissions.
     |
     */
-    'migrationSuffix' => 'laravel_entrust_setup_tables',
+    "migrationSuffix" => "laravel_entrust_setup_tables",
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +31,7 @@ return [
     | to have a different name, you can do it here.
     |
     */
-    'user_model' => 'App\Models\User',
+    "user_model" => "App\Models\User",
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +43,7 @@ return [
     | to have a different name, you can do it here.
     |
     */
-    'user_table' => 'users',
+    "user_table" => "users",
 
     /*
     |--------------------------------------------------------------------------
@@ -56,9 +55,9 @@ return [
     | to have a different name, you can do it here.
     |
     */
-    'models' => [
-        'role'          => 'App\Models\Role',
-        'permission'    => 'App\Models\Permission',
+    "models" => [
+        "role" => "App\Models\Role",
+        "permission" => "App\Models\Permission",
     ],
 
     /*
@@ -70,8 +69,9 @@ return [
     | If you want the Laravel Entrust to be in a different guards you can do it here.
     |
     */
-    'defaults' => [
-        'guard'          => 'web',
+    // If we'll be officially using API just change web to api
+    "defaults" => [
+        "guard" => ["web", "api"],
     ],
 
     /*
@@ -82,11 +82,11 @@ return [
     | These are the tables used by Laravel Entrust to store all the authorization data.
     |
     */
-    'tables' => [
-        'roles'             => 'roles',
-        'permissions'       => 'permissions',
-        'role_user'         => 'role_user',
-        'permission_role'   => 'permission_role',
+    "tables" => [
+        "roles" => "roles",
+        "permissions" => "permissions",
+        "role_user" => "role_user",
+        "permission_role" => "permission_role",
     ],
 
     /*
@@ -97,10 +97,10 @@ return [
     | These are the foreign keys used by laratrust in the intermediate tables.
     |
     */
-    'foreign_keys' => [
-        'user' => 'user_id',
-        'role' => 'role_id',
-        'permission' => 'permission_id',
+    "foreign_keys" => [
+        "user" => "user_id",
+        "role" => "role_id",
+        "permission" => "permission_id",
     ],
 
     /*
@@ -111,29 +111,29 @@ return [
     | This configuration helps to customize the Laravel Entrust middleware behavior.
     |
     */
-    'middleware' => [
+    "middleware" => [
         /**
          * Define if the laratrust middleware are registered automatically in the service provider
          */
-        'register' => true,
+        "register" => true,
 
         /**
          * Method to be called in the middleware return case.
          * Available: abort|redirect
          */
-        'handling' => 'abort',
+        "handling" => "abort",
 
         /**
          * Handlers for the unauthorized method in the middlewares.
          * The name of the handler must be the same as the handling.
          */
-        'handlers' => [
+        "handlers" => [
             /**
              * Aborts the execution with a 403 code and allows you to provide the response text
              */
-            'abort' => [
-                'code' => 403,
-                'message' => 'You don\'t Have a permission to Access this page.'
+            "abort" => [
+                "code" => 403,
+                "message" => 'You don\'t Have a permission to Access this page.',
             ],
 
             /**
@@ -142,12 +142,12 @@ return [
              * you can do it by setting the key and the content of the message
              * If the message content is empty it won't be added to the redirection.
              */
-            'redirect' => [
-                'url' => '/',
-                'message' => [
-                    'key' => 'error',
-                    'content' => 'You don\'t Have a permission to Access this page'
-                ]
+            "redirect" => [
+                "url" => "/403",
+                "message" => [
+                    "key" => "error",
+                    "content" => 'You don\'t Have a permission to Access this page',
+                ],
             ],
         ],
     ],

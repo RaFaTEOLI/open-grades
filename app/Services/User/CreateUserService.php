@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\AdminController;
 use Exception;
 
 class CreateUserService
@@ -24,6 +24,7 @@ class CreateUserService
         $invitationLinkRepository = new InvitationLinkRepository();
 
         try {
+            AdminController::isAdminOrFail();
             $user = DB::transaction(function () use ($request, $invitationLinkRepository) {
                 $type = null;
                 $request["password"] = Hash::make($request["password"]);

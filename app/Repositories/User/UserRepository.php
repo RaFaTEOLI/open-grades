@@ -5,6 +5,7 @@ namespace App\Repositories\User;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 use App\Models\Role;
+use Carbon\Carbon;
 use Exception;
 
 class UserRepository implements UserRepositoryInterface
@@ -43,7 +44,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function delete($userId)
     {
-        $user = User::where("id", $userId)->delete();
+        $this->update($userId, ["deleted_at" => Carbon::now()]);
 
         return true;
     }
