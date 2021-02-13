@@ -24,9 +24,8 @@ class UserRepository implements UserRepositoryInterface
     */
     public function findById($id)
     {
-        return User::findOrFail($id)
+        return User::where("id", $id)
             ->where("deleted_at", null)
-            ->get()
             ->first()
             ->format();
     }
@@ -54,7 +53,7 @@ class UserRepository implements UserRepositoryInterface
         $user = User::find($userId);
         $role = Role::where("name", strtolower($type))->first();
 
-        if ($type === "TEACHER" || $type === "STUDENT") {
+        if (!empty($role)) {
             $user->attachRole($role);
         } else {
             throw new Exception("No type specified");

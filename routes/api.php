@@ -24,6 +24,15 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::get("users", "API\UserController@all");
     Route::put("users/{id}", "API\UserController@update");
 
+    /**
+     * Roles Routes
+     */
+    Route::get("/roles", "API\RolesController@index");
+    Route::get("/role/{id}", "API\RolesController@show");
+    Route::delete("/role/{id}", "API\RolesController@destroy");
+    Route::post("/roles", "API\RolesController@store");
+    Route::put("/roles/{id}", "API\RolesController@update");
+
     Route::get("invitations", "API\InvitationLinkController@index");
     Route::get("invitations/{id}", "API\InvitationLinkController@show");
     Route::post("invitations", "API\InvitationLinkController@store");

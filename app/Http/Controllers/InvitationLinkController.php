@@ -23,7 +23,7 @@ class InvitationLinkController extends Controller
     {
         $invitations = $this->invitationLinkRepository->all();
 
-        return view("admin/invitations", ["invitations" => $invitations]);
+        return view("admin/invitation/invitations", ["invitations" => $invitations]);
     }
 
     public function store(Request $request)
@@ -46,7 +46,7 @@ class InvitationLinkController extends Controller
 
             $invitation = $createInvitationLinkService->execute($input);
 
-            return view("admin/invitation", ["invitation" => $invitation]);
+            return view("admin/invitation/invitations", ["invitation" => $invitation]);
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }
@@ -56,7 +56,7 @@ class InvitationLinkController extends Controller
     {
         $invitation = $this->invitationLinkRepository->findById($id);
 
-        return view("admin/invitation", ["invitation" => $invitation]);
+        return view("admin/invitation/invitations", ["invitation" => $invitation]);
     }
 
     public function update($id, $data)

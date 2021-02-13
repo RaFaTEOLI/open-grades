@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Menu Language Lines
@@ -11,13 +10,15 @@ return [
     |
     */
 
-    'dashboard' => 'Dashboard',
-    'invitations' => 'Convites',
-    'students' => 'Alunos',
-    'teachers' => 'Professores',
-    'calendars' => 'Calendários',
-    'grades' => 'Séries/Anos',
-    'classes' => 'Aulas',
-    'subjects' => 'Matérias',
-    'configuration' => 'Configurações',
+    "dashboard" => "Dashboard",
+    "users" => "Usuários",
+    "invitations" => "Convites",
+    "students" => "Alunos",
+    "teachers" => "Professores",
+    "calendars" => "Calendários",
+    "grades" => "Séries/Anos",
+    "classes" => "Aulas",
+    "subjects" => "Matérias",
+    "configuration" => "Configurações",
+    "roles" => "Tipos de Usuário",
 ];

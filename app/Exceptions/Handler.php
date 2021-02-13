@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -21,10 +22,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontFlash = [
-        'password',
-        'password_confirmation',
-    ];
+    protected $dontFlash = ["password", "password_confirmation"];
 
     /**
      * Report or log an exception.
@@ -50,6 +48,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof HttpException && $exception->getStatusCode() == 403) {
+            return redirect("/403");
+        } elseif (
+            $exception instanceof HttpException &&
+            $exception->getStatusCode() == 401
+        ) {
+            return redirect("/401");
+        }
         return parent::render($request, $exception);
     }
 }

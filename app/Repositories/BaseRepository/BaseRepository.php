@@ -6,7 +6,6 @@ use App\Repositories\BaseRepository\BaseRepositoryInterface;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-
     /**
      * Fetch All
      *
@@ -27,8 +26,8 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function findById($id)
     {
-        // return Model::findOrFail($id)
-        //     ->get()
+        // return Model::where("id", $id)
+        //     ->where("deleted_at", null)
         //     ->first()
         //     ->format();
     }

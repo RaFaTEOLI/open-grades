@@ -23,7 +23,7 @@ class ConfigurationController extends Controller
     {
         $configurations = $this->configurationRepository->all();
 
-        return view("configuration/configurations", [
+        return view("admin/configuration/configurations", [
             "configurations" => $configurations,
         ]);
     }

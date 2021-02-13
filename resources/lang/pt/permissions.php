@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Configuration Message Lines
+    | Permission Message Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during simple messages for various
@@ -12,10 +12,14 @@ return [
     |
     */
 
-    "page_title" => "Configurations",
-    "name" => "Name",
-    "value" => "Value",
-    "school-year-division" => "School Year Division",
-    "max-grade" => "Max Grade",
-    "point-average" => "Point Average",
+    "create" => "Criar",
+    "update" => "Atualizar",
+    "read" => "Visualizar",
+    "delete" => "Excluir",
+    "users" => "Usuários",
+    "admin" => "Admin",
+    "classes" => "Aulas",
+    "students" => "Alunos",
+    "teachers" => "Professores",
+    "profile" => "Perfil",
 ];

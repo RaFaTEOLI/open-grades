@@ -1,9 +1,3 @@
-@if (Auth::user()->admin != 1)
-<script>
-    window.location = "{{ route('permission') }}";
-</script>
-<?php exit; ?>
-@endif
 @extends('layouts.app')
 
 @section('content')

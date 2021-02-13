@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\Hash;
 
 class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 {
-
     /**
      * Get All Active Invitation Links
      */
     public function all()
     {
-        return InvitationLink::where('used_at', null)
-            ->with('user')
+        return InvitationLink::where("used_at", null)
+            ->with("user")
             ->get()
             ->map->format();
     }
@@ -27,8 +26,8 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
      */
     public function findById($id)
     {
-        return InvitationLink::findOrFail($id)
-            ->where('used_at', null)
+        return InvitationLink::where("id", $id)
+            ->where("used_at", null)
             ->get()
             ->first()
             ->format();
@@ -36,8 +35,8 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 
     public function findByUserId($userId)
     {
-        return InvitationLink::where('user_id', $userId)
-            ->where('used_at', null)
+        return InvitationLink::where("user_id", $userId)
+            ->where("used_at", null)
             ->get()
             ->first()
             ->map->format();
@@ -45,7 +44,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 
     public function update($id, $set)
     {
-        $user = InvitationLink::where('id', $id)->first();
+        $user = InvitationLink::where("id", $id)->first();
 
         $user->update($set);
     }
@@ -75,8 +74,13 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
     public function getValidatedHash($hash)
     {
         try {
-            $invitation = InvitationLink::where('hash', $hash)->where('used_at', null)->get()->first();
-            if (empty($invitation)) throw new Exception(__('validation.invalid_link'));
+            $invitation = InvitationLink::where("hash", $hash)
+                ->where("used_at", null)
+                ->get()
+                ->first();
+            if (empty($invitation)) {
+                throw new Exception(__("validation.invalid_link"));
+            }
             return $invitation;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -85,16 +89,21 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 
     public function validateHash($hash)
     {
-        $invitation = InvitationLink::where('hash', $hash)->where('used_at', null)->get()->first();
-        if (empty($invitation)) return false;
+        $invitation = InvitationLink::where("hash", $hash)
+            ->where("used_at", null)
+            ->get()
+            ->first();
+        if (empty($invitation)) {
+            return false;
+        }
         return true;
     }
 
     public function generateHash()
     {
-        $hash = str_replace('$', '', Hash::make(Carbon::now()));
-        $hash = str_replace('/', '', $hash);
-        $hash = str_replace('.', '', $hash);
+        $hash = str_replace('$', "", Hash::make(Carbon::now()));
+        $hash = str_replace("/", "", $hash);
+        $hash = str_replace(".", "", $hash);
 
         return $hash;
     }

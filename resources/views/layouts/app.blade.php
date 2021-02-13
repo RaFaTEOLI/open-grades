@@ -29,6 +29,9 @@
     <!-- color CSS -->
     <link href="{{ asset('ample-admin/css/colors/default.css') }}" id="theme" rel="stylesheet">
 </head>
+<style>
+    p.label-error>strong{color: tomato;}
+</style>
 
 <body class="fix-header">
     <!-- ============================================================== -->
@@ -114,6 +117,15 @@
                     </li>
                     @if (Auth::user()->hasRole("admin"))
                     <li>
+                        <a href="{{ route('users') }}" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>{{ __('menu.users') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('roles') }}" class="waves-effect"><i class="fa fa-lock fa-fw" aria-hidden="true"></i>{{ __('menu.roles') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('configuration') }}" class="waves-effect"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>{{ __('menu.configuration') }}</a>
+                    </li>
+                    <li>
                         <a href="{{ route('invitations') }}" class="waves-effect"><i class="fa fa-link fa-fw" aria-hidden="true"></i>{{ __('menu.invitations') }}</a>
                     </li>
                     @endif
@@ -164,7 +176,7 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.container-fluid -->
-        <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer>
+        <footer class="footer text-center"> {{ date('Y') }} &copy; Open Grades </footer>
     </div>
     <!-- ============================================================== -->
     <!-- End Page Content -->

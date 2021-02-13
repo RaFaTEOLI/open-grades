@@ -7,10 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Str;
 use App\Http\Controllers\API\HttpStatus;
 use App\Repositories\User\UserRepository;
-use App\Rules\ValidLink;
 use App\Services\User\CreateUserService;
 use Exception;
 use App\Models\User;
@@ -41,10 +39,7 @@ class UserController extends Controller
         if ($userLoginAttempt) {
             return $this->createNewToken($userLoginAttempt);
         } else {
-            return response()->json(
-                ["error" => "Unauthorized"],
-                HttpStatus::UNAUTHORIZED,
-            );
+            return response()->json(["error" => "Unauthorized"], HttpStatus::UNAUTHORIZED);
         }
     }
 
@@ -59,10 +54,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), User::validationRules());
 
             if ($validator->fails()) {
-                return response()->json(
-                    ["error" => $validator->errors()],
-                    HttpStatus::BAD_REQUEST,
-                );
+                return response()->json(["error" => $validator->errors()], HttpStatus::BAD_REQUEST);
             }
 
             $input = $request->all();
@@ -75,10 +67,7 @@ class UserController extends Controller
 
             return response()->json($user->format(), HttpStatus::CREATED);
         } catch (Exception $e) {
-            return response()->json(
-                ["error" => $e->getMessage()],
-                HttpStatus::BAD_REQUEST,
-            );
+            return response()->json(["error" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
     }
 
@@ -138,10 +127,7 @@ class UserController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(
-                ["message" => $e->getMessage()],
-                HttpStatus::BAD_REQUEST,
-            );
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
     }
 
@@ -152,7 +138,7 @@ class UserController extends Controller
      */
     public function details()
     {
-        $user = Auth::user();
+        $user = Auth::user()->format();
         return response()->json($user, HttpStatus::SUCCESS);
     }
 

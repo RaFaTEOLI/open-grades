@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Configuration Message Lines
@@ -13,8 +12,10 @@ return [
     |
     */
 
-    'page_title' => 'Configurações',
-    'name' => 'Nome',
-    'value' => 'Valor',
-    'school_year_division' => 'Divisão do Ano Escolar',
+    "page_title" => "Configurações",
+    "name" => "Nome",
+    "value" => "Valor",
+    "school-year-division" => "Divisão do Ano Escolar",
+    "max-grade" => "Nota Máxima",
+    "point-average" => "Média",
 ];

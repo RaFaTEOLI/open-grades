@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class CreateUserService
@@ -15,22 +16,24 @@ class CreateUserService
 
     public function __construct()
     {
-        $this->userRepository = (new UserRepository());
+        $this->userRepository = new UserRepository();
     }
 
-    public function execute(array $request) {
+    public function execute(array $request)
+    {
         $invitationLinkRepository = new InvitationLinkRepository();
 
         try {
             $user = DB::transaction(function () use ($request, $invitationLinkRepository) {
-                $request['password'] = Hash::make($request['password']);
+                $type = null;
+                $request["password"] = Hash::make($request["password"]);
 
                 if (isset($request["hash"])) {
                     $invite = $invitationLinkRepository->getValidatedHash($request["hash"]);
                     $type = $invite->type;
 
                     unset($request["hash"]);
-                } else {
+                } elseif (isset($request["type"])) {
                     // Separates the Type
                     $type = $request["type"];
                     unset($request["type"]);
@@ -39,12 +42,14 @@ class CreateUserService
                 // Saves the User
                 $user = User::create($request);
 
-                // Saves the User's Type
-                $this->userRepository->createType($type, $user->id);
+                if ($type) {
+                    // Saves the User's Type
+                    $this->userRepository->createType($type, $user->id);
+                }
 
                 // Mark Link as Used
                 if (!empty($invite)) {
-                    $invite->update(['used_at' => Carbon::now()]);
+                    $invite->update(["used_at" => Carbon::now()]);
                 }
 
                 return $user;

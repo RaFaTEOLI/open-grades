@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Actions Message Lines
@@ -13,7 +12,8 @@ return [
     |
     */
 
-    'success' => 'Ação realizada com sucesso!',
-    'error' => 'Não foi possível realizar a ação!',
-    'copy' => 'Copiar',
+    "success" => "Ação realizada com sucesso!",
+    "error" => "Não foi possível realizar a ação!",
+    "copy" => "Copiar",
+    "save" => "Salvar",
 ];

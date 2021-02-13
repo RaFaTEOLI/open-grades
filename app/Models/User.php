@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return [
             "name" => "required",
             "email" => "required|email|unique:users",
-            "password" => "required",
+            "password" => "required|min:8",
             "hash" => ["required", new ValidLink()],
         ];
     }
@@ -78,9 +78,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             "name" => $this->name,
             "email" => $this->email,
             "photo" => $this->photo,
-            "admin" => $this->admin,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
+            "roles" => $this->roles()
+                ->get()
+                ->map->formatWithoutPermissions(),
         ];
     }
 }
