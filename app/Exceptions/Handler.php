@@ -49,9 +49,17 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof HttpException && $exception->getStatusCode() == 403) {
-            return redirect("/403");
+            if ($request->is("api/*")) {
+                return response()->json(["error" => __("informative.unauthorized")], $exception->getStatusCode());
+            } else {
+                return redirect("/403");
+            }
         } elseif ($exception instanceof HttpException && $exception->getStatusCode() == 401) {
-            return redirect("/401");
+            if ($request->is("api/*")) {
+                return response()->json(["error" => __("informative.unauthorized")], $exception->getStatusCode());
+            } else {
+                return redirect("/401");
+            }
         }
         return parent::render($request, $exception);
     }
