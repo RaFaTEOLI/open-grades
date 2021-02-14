@@ -75,7 +75,7 @@
                     <li>
                         <a class="nav-toggler open-close waves-effect waves-light hidden-md hidden-lg" href="javascript:void(0)"><i class="fa fa-bars"></i></a>
                     </li>
-                    <li>
+                    <li style="display: none;">
                         <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
                             <input type="text" placeholder="Search..." class="form-control">
                             <a href="">
@@ -86,9 +86,9 @@
                     <li class="nav-item dropdown">
                         <a class="profile-pic nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre> <img src="{{ (Auth::user()->photo != '') ? asset(Auth::user()->photo) : asset('plugins/images/users/no-avatar.png') }}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{ Auth::user()->name }}</b></a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            <a class="dropdown-item btn" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> {{ __('Logout') }}
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
