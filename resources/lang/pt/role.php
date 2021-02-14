@@ -18,4 +18,7 @@ return [
     "display_name" => "Nome de Exibição",
     "description" => "Descrição",
     "permissions" => "Permissões",
+    "teacher" => "Professor",
+    "admin" => "Administrador",
+    "student" => "Aluno",
 ];
