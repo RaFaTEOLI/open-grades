@@ -23,17 +23,6 @@ class InvitationLink extends Model
         return $this->hasOne("App\Models\User", "id", "user_id");
     }
 
-    /**
-     * Validation Rules Array.
-     *
-     */
-    public static function validationRules()
-    {
-        return [
-            "type" => "required",
-        ];
-    }
-
     public function format()
     {
         return (object) [

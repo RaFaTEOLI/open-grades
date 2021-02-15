@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shanmuga\LaravelEntrust\Traits\LaravelEntrustUserTrait;
-use App\Rules\ValidLink;
+
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
@@ -36,20 +36,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     protected $casts = [
         "email_verified_at" => "datetime",
     ];
-
-    /**
-     * Validation Rules Array.
-     *
-     */
-    public static function validationRules()
-    {
-        return [
-            "name" => "required",
-            "email" => "required|email|unique:users",
-            "password" => "required|min:8",
-            "hash" => ["required", new ValidLink()],
-        ];
-    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Repositories\RolesRepository\RolesRepository;
 use App\Services\Role\CreateRoleService;
 use Exception;
-use App\Models\Role;
 
 class RolesController extends Controller
 {
@@ -28,17 +27,9 @@ class RolesController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         try {
-            $validator = Validator::make($request->all(), Role::validationRules());
-
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator->errors());
-            }
-
             $input = $request->all();
 
             $createRoleService = new CreateRoleService();

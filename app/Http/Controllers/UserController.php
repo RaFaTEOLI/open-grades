@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Services\User\CreateUserService;
-use App\Models\User;
 use App\Repositories\RolesRepository\RolesRepository;
+use App\Http\Requests\User\UserRequest;
 use Exception;
 
 class UserController extends Controller
@@ -30,21 +29,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                "name" => "required",
-                "email" => "required|email|unique:users",
-                "password" => "required|min:8",
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator->errors());
-            }
-
             $input = $request->all();
 
             $createUserService = new CreateUserService();
@@ -72,7 +59,7 @@ class UserController extends Controller
     public function update($id, Request $request)
     {
         $input = $request->only(["name", "email"]);
-        $user = $this->userRepository->update($id, $input);
+        $this->userRepository->update($id, $input);
 
         return redirect()
             ->route("users")

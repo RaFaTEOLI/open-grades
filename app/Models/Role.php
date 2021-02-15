@@ -9,19 +9,6 @@ class Role extends EntrustRole
 {
     use HasFactory;
 
-    /**
-     * Validation Rules Array.
-     *
-     */
-    public static function validationRules()
-    {
-        return [
-            "name" => "required",
-            "display_name" => "required",
-            "description" => "required",
-        ];
-    }
-
     public function format()
     {
         return (object) [

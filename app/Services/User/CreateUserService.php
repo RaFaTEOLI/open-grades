@@ -24,7 +24,6 @@ class CreateUserService
         $invitationLinkRepository = new InvitationLinkRepository();
 
         try {
-            AdminController::isAdminOrFail();
             $user = DB::transaction(function () use ($request, $invitationLinkRepository) {
                 $type = null;
                 $request["password"] = Hash::make($request["password"]);

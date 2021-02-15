@@ -5,13 +5,13 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\API\HttpStatus;
+use App\Http\Requests\User\InviteUserRequest;
+use App\Http\Requests\User\UserRequest;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
 use Exception;
-use App\Models\User;
 
 class UserController extends Controller
 {
@@ -48,15 +48,26 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function register(InviteUserRequest $request)
     {
         try {
-            $validator = Validator::make($request->all(), User::validationRules());
+            $input = $request->all();
 
-            if ($validator->fails()) {
-                return response()->json(["error" => $validator->errors()], HttpStatus::BAD_REQUEST);
-            }
+            $createUserService = new CreateUserService();
+            $user = $createUserService->execute($input);
 
+            // Sends Email Verification
+            $user->sendEmailVerificationNotification();
+
+            return response()->json($user->format(), HttpStatus::CREATED);
+        } catch (Exception $e) {
+            return response()->json(["error" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
+    }
+
+    public function store(UserRequest $request)
+    {
+        try {
             $input = $request->all();
 
             $createUserService = new CreateUserService();

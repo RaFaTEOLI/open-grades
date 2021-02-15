@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\HttpStatus;
+use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use App\Services\Role\CreateRoleService;
 use App\Repositories\RolesRepository\RolesRepository;
@@ -28,17 +29,9 @@ class RolesController extends Controller
         return response()->json($roles, HttpStatus::SUCCESS);
     }
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         try {
-            $validator = Validator::make($request->all(), Role::validationRules());
-
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator->errors());
-            }
-
             $input = $request->all();
 
             $createRoleService = new CreateRoleService();

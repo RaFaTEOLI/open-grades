@@ -21,12 +21,12 @@ class UserTest extends TestCase
     public function testShouldFetchListOfUsers()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/users');
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/users");
 
         $response->assertStatus(HttpStatus::SUCCESS);
     }
 
-     /**
+    /**
      * It should return the user by id
      *
      * @return void
@@ -35,11 +35,11 @@ class UserTest extends TestCase
     {
         $user = User::find(1);
         User::create([
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('12345678')
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => Hash::make("12345678"),
         ]);
-        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/users/1');
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/users/1");
 
         $response->assertStatus(HttpStatus::SUCCESS);
     }
@@ -53,12 +53,14 @@ class UserTest extends TestCase
     {
         $user = User::find(1);
         $userToUpdate = User::create([
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('12345678')
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => Hash::make("12345678"),
         ]);
 
-        $response = $this->actingAs($user, 'api')->json('PUT', env('APP_API') . "/users/{$userToUpdate->id}", ["name" => "UpdatedName"]);
+        $response = $this->actingAs($user, "api")->json("PUT", env("APP_API") . "/users/{$userToUpdate->id}", [
+            "name" => "UpdatedName",
+        ]);
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 
@@ -69,7 +71,7 @@ class UserTest extends TestCase
      */
     public function testShouldNotReturnUsersBecauseUserIsNotAuthorized()
     {
-        $response = $this->json('GET', env('APP_API') . '/users');
+        $response = $this->json("GET", env("APP_API") . "/users");
 
         $response->assertStatus(HttpStatus::UNAUTHORIZED);
     }
@@ -87,9 +89,9 @@ class UserTest extends TestCase
             "password" => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ];
 
-        $response = $this->json('POST', env('APP_API') . '/register', $user);
+        $response = $this->json("POST", env("APP_API") . "/register", $user);
 
-        $response->assertStatus(HttpStatus::BAD_REQUEST);
+        $response->assertStatus(HttpStatus::UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -100,17 +102,17 @@ class UserTest extends TestCase
     public function testShouldNotCreateANewUserBecauseEmailAlreadyExists()
     {
         $user = User::find(1);
-        $response = $this->actingAs($user, 'api')->json('POST', env('APP_API') . '/invitations', ["type" => "TEACHER"]);
+        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/invitations", ["type" => "TEACHER"]);
 
         $user = [
             "name" => $this->faker->name,
             "email" => "opengrades@gmail.com",
             "password" => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            "hash" => $response["hash"]
+            "hash" => $response["hash"],
         ];
 
-        $response = $this->json('POST', env('APP_API') . '/register', $user);
+        $response = $this->json("POST", env("APP_API") . "/register", $user);
 
-        $response->assertStatus(HttpStatus::BAD_REQUEST);
+        $response->assertStatus(HttpStatus::UNPROCESSABLE_ENTITY);
     }
 }

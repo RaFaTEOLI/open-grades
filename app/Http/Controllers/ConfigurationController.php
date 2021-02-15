@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Configuration\ConfigurationRequest;
 use App\Models\Configuration;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Services\Configuration\CreateConfigurationService;
@@ -28,21 +29,10 @@ class ConfigurationController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ConfigurationRequest $request)
     {
         try {
             $createConfigurationService = new CreateConfigurationService();
-
-            $validator = Validator::make(
-                $request->all(),
-                Configuration::validationRules(),
-            );
-
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator->errors());
-            }
 
             $input = $request->all();
 

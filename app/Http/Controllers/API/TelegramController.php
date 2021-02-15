@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Telegram;
+use App\Http\Requests\Telegram\TelegramRequest;
 use App\Repositories\Telegram\TelegramRepository;
 use App\Services\Telegram\CreateMessageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,22 +26,10 @@ class TelegramController extends Controller
         return response()->json($results, HttpStatus::SUCCESS);
     }
 
-    public function store(Request $request)
+    public function store(TelegramRequest $request)
     {
         try {
             $createMessageService = new CreateMessageService();
-
-            $validator = Validator::make(
-                $request->all(),
-                Telegram::validationRules(),
-            );
-
-            if ($validator->fails()) {
-                return response()->json(
-                    ["error" => $validator->errors()],
-                    HttpStatus::BAD_REQUEST,
-                );
-            }
 
             $input = $request->all();
 
@@ -51,10 +38,7 @@ class TelegramController extends Controller
 
             return response()->json($result, HttpStatus::CREATED);
         } catch (Exception $e) {
-            return response()->json(
-                ["message" => $e->getMessage()],
-                HttpStatus::UNAUTHORIZED,
-            );
+            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
         }
     }
 
@@ -67,10 +51,7 @@ class TelegramController extends Controller
 
             return response()->json($result, HttpStatus::SUCCESS);
         } catch (Exception $e) {
-            return response()->json(
-                ["message" => $e->getMessage()],
-                HttpStatus::BAD_REQUEST,
-            );
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
     }
 
@@ -83,10 +64,7 @@ class TelegramController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(
-                ["message" => $e->getMessage()],
-                HttpStatus::BAD_REQUEST,
-            );
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
     }
 }

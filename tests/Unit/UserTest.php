@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Role;
+use App\Services\User\RemoveUserRoleService;
+use App\Services\User\UpdateUserRoleService;
 
 class UserTest extends TestCase
 {
@@ -41,5 +43,53 @@ class UserTest extends TestCase
         ]);
 
         $this->assertTrue(is_numeric($createdUser->id));
+    }
+
+    /**
+     * It should add a role to a user
+     *
+     * @return void
+     */
+    public function testShouldAddRoleToUser()
+    {
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        $user = factory(User::class)->create();
+
+        $updatedRole = (new UpdateUserRoleService())->execute([
+            "userId" => $user->id,
+            "roleId" => $role->id,
+        ]);
+
+        $this->assertTrue(is_numeric($updatedRole->roles[0]->id));
+    }
+
+    /**
+     * It should delete a role to a user
+     *
+     * @return void
+     */
+    public function testShouldDeleteRoleToUser()
+    {
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        $user = factory(User::class)->create();
+
+        $updatedRole = (new RemoveUserRoleService())->execute([
+            "userId" => $user->id,
+            "roleId" => $role->id,
+        ]);
+
+        $this->assertTrue(count($updatedRole->roles) < 1);
     }
 }

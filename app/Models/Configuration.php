@@ -17,18 +17,6 @@ class Configuration extends Model
 
     public $timestamps = true;
 
-    /**
-     * Validation Rules Array.
-     *
-     */
-    public static function validationRules()
-    {
-        return [
-            "name" => "string|required",
-            "value" => "string|required",
-        ];
-    }
-
     public function format()
     {
         return (object) [
