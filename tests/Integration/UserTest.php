@@ -115,4 +115,30 @@ class UserTest extends TestCase
 
         $response->assertStatus(HttpStatus::UNPROCESSABLE_ENTITY);
     }
+
+    /**
+     * It should not add a role to the user because the user is not admin
+     *
+     * @return void
+     */
+    public function testShouldNotAddARoleToUserBecauseUserIsNotAdmin()
+    {
+        $user = factory(User::class)->create();
+        $response = $this->actingAs($user, "api")->json("PATCH", env("APP_API") . "/users/{$user->id}/role/1");
+
+        $response->assertStatus(HttpStatus::FORBIDDEN);
+    }
+
+    /**
+     * It should not delete user's role because the user is not admin
+     *
+     * @return void
+     */
+    public function testShouldNotDeleteUsersRoleBecauseUserIsNotAdmin()
+    {
+        $user = factory(User::class)->create();
+        $response = $this->actingAs($user, "api")->json("DELETE", env("APP_API") . "/users/{$user->id}/role/1");
+
+        $response->assertStatus(HttpStatus::FORBIDDEN);
+    }
 }
