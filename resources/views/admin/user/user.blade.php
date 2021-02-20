@@ -102,6 +102,27 @@
                     @endforeach
                     </div>
                 </div>
+
+                @if ($errors->get('user_id'))
+                <p class="label-error">
+                    @foreach ($errors->get('user_id') as $error)
+
+                    <strong>{{ $error }}</strong>
+
+                    @endforeach
+                </p>
+                @endif
+
+                @if ($errors->get('role_id'))
+                <p class="label-error">
+                    @foreach ($errors->get('role_id') as $error)
+
+                    <strong>{{ $error }}</strong>
+
+                    @endforeach
+                </p>
+                @endif
+
                 @endif
             @endif
         </div>

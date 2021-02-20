@@ -40,17 +40,24 @@ Route::group(["middleware" => "auth:api"], function () {
         Route::delete("/role/{id}", "API\RolesController@destroy");
         Route::post("/roles", "API\RolesController@store");
         Route::put("/roles/{id}", "API\RolesController@update");
+        Route::patch("/roles/{roleId}/permission/{permissionId}", "API\RolesPermissionController@store");
+        Route::delete("/roles/{roleId}/permission/{permissionId}", "API\RolesPermissionController@destroy");
 
+        /**
+         * Invitations Routes
+         */
         Route::get("invitations", "API\InvitationLinkController@index");
         Route::get("invitations/{id}", "API\InvitationLinkController@show");
         Route::post("invitations", "API\InvitationLinkController@store");
 
+        /** Configurations Routes */
         Route::get("configurations", "API\ConfigurationController@index");
         Route::get("configurations/{id}", "API\ConfigurationController@show");
         Route::post("configurations", "API\ConfigurationController@store");
         Route::put("configurations/{id}", "API\ConfigurationController@update");
         Route::delete("configurations/{id}", "API\ConfigurationController@destroy");
 
+        /** Telegram Messages Routes */
         Route::post("messages", "API\TelegramController@store");
         Route::get("messages", "API\TelegramController@index");
         Route::get("messages/{id}", "API\TelegramController@show");

@@ -68,32 +68,73 @@
                     @endif
                 </div>
 
-                @if (!empty($role->permissions))
-                <div class="form-group">
-                    <label>{{ __('role.permissions') }}</label>
-                    <div class="form-group">
-                    @foreach ($role->permissions as $permission)
-                        <?php
-                        $permissionSteps = explode(" ", $permission->display_name);
-                        $action = strtolower($permissionSteps[0]);
-                        $model = strtolower($permissionSteps[1]);
-                        ?>
-                        <form class="btn" action="{{ route('users.destroy', $permission->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-primary" type="submit">{{ __("permissions.{$action}") . ' ' . __("permissions.{$model}") }} <i class="fa fa-times"></i></button>
-                        </form>
-
-                    @endforeach
-                    <button class="btn btn-warning" type="button"><i class="fa fa-plus"></i></button>
-                    </div>
-                </div>
-                @endif
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">{{ __('actions.save') }}</button>
                 </div>
             </form>
+            @if (!empty($role))
+            <hr />
+                @if (count($permissions) > 0)
+                <div class="form-group">
+                    <label>{{ __('user.types_to_add') }}</label>
+                    <div class="form-group">
+                    @foreach ($permissions as $permission)
+                    <?php
+                    $permissionSteps = explode(" ", $permission->display_name);
+                    $action = strtolower($permissionSteps[0]);
+                    $model = strtolower($permissionSteps[1]);
+                    ?>
+                        <form class="btn" action="{{ route('roles.permission.update', ["roleId" => $role->id, "permissionId" => $permission->id]) }}" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-success" type="submit">{{ __("permissions.{$action}") . ' ' . __("permissions.{$model}") }} <i class="fa fa-plus"></i></button>
+                        </form>
+                    @endforeach
+                    </div>
+                </div>
+                @endif
+
+                @if (count($role->permissions) > 0)
+                <div class="form-group">
+                    <label>{{ __('user.types') }}</label>
+                    <div class="form-group">
+                    @foreach ($role->permissions as $permission)
+                    <?php
+                    $permissionSteps = explode(" ", $permission->display_name);
+                    $action = strtolower($permissionSteps[0]);
+                    $model = strtolower($permissionSteps[1]);
+                    ?>
+                        <form class="btn" action="{{ route('roles.permission.remove', ["roleId" => $role->id, "permissionId" => $permission->id]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-primary" type="submit">{{ __("permissions.{$action}") . ' ' . __("permissions.{$model}") }} <i class="fa fa-times"></i></button>
+                        </form>
+                    @endforeach
+                    </div>
+                </div>
+
+                @if ($errors->get('role_id'))
+                <p class="label-error">
+                    @foreach ($errors->get('role_id') as $error)
+
+                    <strong>{{ $error }}</strong>
+
+                    @endforeach
+                </p>
+                @endif
+
+                @if ($errors->get('permission_id'))
+                <p class="label-error">
+                    @foreach ($errors->get('permission_id') as $error)
+
+                    <strong>{{ $error }}</strong>
+
+                    @endforeach
+                </p>
+                @endif
+
+                @endif
+            @endif
         </div>
     </div>
 </div>

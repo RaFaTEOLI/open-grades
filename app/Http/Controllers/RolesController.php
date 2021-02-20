@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
+use App\Repositories\PermissionRepository\PermissionRepository;
 use Illuminate\Http\Request;
 use App\Repositories\RolesRepository\RolesRepository;
 use App\Services\Role\CreateRoleService;
@@ -46,8 +47,9 @@ class RolesController extends Controller
     public function show($id)
     {
         $role = $this->rolesRepository->findById($id);
+        $permissions = (new PermissionRepository())->findPermissionsNotInRole($id);
 
-        return view("admin/role/role", ["role" => $role]);
+        return view("admin/role/role", ["role" => $role, "permissions" => $permissions]);
     }
 
     public function update($id, Request $request)
