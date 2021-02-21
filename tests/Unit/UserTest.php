@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Services\User\RemoveUserRoleService;
 use App\Services\User\UpdateUserRoleService;
+use Exception;
 
 class UserTest extends TestCase
 {
@@ -91,5 +92,29 @@ class UserTest extends TestCase
         ]);
 
         $this->assertTrue(count($updatedRole->roles) < 1);
+    }
+
+    /**
+     * It should not delete admin role from user because user is admin
+     *
+     * @return void
+     */
+    public function testShouldNotDeleteAdminRoleFromUserBecauseUserIsAdmin()
+    {
+        $this->expectException(Exception::class);
+
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        $adminMaster = User::find(1);
+
+        (new RemoveUserRoleService())->execute([
+            "userId" => $adminMaster->id,
+            "roleId" => $role->id,
+        ]);
     }
 }

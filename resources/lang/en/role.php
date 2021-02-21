@@ -21,4 +21,5 @@ return [
     "teacher" => "Teacher",
     "admin" => "Administrator",
     "student" => "Student",
+    "user_is_admin" => "It wasn't possible to delete the admin role from the user, because the user is admin",
 ];

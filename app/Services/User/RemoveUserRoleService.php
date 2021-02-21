@@ -13,7 +13,9 @@ class RemoveUserRoleService
     public function execute(array $request)
     {
         try {
-            AdminController::isAdminOrFail();
+            if ($request["userId"] == 1 && $request["roleId"] == 1) {
+                throw new Exception(__("role.user_is_admin"));
+            }
             $user = DB::transaction(function () use ($request) {
                 $user = User::where("id", $request["userId"])
                     ->where("deleted_at", null)

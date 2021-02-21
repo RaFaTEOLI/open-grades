@@ -16,7 +16,7 @@ class UpdateRolePermissionService
             $permission = Permission::findOrFail($request["permissionId"]);
             $role->attachPermission($permission);
 
-            return $role;
+            return $role->format();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

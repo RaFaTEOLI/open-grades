@@ -56,8 +56,8 @@
                         @foreach ($roles as $role)
                         <tr>
                             <td>{{ $role->id }}</td>
-                            <td class="txt-oflo">{{ $role->name }}</td>
-                            <td>{{ $role->display_name }}</td>
+                            <td class="txt-oflo">{{ __('role.' . strtolower($role->name)) }}</td>
+                            <td>{{ __('role.' . strtolower($role->display_name)) }}</td>
                             <td>{{ $role->description }}</span></td>
                             <td>
                                 <div class="d-flex">
