@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = "App\Http\Controllers";
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -51,9 +51,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+        Route::middleware("web")
+            ->namespace($this->namespace)
+            ->group(base_path("routes/web/web.php"));
+
+        $this->loadWebRoute("user");
+        $this->loadWebRoute("role");
+        $this->loadWebRoute("invitation");
+        $this->loadWebRoute("configuration");
     }
 
     /**
@@ -65,9 +70,30 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+        Route::prefix("api")
+            ->middleware("api")
+            ->namespace($this->namespace)
+            ->group(base_path("routes/api/api.php"));
+
+        $this->loadApiRoute("user");
+        $this->loadApiRoute("role");
+        $this->loadApiRoute("invitation");
+        $this->loadApiRoute("configuration");
+        $this->loadApiRoute("telegram");
+    }
+
+    private function loadWebRoute($routeName)
+    {
+        Route::middleware("web")
+            ->namespace($this->namespace)
+            ->group(base_path("routes/web/{$routeName}.php"));
+    }
+
+    private function loadApiRoute($routeName)
+    {
+        Route::prefix("api")
+            ->middleware("api")
+            ->namespace($this->namespace)
+            ->group(base_path("routes/api/{$routeName}.php"));
     }
 }
