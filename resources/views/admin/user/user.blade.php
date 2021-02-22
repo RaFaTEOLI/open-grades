@@ -82,7 +82,7 @@
                         <form class="btn" action="{{ route('users.role', ["userId" => $user->id, "roleId" => $role->id]) }}" method="post">
                             @csrf
                             @method('PATCH')
-                            <button class="btn btn-success" type="submit">{{ __('role.' . strtolower($role->display_name)) }} <i class="fa fa-plus"></i></button>
+                            <button class="btn btn-success" type="submit" onclick="setLoading()">{{ __('role.' . strtolower($role->display_name)) }} <i class="fa fa-plus"></i></button>
                         </form>
                     @endforeach
                     </div>
@@ -97,7 +97,7 @@
                         <form class="btn" action="{{ route('users.role.remove', ["userId" => $user->id, "roleId" => $role->id]) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-primary" type="submit">{{ __('role.' . strtolower($role->display_name)) }} <i class="fa fa-times"></i></button>
+                            <button class="btn btn-primary" type="submit" onclick="setLoading()">{{ __('role.' . strtolower($role->display_name)) }} <i class="fa fa-times"></i></button>
                         </form>
                     @endforeach
                     </div>

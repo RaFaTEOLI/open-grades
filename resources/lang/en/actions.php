@@ -16,4 +16,6 @@ return [
     "error" => "There was an error while trying to perform action!",
     "copy" => "Copy",
     "save" => "Save",
+    "loading" => "Loading, please wait!",
+    "close" => "Close",
 ];

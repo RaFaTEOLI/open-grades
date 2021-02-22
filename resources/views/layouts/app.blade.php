@@ -31,6 +31,19 @@
 </head>
 <style>
     p.label-error>strong{color: tomato;}
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 
 <body class="fix-header">
@@ -120,7 +133,7 @@
                         <a href="{{ route('users') }}" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>{{ __('menu.users') }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('roles') }}" class="waves-effect"><i class="fa fa-lock fa-fw" aria-hidden="true"></i>{{ __('menu.roles') }}</a>
+                        <a href="{{ route('roles') }}" class="waves-effect"><i class="fa fa-shield fa-fw" aria-hidden="true"></i>{{ __('menu.roles') }}</a>
                     </li>
                     <li>
                         <a href="{{ route('configuration') }}" class="waves-effect"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>{{ __('menu.configuration') }}</a>
@@ -186,6 +199,27 @@
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
+    <!-- Begin Modal -->
+    <!-- ============================================================== -->
+    <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('actions.loading') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <div class="modal-body" style="display: flex; justify-content: center;">
+                <div class="loader"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Modal -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -238,6 +272,14 @@
                 });
             }
         });
+
+        function setLoading(value = true) {
+            if (value) {
+                $("#loading-modal").modal("show");
+            } else {
+                $("#loading-modal").modal("hide");
+            }
+        }
     </script>
 </body>
 

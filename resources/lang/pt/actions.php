@@ -16,4 +16,6 @@ return [
     "error" => "Não foi possível realizar a ação!",
     "copy" => "Copiar",
     "save" => "Salvar",
+    "loading" => "Carregando, por favor aguarde!",
+    "close" => "Fechar",
 ];
