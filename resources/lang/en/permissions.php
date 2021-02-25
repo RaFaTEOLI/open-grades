@@ -22,4 +22,8 @@ return [
     "students" => "Students",
     "teachers" => "Teachers",
     "profile" => "Profile",
+    "roles" => "Roles",
+    "permissions" => "Permissions",
+    "configuration" => "Configuration",
+    "invitation" => "Invitation",
 ];

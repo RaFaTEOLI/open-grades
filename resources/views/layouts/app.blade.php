@@ -28,6 +28,8 @@
     <link href="{{ asset('ample-admin/css/style.css') }}" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{ asset('ample-admin/css/colors/default.css') }}" id="theme" rel="stylesheet">
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
 </head>
 <style>
     p.label-error>strong{color: tomato;}
@@ -136,6 +138,9 @@
                         <a href="{{ route('roles') }}" class="waves-effect"><i class="fa fa-shield fa-fw" aria-hidden="true"></i>{{ __('menu.roles') }}</a>
                     </li>
                     <li>
+                        <a href="{{ route('permissions') }}" class="waves-effect"><i class="fa fa-lock fa-fw" aria-hidden="true"></i>{{ __('menu.permissions') }}</a>
+                    </li>
+                    <li>
                         <a href="{{ route('configuration') }}" class="waves-effect"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>{{ __('menu.configuration') }}</a>
                     </li>
                     <li>
@@ -160,11 +165,6 @@
                     <li>
                         <a href="blank.html" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>{{ __('menu.subjects') }}</a>
                     </li>
-                    @if (Auth::user()->admin == 1)
-                    <li>
-                        <a href="{{ route('configuration') }}" class="waves-effect"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>{{ __('menu.configuration') }}</a>
-                    </li>
-                    @endif
                 </ul>
                 <!-- <div class="center p-20">
                      <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">Upgrade to Pro</a>
@@ -243,8 +243,11 @@
     <script src="{{ asset('ample-admin/js/custom.min.js') }}"></script>
     <script src="{{ asset('ample-admin/js/dashboard1.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/toast-master/js/jquery.toast.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
+            $('#dataTable').DataTable();
+
             const hasSuccess = document.getElementById('hasSuccess').value;
             const success = document.getElementById('success').value;
             if (hasSuccess) {

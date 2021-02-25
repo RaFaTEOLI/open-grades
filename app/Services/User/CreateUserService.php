@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Models\User;
-use App\Http\Controllers\Auth\AdminController;
 use Exception;
 
 class CreateUserService

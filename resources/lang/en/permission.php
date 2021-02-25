@@ -12,18 +12,9 @@ return [
     |
     */
 
-    "create" => "Criar",
-    "update" => "Atualizar",
-    "read" => "Visualizar",
-    "delete" => "Excluir",
-    "users" => "Usuários",
-    "admin" => "Admin",
-    "classes" => "Aulas",
-    "students" => "Alunos",
-    "teachers" => "Professores",
-    "profile" => "Perfil",
-    "roles" => "Tipos",
-    "permissions" => "Permissões",
-    "configuration" => "Configuração",
-    "invitation" => "Convites",
+    "permissions" => "Permissions",
+    "permission" => "Permission",
+    "name" => "Name",
+    "display_name" => "Display Name",
+    "description" => "Description",
 ];

@@ -21,4 +21,5 @@ return [
     "subjects" => "Subjects",
     "configuration" => "Configuration",
     "roles" => "User Roles",
+    "permissions" => "Permissions",
 ];

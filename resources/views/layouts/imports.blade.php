@@ -25,6 +25,10 @@
     <link href="{{ asset('ample-admin/css/style.css') }}" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{ asset('ample-admin/css/colors/default.css') }}" id="theme" rel="stylesheet">
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+
 </head>
 
 <body>
@@ -47,6 +51,7 @@
     <script src="{{ asset('ample-admin/js/custom.min.js') }}"></script>
     <script src="{{ asset('ample-admin/js/dashboard1.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/toast-master/js/jquery.toast.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
 </body>
 
 </html>

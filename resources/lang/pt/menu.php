@@ -21,4 +21,5 @@ return [
     "subjects" => "Matérias",
     "configuration" => "Configurações",
     "roles" => "Tipos de Usuário",
+    "permissions" => "Permissões",
 ];
