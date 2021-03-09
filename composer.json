@@ -18,7 +18,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "predis/predis": "^1.1",
-        "shanmuga/laravel-entrust": "^2.1",
+        "shanmuga/laravel-entrust": "^2.2",
         "tymon/jwt-auth": "^1.0.2"
     },
     "require-dev": {
