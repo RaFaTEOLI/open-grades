@@ -5,8 +5,10 @@ namespace App\Repositories\User;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 use App\Models\Role;
+use App\Repositories\RedisRepository\RedisRepository;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Redis;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -15,9 +17,24 @@ class UserRepository implements UserRepositoryInterface
     */
     public function all()
     {
-        return User::where("deleted_at", null)
-            ->get()
-            ->map->format();
+        $users = (new RedisRepository())->all("users");
+
+        if (empty($users)) {
+            $users = User::where("deleted_at", null)
+                ->get()
+                ->map->format();
+        }
+
+        return $users;
+    }
+
+    public function store(array $request)
+    {
+        $userCreated = User::create($request);
+
+        (new RedisRepository())->set("users", $this->all());
+
+        return $userCreated;
     }
 
     /*
@@ -25,10 +42,16 @@ class UserRepository implements UserRepositoryInterface
     */
     public function findById($id)
     {
-        return User::where("id", $id)
-            ->where("deleted_at", null)
-            ->first()
-            ->format();
+        $user = (new RedisRepository())->findById("users", $id);
+
+        if (empty($user)) {
+            $user = User::where("id", $id)
+                ->where("deleted_at", null)
+                ->first()
+                ->format();
+        }
+
+        return $user;
     }
 
     public function findByUsername($username)

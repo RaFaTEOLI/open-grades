@@ -1,0 +1,55 @@
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+set
+$5
+teste
+$0
+
+*2
+$3
+del
+$5
+teste
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+SET
+$25
+opengrades_database_users
+$121
+{"name":"Teste 5","email":"teste5@hotmail.com","password":"$2y$10$Sp2YzEhz8r.bXp99YlLJWOTTZvDdU7vC2M3ckN0AZ4f3w..FuBNqu"}
+*3
+$3
+SET
+$25
+opengrades_database_users
+$135
+"{\"name\":\"Teste 5\",\"email\":\"teste5@hotmail.com\",\"password\":\"$2y$10$Sp2YzEhz8r.bXp99YlLJWOTTZvDdU7vC2M3ckN0AZ4f3w..FuBNqu\"}"
+*2
+$3
+del
+$25
+opengrades_database_users
+*3
+$3
+SET
+$25
+opengrades_database_users
+$1450
+[{"id":1,"name":"Admin","email":"opengrades@gmail.com","photo":null,"created_at":"2021-02-06T01:51:46.000000Z","updated_at":"2021-02-13T18:56:58.000000Z","roles":[{"id":1,"name":"admin","display_name":"Admin","description":"Admin"}]},{"id":2,"name":"Teste","email":"teste@hotmail.com","photo":null,"created_at":"2021-02-07T20:20:22.000000Z","updated_at":"2021-02-13T19:14:58.000000Z","roles":[{"id":3,"name":"student","display_name":"Student","description":"Student"}]},{"id":10,"name":"Teste 2","email":"teste2@hotmail.com","photo":null,"created_at":"2021-02-14T16:10:03.000000Z","updated_at":"2021-02-14T16:10:03.000000Z","roles":[]},{"id":11,"name":"Teste 3","email":"teste3@hotmail.com","photo":null,"created_at":"2021-02-14T16:15:15.000000Z","updated_at":"2021-02-14T16:15:15.000000Z","roles":[{"id":2,"name":"teacher","display_name":"Teacher","description":"Teacher"}]},{"id":19,"name":"Student","email":"teste4@hotmail.com","photo":null,"created_at":"2021-02-14T17:03:13.000000Z","updated_at":"2021-02-14T17:03:13.000000Z","roles":[{"id":3,"name":"student","display_name":"Student","description":"Student"}]},{"id":658,"name":"Teste 5","email":"teste5@hotmail.com","photo":null,"created_at":"2021-03-09T14:26:47.000000Z","updated_at":"2021-03-09T14:26:47.000000Z","roles":[]},{"id":659,"name":"Teste 6","email":"teste6@hotmail.com","photo":null,"created_at":"2021-03-09T14:27:44.000000Z","updated_at":"2021-03-09T14:27:44.000000Z","roles":[]}]
+*3
+$3
+SET
+$25
+opengrades_database_users
+$1450
+[{"id":1,"name":"Admin","email":"opengrades@gmail.com","photo":null,"created_at":"2021-02-06T01:51:46.000000Z","updated_at":"2021-02-13T18:56:58.000000Z","roles":[{"id":1,"name":"admin","display_name":"Admin","description":"Admin"}]},{"id":2,"name":"Teste","email":"teste@hotmail.com","photo":null,"created_at":"2021-02-07T20:20:22.000000Z","updated_at":"2021-02-13T19:14:58.000000Z","roles":[{"id":3,"name":"student","display_name":"Student","description":"Student"}]},{"id":10,"name":"Teste 2","email":"teste2@hotmail.com","photo":null,"created_at":"2021-02-14T16:10:03.000000Z","updated_at":"2021-02-14T16:10:03.000000Z","roles":[]},{"id":11,"name":"Teste 3","email":"teste3@hotmail.com","photo":null,"created_at":"2021-02-14T16:15:15.000000Z","updated_at":"2021-02-14T16:15:15.000000Z","roles":[{"id":2,"name":"teacher","display_name":"Teacher","description":"Teacher"}]},{"id":19,"name":"Student","email":"teste4@hotmail.com","photo":null,"created_at":"2021-02-14T17:03:13.000000Z","updated_at":"2021-02-14T17:03:13.000000Z","roles":[{"id":3,"name":"student","display_name":"Student","description":"Student"}]},{"id":658,"name":"Teste 5","email":"teste5@hotmail.com","photo":null,"created_at":"2021-03-09T14:26:47.000000Z","updated_at":"2021-03-09T14:26:47.000000Z","roles":[]},{"id":659,"name":"Teste 6","email":"teste6@hotmail.com","photo":null,"created_at":"2021-03-09T14:27:44.000000Z","updated_at":"2021-03-09T14:27:44.000000Z","roles":[]}]

@@ -39,7 +39,7 @@ class CreateUserService
                 }
 
                 // Saves the User
-                $user = User::create($request);
+                $user = $this->userRepository->store($request);
 
                 if ($type) {
                     // Saves the User's Type

@@ -53,7 +53,9 @@ services:
         volumes:
             - ./docker-compose/redis:/data
         ports:
-            - "8002:6379"
+            - "8002:${REDIS_PORT}"
+        networks:
+            - opengrades
 networks:
     opengrades:
         driver: bridge
