@@ -10,7 +10,6 @@ class RedisRepository implements RedisRepositoryInterface
     /**
      * Get All
      *
-     * @return User
      * @param string $db
      */
     public function all($db)
@@ -22,32 +21,39 @@ class RedisRepository implements RedisRepositoryInterface
     /**
      * Get By Id
      *
-     * @return User
      * @param string $db
      * @param integer $id
      */
     public function findById($db, $id)
     {
-        $users = json_decode(Redis::get($db));
-
-        foreach ($users as $user) {
-            if ($user->id == $id) {
-                return $user;
+        $objects = json_decode(Redis::get($db));
+        $obj = [];
+        if (!empty($objects)) {
+            foreach ($objects as $obj) {
+                if ($obj->id == $id) {
+                    return $obj;
+                }
             }
         }
 
-        return $user;
+        return $obj;
     }
 
-    /**
-     * Get All
-     *
-     * @return User
-     * @param string $db
-     */
     public function set($db, $request)
     {
         $redis = Redis::connection();
         $redis->set($db, json_encode($request));
+    }
+
+    /**
+     * Invalidate
+     *
+     * @return User
+     * @param string $db
+     */
+    public function invalidate($db)
+    {
+        $redis = Redis::connection();
+        $redis->set($db, "");
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Role;
 use App\Repositories\RedisRepository\RedisRepository;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\Redis;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -63,11 +62,13 @@ class UserRepository implements UserRepositoryInterface
         $user = User::where("id", $userId)->first();
 
         $user->update($set);
+        (new RedisRepository())->invalidate("users");
     }
 
     public function delete($userId)
     {
         $this->update($userId, ["deleted_at" => Carbon::now()]);
+        (new RedisRepository())->invalidate("users");
 
         return true;
     }

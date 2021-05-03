@@ -4,6 +4,7 @@ namespace App\Repositories\PermissionRepository;
 
 use App\Models\Permission;
 use App\Repositories\RolesRepository\RolesRepository;
+use App\Repositories\RedisRepository\RedisRepository;
 
 class PermissionRepository implements PermissionRepositoryInterface
 {
@@ -14,7 +15,13 @@ class PermissionRepository implements PermissionRepositoryInterface
      */
     public function all()
     {
-        return Permission::all();
+        $permissions = (new RedisRepository())->all("permissions");
+
+        if (empty($permissions)) {
+            return Permission::all();
+        }
+
+        return $permissions;
     }
 
     /**
@@ -33,6 +40,15 @@ class PermissionRepository implements PermissionRepositoryInterface
         return Permission::whereNotIn("id", $rolePermissions)->get();
     }
 
+    public function store(array $request)
+    {
+        $permissionCreated = Permission::create($request);
+
+        (new RedisRepository())->set("permissions", $this->all()->map->format());
+
+        return $permissionCreated;
+    }
+
     /**
      * Get By Id
      *
@@ -41,7 +57,13 @@ class PermissionRepository implements PermissionRepositoryInterface
      */
     public function findById($id)
     {
-        return Permission::find($id);
+        $permission = (new RedisRepository())->findById("permissions", $id);
+
+        if (empty($permission)) {
+            return Permission::find($id);
+        }
+
+        return $permission;
     }
 
     /**
@@ -57,6 +79,8 @@ class PermissionRepository implements PermissionRepositoryInterface
 
         $obj->update($set);
 
+        (new RedisRepository())->invalidate("permissions");
+
         return $obj;
     }
 
@@ -68,7 +92,8 @@ class PermissionRepository implements PermissionRepositoryInterface
      */
     public function delete($id)
     {
-        $obj = Permission::where("id", $id)->delete();
+        Permission::where("id", $id)->delete();
+        (new RedisRepository())->invalidate("permissions");
 
         return true;
     }
