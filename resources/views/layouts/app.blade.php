@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="{{ asset('plugins/images/assets/favicon.ico') }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('ample-admin/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -97,6 +98,23 @@
                                 <i class="fa fa-search"></i>
                             </a>
                         </form>
+                    </li>
+                    <li class="nav-item dropdown dropdown-notifications">
+                        <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+                            <i data-count="0" class="glyphicon glyphicon-bell notification-icon">
+                              <span class="badge badge-warning notif-count text-right" id="notification-count" style="font-family: 'Rubik', sans-serif;">0</span>
+                            </i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            {{-- <div class="dropdown-toolbar-actions">
+                                <a href="#">Mark all as read</a>
+                            </div> --}}
+                            <div class="notifications-container">
+                            </div>
+                            {{-- <div class="dropdown-footer text-center">
+                                <a href="#">View All</a>
+                            </div> --}}
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="profile-pic nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre> <img src="{{ (Auth::user()->photo != '') ? asset(Auth::user()->photo) : asset('plugins/images/users/no-avatar.png') }}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{ Auth::user()->name }}</b></a>
@@ -283,6 +301,45 @@
                 $("#loading-modal").modal("hide");
             }
         }
+    </script>
+    <script>
+        var notificationsWrapper   = $('.dropdown-notifications');
+        var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+        var notificationsCountElem = notificationsToggle.find('i[data-count]');
+        var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+        var notifications          = notificationsWrapper.find('div.notifications-container');
+
+        if (notificationsCount <= 0) {
+          notificationsWrapper.hide();
+        }
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher("40dfdfde5a90ba2ce71c", {
+          encrypted: true,
+          cluster: 'us2'
+        });
+
+        // Subscribe to the channel we specified in our Laravel Event
+        var channel = pusher.subscribe('welcome');
+        // Bind a function to a Event (the full Laravel class)
+        channel.bind('App\\Events\\Welcome', function(data) {
+          var existingNotifications = notifications.html();
+          var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+          var newNotificationHtml = `
+            <div class="card dropdown-toolbar-actions" style="padding: 10px;">
+                <i class="fa fa-comment"></i>
+                <a href="#">`+data.message+`</a>
+            </div>
+          `;
+
+          notifications.html(newNotificationHtml + existingNotifications);
+          notificationsCount += 1;
+          notificationsCountElem.attr('data-count', notificationsCount);
+          notificationsWrapper.find('.notify-count').text(notificationsCount);
+          $("#notification-count").html(notificationsCount);
+          notificationsWrapper.show();
+        });
     </script>
 </body>
 

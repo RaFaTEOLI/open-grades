@@ -17,6 +17,11 @@ Route::get("/", function () {
     return view("welcome");
 });
 
+Route::get("event", function () {
+    event(new App\Events\Welcome("teste"));
+    return ["success" => "Event has been sent"];
+});
+
 Auth::routes(["verify" => true]);
 
 Route::get("/home", "HomeController@index")->name("home");
