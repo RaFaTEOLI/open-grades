@@ -27,6 +27,17 @@ class UserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    /*
+        Get All Active Students
+    */
+    public function allStudents()
+    {
+        return User::where("deleted_at", null)
+            ->withRole("student")
+            ->get()
+            ->map->format();
+    }
+
     public function store(array $request)
     {
         $userCreated = User::create($request);
