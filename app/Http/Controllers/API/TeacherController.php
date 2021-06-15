@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\Student\StudentRequest;
+use App\Http\Requests\Teacher\TeacherRequest;
 use App\Http\Controllers\Controller;
-use App\Repositories\Student\StudentRepository;
+use App\Repositories\Teacher\TeacherRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
 use Exception;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class TeacherController extends Controller
 {
     private $userRepository;
-    private $studentRepository;
+    private $teacherRepository;
 
     public function __construct()
     {
         $this->middleware(["auth", "verified"]);
         $this->userRepository = new UserRepository();
-        $this->studentRepository = new StudentRepository();
+        $this->teacherRepository = new TeacherRepository();
     }
 
     public function index()
     {
-        $students = $this->studentRepository->all();
+        $teachers = $this->teacherRepository->all();
 
-        return response()->json($students, HttpStatus::SUCCESS);
+        return response()->json($teachers, HttpStatus::SUCCESS);
     }
 
-    public function store(StudentRequest $request)
+    public function store(TeacherRequest $request)
     {
         try {
             $input = $request->all();
-            $input["type"] = "STUDENT";
+            $input["type"] = "RESPONSIBLE";
 
             $createUserService = new CreateUserService();
             $user = $createUserService->execute($input);
@@ -57,8 +57,8 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        $student = $this->studentRepository->findById($id);
+        $teacher = $this->teacherRepository->findById($id);
 
-        return response()->json($student, HttpStatus::SUCCESS);
+        return response()->json($teacher, HttpStatus::SUCCESS);
     }
 }

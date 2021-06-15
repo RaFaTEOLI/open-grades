@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\InvitationLink;
+namespace App\Http\Requests\StudentsResponsible;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InvitationLinkRequest extends FormRequest
+class StudentResponsibleLinkRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class InvitationLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            "type" => "required|in:STUDENT,TEACHER,RESPONSIBLE",
+            "student_id" => "required|numeric|exists:users,id",
         ];
     }
 }

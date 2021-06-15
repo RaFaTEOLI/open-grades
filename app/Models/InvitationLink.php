@@ -11,7 +11,7 @@ class InvitationLink extends Model
      *
      * @var array
      */
-    protected $fillable = ["user_id", "type", "hash", "used_at"];
+    protected $fillable = ["user_id", "type", "student_id", "hash", "used_at"];
 
     public $timestamps = true;
 

@@ -13,15 +13,24 @@ class CreateInvitationLinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('invitation_links', function (Blueprint $table) {
+        Schema::create("invitation_links", function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->text('hash');
-            $table->string('type');
-            $table->timestamp('used_at')->nullable();
+            $table->unsignedBigInteger("user_id");
+            $table->text("hash");
+            $table->string("type");
+            $table->unsignedBigInteger("student_id")->nullable;
+            $table->timestamp("used_at")->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table
+                ->foreign("user_id")
+                ->references("id")
+                ->on("users");
+
+            $table
+                ->foreign("student_id")
+                ->references("id")
+                ->on("users");
         });
     }
 
@@ -32,6 +41,6 @@ class CreateInvitationLinkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invitation_links');
+        Schema::dropIfExists("invitation_links");
     }
 }

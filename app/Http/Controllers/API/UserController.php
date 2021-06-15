@@ -165,6 +165,17 @@ class UserController extends Controller
         return response()->json($user, HttpStatus::SUCCESS);
     }
 
+    public function profile()
+    {
+        if (Auth::user()->hasRole("student")) {
+            $student = $this->studentRepository->findById(Auth::user()->id);
+            return response()->json($student, HttpStatus::SUCCESS);
+        } else {
+            $user = $this->userRepository->findById(Auth::user()->id);
+            return response()->json($user, HttpStatus::SUCCESS);
+        }
+    }
+
     /**
      * Remove an user
      *

@@ -71,4 +71,15 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
                 ->map->formatWithoutPermissions(),
         ];
     }
+
+    public function formatSimple()
+    {
+        return (object) [
+            "id" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "photo" => $this->photo,
+            "created_at" => $this->created_at,
+        ];
+    }
 }

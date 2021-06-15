@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Actions Message Lines
+    | Student Message Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during simple messages for various
@@ -12,11 +12,12 @@ return [
     |
     */
 
-    "success" => "Successfully saved!",
-    "error" => "There was an error while trying to perform action!",
-    "copy" => "Copy",
-    "save" => "Save",
-    "loading" => "Loading, please wait!",
-    "close" => "Close",
-    "new" => "New",
+    "students" => "Students",
+    "student" => "Student",
+    "name" => "name",
+    "created_at" => "Created at",
+    "email" => "E-mail",
+    "password" => "Password",
+    "responsibles" => "Responsibles",
+    "new_responsible" => "Add New Responsible",
 ];

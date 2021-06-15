@@ -72,7 +72,7 @@
                     <button type="submit" class="btn btn-success">{{ __('actions.save') }}</button>
                 </div>
             </form>
-            @if (!empty($user))
+            @if (!empty($user) && !empty($roles))
             <hr />
                 @if (count($roles) > 0)
                 <div class="form-group">

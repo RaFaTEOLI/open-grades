@@ -18,4 +18,5 @@ return [
     "save" => "Salvar",
     "loading" => "Carregando, por favor aguarde!",
     "close" => "Fechar",
+    "new" => "Novo",
 ];

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(["middleware" => "auth:api"], function () {
+    Route::get("/profile", "API\UserController@profile");
+
     Route::group(["middleware" => ["role:admin"]], function () {
         Route::get("users/{id}", "API\UserController@show")->middleware("permission:read-users");
 

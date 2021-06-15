@@ -6,8 +6,8 @@ use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
-use App\Models\User;
 use Exception;
+use App\Models\StudentsResponsible;
 
 class CreateUserService
 {
@@ -30,6 +30,7 @@ class CreateUserService
                 if (isset($request["hash"])) {
                     $invite = $invitationLinkRepository->getValidatedHash($request["hash"]);
                     $type = $invite->type;
+                    $studentId = $invite->student_id;
 
                     unset($request["hash"]);
                 } elseif (isset($request["type"])) {
@@ -42,6 +43,12 @@ class CreateUserService
                 $user = $this->userRepository->store($request);
 
                 if ($type) {
+                    if ($type == "RESPONSIBLE") {
+                        StudentsResponsible::create([
+                            "student_id" => $studentId,
+                            "responsible_id" => $user->id,
+                        ]);
+                    }
                     // Saves the User's Type
                     $this->userRepository->createType($type, $user->id);
                 }

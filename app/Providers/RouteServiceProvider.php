@@ -61,6 +61,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->loadWebRoute("configuration");
         $this->loadWebRoute("permission");
         $this->loadWebRoute("student");
+        $this->loadWebRoute("teacher");
     }
 
     /**
@@ -84,6 +85,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->loadApiRoute("telegram");
         $this->loadApiRoute("permission");
         $this->loadApiRoute("student");
+        $this->loadApiRoute("teacher");
     }
 
     private function loadWebRoute($routeName)

@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepository;
-use Illuminate\Support\Facades\Validator;
+use App\Repositories\Student\StudentRepository;
 use App\Services\User\CreateUserService;
 use App\Repositories\RolesRepository\RolesRepository;
 use App\Http\Requests\User\UserRequest;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,6 +19,7 @@ class UserController extends Controller
     {
         $this->middleware(["auth", "verified"]);
         $this->userRepository = new UserRepository();
+        $this->studentRepository = new StudentRepository();
     }
 
     public function index()
@@ -64,6 +66,17 @@ class UserController extends Controller
         return redirect()
             ->route("users")
             ->withSuccess(__("actions.success"));
+    }
+
+    public function profile()
+    {
+        if (Auth::user()->hasRole("student")) {
+            $student = $this->studentRepository->findById(Auth::user()->id);
+            return view("students/student", ["student" => $student]);
+        } else {
+            $user = $this->userRepository->findById(Auth::user()->id);
+            return view("admin/user/user", ["user" => $user]);
+        }
     }
 
     public function destroy($id)

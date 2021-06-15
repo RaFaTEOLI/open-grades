@@ -13,10 +13,11 @@ class CreateInvitationLinkService
 
     public function __construct()
     {
-        $this->invitationLinkRepository = (new InvitationLinkRepository());
+        $this->invitationLinkRepository = new InvitationLinkRepository();
     }
 
-    public function execute(array $request) {
+    public function execute(array $request)
+    {
         try {
             AdminController::isAdminOrFail();
 

@@ -2,39 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Student\StudentRequest;
-use App\Repositories\Student\StudentRepository;
+use App\Http\Requests\Teacher\TeacherRequest;
+use App\Repositories\Teacher\TeacherRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
 use Exception;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class TeacherController extends Controller
 {
     private $userRepository;
-    private $studentRepository;
+    private $teacherRepository;
 
     public function __construct()
     {
         $this->middleware(["auth", "verified"]);
         $this->userRepository = new UserRepository();
-        $this->studentRepository = new StudentRepository();
+        $this->teacherRepository = new TeacherRepository();
     }
 
     public function index()
     {
-        $students = $this->studentRepository->all();
+        $teachers = $this->teacherRepository->all();
 
-        return view("students/students", [
-            "students" => $students,
+        return view("teachers/teachers", [
+            "teachers" => $teachers,
         ]);
     }
 
-    public function store(StudentRequest $request)
+    public function store(TeacherRequest $request)
     {
         try {
             $input = $request->all();
-            $input["type"] = "STUDENT";
+            $input["type"] = "TEACHER";
 
             $createUserService = new CreateUserService();
             $user = $createUserService->execute($input);
@@ -43,7 +43,7 @@ class StudentController extends Controller
             $user->sendEmailVerificationNotification();
 
             return redirect()
-                ->route("students")
+                ->route("teachers")
                 ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
@@ -56,14 +56,14 @@ class StudentController extends Controller
         $this->userRepository->update($id, $input);
 
         return redirect()
-            ->route("students")
+            ->route("teachers")
             ->withSuccess(__("actions.success"));
     }
 
     public function show($id)
     {
-        $student = $this->studentRepository->findById($id);
+        $teacher = $this->teacherRepository->findById($id);
 
-        return view("students/student", ["student" => $student]);
+        return view("teachers/teacher", ["teacher" => $teacher]);
     }
 }

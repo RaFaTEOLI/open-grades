@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Role Message Lines
+    | Student Message Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during simple messages for various
@@ -12,15 +12,10 @@ return [
     |
     */
 
-    "roles" => "Tipos de Usuários",
-    "role" => "Tipo de Usuário",
-    "name" => "Nome",
-    "display_name" => "Nome de Exibição",
-    "description" => "Descrição",
-    "permissions" => "Permissões",
+    "teachers" => "Professores",
     "teacher" => "Professor",
-    "admin" => "Administrador",
-    "student" => "Aluno",
-    "responsible" => "Responsável",
-    "user_is_admin" => "Náo foi possível apagar o tipo de usuário de administrador dele poís o usuário é administrador",
+    "name" => "Nome",
+    "created_at" => "Criado em",
+    "email" => "E-mail",
+    "password" => "Senha",
 ];

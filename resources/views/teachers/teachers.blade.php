@@ -3,12 +3,12 @@
 @section('content')
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h4 class="page-title">{{ __('menu.students') }}</h4>
+        <h4 class="page-title">{{ __('menu.teachers') }}</h4>
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <!-- <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a> -->
         <ol class="breadcrumb">
-            <li><a href="#">{{ __('menu.students') }}</a></li>
+            <li><a href="#">{{ __('menu.teachers') }}</a></li>
         </ol>
     </div>
 </div>
@@ -19,9 +19,9 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
-                <a type="button" href="{{ route('students.new') }}" class="btn btn-success pull-right row b-none"><i class="fa fa-plus"></i></a>
+                <a type="button" href="{{ route('teachers.new') }}" class="btn btn-success pull-right row b-none"><i class="fa fa-plus"></i></a>
             </div>
-            <h3 class="box-title">{{ __('menu.students') }}</h3>
+            <h3 class="box-title">{{ __('menu.teachers') }}</h3>
             @if (is_array($errors))
             @foreach ($errors as $error)
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -46,14 +46,14 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('student.name') }}</th>
-                            <th>{{ __('student.email') }}</th>
-                            <th>{{ __('student.created_at') }}</th>
+                            <th>{{ __('teacher.name') }}</th>
+                            <th>{{ __('teacher.email') }}</th>
+                            <th>{{ __('teacher.created_at') }}</th>
                             <th>{{ __('messages.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($students as $user)
+                        @foreach ($teachers as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td class="txt-oflo">{{ $user->name }}</td>
@@ -65,10 +65,10 @@
                             <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($user->created_at)) }}</span></td>
                             <td>
                                 <div class="d-flex">
-                                    @if (Auth::user()->can(['update-students']))
-                                    <a type="button" href="{{ route('students.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                    @if (Auth::user()->can(['update-teachers']))
+                                    <a type="button" href="{{ route('teachers.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     @endif
-                                    @if (Auth::user()->can(['delete-students']))
+                                    @if (Auth::user()->can(['delete-teachers']))
                                     <form class="btn" action="{{ route('users.destroy', $user->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
@@ -81,7 +81,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                @if (count($students) < 1) <div style="text-align: center;">{{ __('messages.no_records') }}
+                @if (count($teachers) < 1) <div style="text-align: center;">{{ __('messages.no_records') }}
             </div>
             @endif
         </div>

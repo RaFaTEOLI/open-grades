@@ -124,6 +124,10 @@
                                 <i class="fa fa-sign-out"></i> {{ __('Logout') }}
                             </a>
 
+                            <a class="dropdown-item btn" href="{{ route('users.profile') }}">
+                                <i class="fa fa-user"></i> {{ __('My Profile') }}
+                            </a>
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
@@ -167,12 +171,12 @@
                     @endif
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))
                     <li>
+                        <a href="{{ route('teachers') }}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{ __('menu.teachers') }}</a>
+                    </li>
+                    <li>
                         <a href="{{ route('students') }}" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>{{ __('menu.students') }}</a>
                     </li>
                     @endif
-                    <li>
-                        <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{ __('menu.teachers') }}</a>
-                    </li>
                     <li>
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ __('menu.calendars') }}</a>
                     </li>

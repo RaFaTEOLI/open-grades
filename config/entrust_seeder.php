@@ -24,6 +24,12 @@ return [
             "students" => "r",
             "classes" => "r",
         ],
+        "responsible" => [
+            "profile" => "r,u",
+            "teachers" => "r",
+            "students" => "r",
+            "classes" => "r",
+        ],
     ],
     "user_roles" => [
         "admin" => [
