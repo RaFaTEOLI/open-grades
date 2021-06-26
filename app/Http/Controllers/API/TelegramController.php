@@ -42,7 +42,7 @@ class TelegramController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         try {
             ValidationController::isIdValid($id);
@@ -55,7 +55,7 @@ class TelegramController extends Controller
         }
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         try {
             $input = $request->all();

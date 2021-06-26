@@ -44,7 +44,7 @@ class RolesController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $role = $this->rolesRepository->findById($id);
         $permissions = (new PermissionRepository())->findPermissionsNotInRole($id);
@@ -52,7 +52,7 @@ class RolesController extends Controller
         return view("admin/role/role", ["role" => $role, "permissions" => $permissions]);
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $input = $request->only(["name", "display_name", "description"]);
         $this->rolesRepository->update($id, $input);
@@ -62,7 +62,7 @@ class RolesController extends Controller
             ->withSuccess(__("actions.success"));
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->rolesRepository->delete($id);

@@ -43,14 +43,14 @@ class PermissionController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $permission = $this->permissionRepository->findById($id);
 
         return view("admin/permission/permission", ["permission" => $permission]);
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $input = $request->only(["name", "display_name", "description"]);
         $this->permissionRepository->update($id, $input);
@@ -60,7 +60,7 @@ class PermissionController extends Controller
             ->withSuccess(__("actions.success"));
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->permissionRepository->delete($id);

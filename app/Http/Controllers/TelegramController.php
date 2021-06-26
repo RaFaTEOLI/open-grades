@@ -41,14 +41,14 @@ class TelegramController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $result = $this->telegramRepository->findById($id);
 
         return view("message/message", ["message" => $result]);
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $input = $request->all();
 

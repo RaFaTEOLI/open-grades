@@ -55,7 +55,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $permission = $this->permissionRepository->findById($id);
 
@@ -69,7 +69,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $input = $request->only(["name", "display_name", "description"]);
         $this->permissionRepository->update($id, $input);
@@ -83,7 +83,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->permissionRepository->delete($id);

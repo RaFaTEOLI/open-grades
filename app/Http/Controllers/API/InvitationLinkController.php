@@ -38,21 +38,21 @@ class InvitationLinkController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $invitation = $this->invitationLinkRepository->findById($id);
 
         return response()->json($invitation, HttpStatus::SUCCESS);
     }
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
         $invitation = $this->invitationLinkRepository->update($id, $data);
 
         return response()->json($invitation, HttpStatus::SUCCESS);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $this->invitationLinkRepository->delete($id);
 

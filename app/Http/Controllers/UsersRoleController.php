@@ -10,7 +10,7 @@ use Exception;
 
 class UsersRoleController extends Controller
 {
-    public function store($userId, $roleId)
+    public function store(int $userId, int $roleId)
     {
         try {
             $validator = Validator::make(
@@ -35,7 +35,7 @@ class UsersRoleController extends Controller
         }
     }
 
-    public function destroy($userId, $roleId)
+    public function destroy(int $userId, int $roleId)
     {
         try {
             $validator = Validator::make(["user_id" => $userId, "role_id" => $roleId], UsersRoleRequest::deleteRules());

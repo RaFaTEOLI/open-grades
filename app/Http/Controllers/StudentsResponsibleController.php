@@ -35,7 +35,7 @@ class StudentsResponsibleController extends Controller
         }
     }
 
-    public function destroy($studentId, $responsibleId)
+    public function destroy(int $studentId, int $responsibleId)
     {
         try {
             (new RemoveStudentsResponsibleService())->execute([

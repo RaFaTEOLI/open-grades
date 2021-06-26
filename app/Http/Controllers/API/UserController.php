@@ -111,15 +111,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function createNewToken($token)
+    protected function createNewToken(string $token)
     {
         return response()->json([
             "access_token" => $token,
             "token_type" => "bearer",
             "expires_in" =>
-                auth("api")
-                    ->factory()
-                    ->getTTL() * 60,
+            auth("api")
+                ->factory()
+                ->getTTL() * 60,
             "user" => auth("api")->user(),
         ]);
     }
@@ -129,7 +129,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         try {
             $input = $request->all();
@@ -158,7 +158,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $user = $this->userRepository->findById($id);
 
@@ -181,7 +181,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->userRepository->delete($id);

@@ -50,7 +50,7 @@ class UserController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $user = $this->userRepository->findById($id);
         $roles = (new RolesRepository())->findRolesNotInUser($id);
@@ -58,7 +58,7 @@ class UserController extends Controller
         return view("admin/user/user", ["user" => $user, "roles" => $roles]);
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $input = $request->only(["name", "email"]);
         $this->userRepository->update($id, $input);
@@ -79,7 +79,7 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->userRepository->delete($id);

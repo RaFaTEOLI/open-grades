@@ -50,7 +50,7 @@ class TeacherController extends Controller
         }
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $input = $request->only(["name", "email"]);
         $this->userRepository->update($id, $input);
@@ -60,7 +60,7 @@ class TeacherController extends Controller
             ->withSuccess(__("actions.success"));
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $teacher = $this->teacherRepository->findById($id);
 

@@ -39,21 +39,21 @@ class InvitationLinkController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $invitation = $this->invitationLinkRepository->findById($id);
 
         return view("admin/invitation/invitations", ["invitation" => $invitation]);
     }
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
         $invitation = $this->invitationLinkRepository->update($id, $data);
 
         return $invitation;
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->invitationLinkRepository->delete($id);

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RolesPermissionController extends Controller
 {
-    public function store($roleId, $permissionId)
+    public function store(int $roleId, int $permissionId)
     {
         try {
             $validator = Validator::make(
@@ -35,7 +35,7 @@ class RolesPermissionController extends Controller
         }
     }
 
-    public function destroy($roleId, $permissionId)
+    public function destroy(int $roleId, int $permissionId)
     {
         try {
             $validator = Validator::make(

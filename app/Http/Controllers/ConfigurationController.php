@@ -46,25 +46,25 @@ class ConfigurationController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $configuration = $this->configurationRepository->findById($id);
 
         //return view('configuration/configurations', ["configuration" => $configuration]);
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $input = $request->all();
 
-        $configuration = $this->configurationRepository->update($id, $input);
+        $this->configurationRepository->update($id, $input);
 
         return redirect()
             ->route("configuration")
             ->withSuccess(__("actions.success"));
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try {
             $this->configurationRepository->delete($id);
