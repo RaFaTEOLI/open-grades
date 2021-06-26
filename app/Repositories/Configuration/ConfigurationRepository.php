@@ -5,6 +5,8 @@ namespace App\Repositories\Configuration;
 use App\Models\Configuration;
 use App\Repositories\Configuration\ConfigurationRepositoryInterface;
 use Exception;
+use Illuminate\Support\Collection;
+
 
 class ConfigurationRepository implements ConfigurationRepositoryInterface
 {
@@ -12,7 +14,7 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
     /**
      * Get All Configurations
      */
-    public function all()
+    public function all(): Collection
     {
         return Configuration::all()
             ->map->format();
@@ -21,12 +23,16 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
     /**
      * Get Configuration By Id
      */
-    public function findById($id)
+    public function findById(int $id): object
     {
-        return Configuration::findOrFail($id)->format();
+        try {
+            return Configuration::findOrFail($id)->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    public function update($id, $set)
+    public function update(int $id, array $set): void
     {
         try {
             $configuration = Configuration::findOrFail($id);
@@ -37,7 +43,7 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
         }
     }
 
-    public function delete($id)
+    public function delete(int $id): bool
     {
         try {
             Configuration::findOrFail($id)->delete();
@@ -47,7 +53,7 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
         }
     }
 
-    public function register($request)
+    public function register(array $request): Configuration
     {
         try {
             return Configuration::create($request);

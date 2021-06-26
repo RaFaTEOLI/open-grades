@@ -7,13 +7,14 @@ use App\Models\InvitationLink;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Collection;
 
 class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 {
     /**
      * Get All Active Invitation Links
      */
-    public function all()
+    public function all(): Collection
     {
         return InvitationLink::where("used_at", null)
             ->with("user")
@@ -24,32 +25,38 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
     /**
      * Get An Invitation Link By Id
      */
-    public function findById($id)
+    public function findById(int $id): object
     {
-        return InvitationLink::where("id", $id)
-            ->where("used_at", null)
-            ->get()
-            ->first()
-            ->format();
+        try {
+            return InvitationLink::where("id", $id)
+                ->where("used_at", null)
+                ->firstOrFail()
+                ->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    public function findByUserId($userId)
+    public function findByUserId(int $userId): object
     {
-        return InvitationLink::where("user_id", $userId)
-            ->where("used_at", null)
-            ->get()
-            ->first()
-            ->map->format();
+        try {
+            return InvitationLink::where("user_id", $userId)
+                ->where("used_at", null)
+                ->get()
+                ->map->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    public function update($id, $set)
+    public function update(int $id, array $set): void
     {
         $user = InvitationLink::where("id", $id)->first();
 
         $user->update($set);
     }
 
-    public function delete($id)
+    public function delete(int $id): bool
     {
         try {
             InvitationLink::findOrFail($id)->delete();
@@ -59,7 +66,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
         }
     }
 
-    public function register($request)
+    public function register(array $request): InvitationLink
     {
         try {
             $invitation = InvitationLink::create($request);
@@ -71,7 +78,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
         }
     }
 
-    public function getValidatedHash($hash)
+    public function getValidatedHash(string $hash): InvitationLink
     {
         try {
             $invitation = InvitationLink::where("hash", $hash)
@@ -87,7 +94,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
         }
     }
 
-    public function validateHash($hash)
+    public function validateHash(string $hash): bool
     {
         $invitation = InvitationLink::where("hash", $hash)
             ->where("used_at", null)
@@ -99,7 +106,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
         return true;
     }
 
-    public function generateHash()
+    public function generateHash(): string
     {
         $hash = str_replace('$', "", Hash::make(Carbon::now()));
         $hash = str_replace("/", "", $hash);

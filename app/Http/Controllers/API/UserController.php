@@ -160,9 +160,13 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
-        $user = $this->userRepository->findById($id);
+        try {
+            $user = $this->userRepository->findById($id);
 
-        return response()->json($user, HttpStatus::SUCCESS);
+            return response()->json($user, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
     }
 
     public function profile()

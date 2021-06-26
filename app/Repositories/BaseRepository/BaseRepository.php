@@ -26,10 +26,11 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function findById($id)
     {
-        // return Model::where("id", $id)
-        //     ->where("deleted_at", null)
-        //     ->first()
-        //     ->format();
+        // try {
+        //     return Model::findOrFail($id)->format();
+        // } catch (Exception $e) {
+        //     throw new Exception($e->getMessage());
+        // }
     }
 
     /**

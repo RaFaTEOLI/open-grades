@@ -2,10 +2,14 @@
 
 namespace App\Repositories\Configuration;
 
-interface ConfigurationRepositoryInterface {
-    public function all();
-    public function findById($id);
-    public function update($id, $set);
-    public function delete($id);
-    public function register($request);
+use App\Models\Configuration;
+use Illuminate\Support\Collection;
+
+interface ConfigurationRepositoryInterface
+{
+    public function all(): Collection;
+    public function findById(int $id): object;
+    public function update(int $id, array $set): void;
+    public function delete(int $id): bool;
+    public function register(array $request): Configuration;
 }

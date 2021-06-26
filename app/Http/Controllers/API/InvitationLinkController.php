@@ -40,9 +40,13 @@ class InvitationLinkController extends Controller
 
     public function show(int $id)
     {
-        $invitation = $this->invitationLinkRepository->findById($id);
+        try {
+            $invitation = $this->invitationLinkRepository->findById($id);
 
-        return response()->json($invitation, HttpStatus::SUCCESS);
+            return response()->json($invitation, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
     }
 
     public function update(int $id, array $data)
