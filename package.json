@@ -18,7 +18,7 @@
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
         "popper.js": "^1.12",
-        "prettier": "^1.19.1",
+        "prettier": "1.19.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",

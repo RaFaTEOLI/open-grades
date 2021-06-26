@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
 Route::group(["middleware" => "auth:api"], function () {
     Route::group(["middleware" => ["role:admin"], ["middleware" => ["role:teacher"]]], function () {
         Route::get("/students", "API\StudentController@index")->middleware("permission:read-students");
@@ -23,7 +25,7 @@ Route::group(["middleware" => "auth:api"], function () {
             ->name("students.update")
             ->middleware("permission:update-students");
 
-        Route::post("/studentResponsible", "API\StudentsResponsibleController@link")
+        Route::post("/student-responsible", "API\StudentsResponsibleController@link")
             ->name("students.responsible.link")
             ->middleware("permission:update-students");
 

@@ -31,13 +31,5 @@ Route::group(
         Route::put("/teachers/{id}", "TeacherController@update")
             ->name("teachers.update")
             ->middleware("permission:update-teachers");
-
-        Route::post("/teacherResponsible", "TeachersResponsibleController@link")
-            ->name("teachers.responsible.link")
-            ->middleware("permission:update-teachers");
-
-        Route::delete("/teachers/{teacherId}/responsible/{responsibleId}", "TeachersResponsibleController@destroy")
-            ->name("teachers.responsible.remove")
-            ->middleware("permission:delete-teachers");
     },
 );

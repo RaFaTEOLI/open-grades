@@ -49,7 +49,7 @@ class StudentTest extends TestCase
         $studentRole = Role::where("name", "student")->first();
         $student->attachRole($studentRole);
 
-        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/studentResponsible", [
+        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/student-responsible", [
             "student_id" => $student->id,
         ]);
 
@@ -79,7 +79,7 @@ class StudentTest extends TestCase
         $studentRole = Role::where("name", "student")->first();
         $student->attachRole($studentRole);
 
-        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/studentResponsible", [
+        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/student-responsible", [
             "student_id" => $student->id,
         ]);
 

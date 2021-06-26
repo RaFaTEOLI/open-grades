@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
 /**
  * Admin Middleware
  */
@@ -35,7 +37,7 @@ Route::group(
             ->name("students.update")
             ->middleware("permission:update-students");
 
-        Route::post("/studentResponsible", "StudentsResponsibleController@link")
+        Route::post("/student-responsible", "StudentsResponsibleController@link")
             ->name("students.responsible.link")
             ->middleware("permission:update-students");
 
