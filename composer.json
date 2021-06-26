@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "rafateoli/open-grades",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Application for schools to manage grades, classes and calendars.",
     "keywords": [
         "framework",
         "laravel"
