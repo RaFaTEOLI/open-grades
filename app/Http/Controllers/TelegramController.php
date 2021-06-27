@@ -43,19 +43,27 @@ class TelegramController extends Controller
 
     public function show(int $id)
     {
-        $result = $this->telegramRepository->findById($id);
+        try {
+            $result = $this->telegramRepository->findById($id);
 
-        return view("message/message", ["message" => $result]);
+            return view("message/message", ["message" => $result]);
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function update(int $id, Request $request)
     {
-        $input = $request->all();
+        try {
+            $input = $request->all();
 
-        $this->telegramRepository->update($id, $input);
+            $this->telegramRepository->update($id, $input);
 
-        return redirect()
-            ->route("message")
-            ->withSuccess(__("actions.success"));
+            return redirect()
+                ->route("message")
+                ->withSuccess(__("actions.success"));
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 }

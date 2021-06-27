@@ -45,17 +45,25 @@ class RolesController extends Controller
 
     public function show(int $id)
     {
-        $role = $this->rolesRepository->findById($id);
+        try {
+            $role = $this->rolesRepository->findById($id);
 
-        return response()->json($role, HttpStatus::SUCCESS);
+            return response()->json($role, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
+        }
     }
 
     public function update(int $id, Request $request)
     {
-        $input = $request->only(["name", "display_name", "description"]);
-        $role = $this->rolesRepository->update($id, $input);
+        try {
+            $input = $request->only(["name", "display_name", "description"]);
+            $role = $this->rolesRepository->update($id, $input);
 
-        return response()->json($role, HttpStatus::SUCCESS);
+            return response()->json($role, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
+        }
     }
 
     public function destroy(int $id)

@@ -52,12 +52,16 @@ class PermissionController extends Controller
 
     public function update(int $id, Request $request)
     {
-        $input = $request->only(["name", "display_name", "description"]);
-        $this->permissionRepository->update($id, $input);
+        try {
+            $input = $request->only(["name", "display_name", "description"]);
+            $this->permissionRepository->update($id, $input);
 
-        return redirect()
-            ->route("permissions")
-            ->withSuccess(__("actions.success"));
+            return redirect()
+                ->route("permissions")
+                ->withSuccess(__("actions.success"));
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function destroy(int $id)

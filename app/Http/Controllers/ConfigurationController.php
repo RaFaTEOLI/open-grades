@@ -55,13 +55,17 @@ class ConfigurationController extends Controller
 
     public function update(int $id, Request $request)
     {
-        $input = $request->all();
+        try {
+            $input = $request->all();
 
-        $this->configurationRepository->update($id, $input);
+            $this->configurationRepository->update($id, $input);
 
-        return redirect()
-            ->route("configuration")
-            ->withSuccess(__("actions.success"));
+            return redirect()
+                ->route("configuration")
+                ->withSuccess(__("actions.success"));
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function destroy(int $id)

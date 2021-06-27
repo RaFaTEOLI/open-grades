@@ -57,9 +57,13 @@ class PermissionController extends Controller
      */
     public function show(int $id)
     {
-        $permission = $this->permissionRepository->findById($id);
+        try {
+            $permission = $this->permissionRepository->findById($id);
 
-        return response()->json($permission, HttpStatus::SUCCESS);
+            return response()->json($permission, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
     }
 
     /**
@@ -71,10 +75,14 @@ class PermissionController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $input = $request->only(["name", "display_name", "description"]);
-        $this->permissionRepository->update($id, $input);
+        try {
+            $input = $request->only(["name", "display_name", "description"]);
+            $this->permissionRepository->update($id, $input);
 
-        return response()->noContent();
+            return response()->noContent();
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
     }
 
     /**

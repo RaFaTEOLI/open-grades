@@ -52,20 +52,28 @@ class UserController extends Controller
 
     public function show(int $id)
     {
-        $user = $this->userRepository->findById($id);
-        $roles = (new RolesRepository())->findRolesNotInUser($id);
+        try {
+            $user = $this->userRepository->findById($id);
+            $roles = (new RolesRepository())->findRolesNotInUser($id);
 
-        return view("admin/user/user", ["user" => $user, "roles" => $roles]);
+            return view("admin/user/user", ["user" => $user, "roles" => $roles]);
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function update(int $id, Request $request)
     {
-        $input = $request->only(["name", "email"]);
-        $this->userRepository->update($id, $input);
+        try {
+            $input = $request->only(["name", "email"]);
+            $this->userRepository->update($id, $input);
 
-        return redirect()
-            ->route("users")
-            ->withSuccess(__("actions.success"));
+            return redirect()
+                ->route("users")
+                ->withSuccess(__("actions.success"));
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function profile()

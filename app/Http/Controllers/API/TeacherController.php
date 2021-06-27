@@ -49,10 +49,14 @@ class TeacherController extends Controller
 
     public function update(int $id, Request $request)
     {
-        $input = $request->only(["name", "email"]);
-        $this->userRepository->update($id, $input);
+        try {
+            $input = $request->only(["name", "email"]);
+            $this->userRepository->update($id, $input);
 
-        return response()->noContent();
+            return response()->noContent();
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
+        }
     }
 
     public function show(int $id)

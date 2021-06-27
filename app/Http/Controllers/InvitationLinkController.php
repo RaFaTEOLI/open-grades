@@ -48,9 +48,13 @@ class InvitationLinkController extends Controller
 
     public function update(int $id, array $data)
     {
-        $invitation = $this->invitationLinkRepository->update($id, $data);
+        try {
+            $invitation = $this->invitationLinkRepository->update($id, $data);
 
-        return $invitation;
+            return $invitation;
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function destroy(int $id)

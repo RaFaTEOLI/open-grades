@@ -5,6 +5,7 @@ namespace App\Repositories\PermissionRepository;
 use App\Models\Permission;
 use App\Repositories\RolesRepository\RolesRepository;
 use App\Repositories\RedisRepository\RedisRepository;
+use Exception;
 
 class PermissionRepository implements PermissionRepositoryInterface
 {
@@ -31,13 +32,17 @@ class PermissionRepository implements PermissionRepositoryInterface
      */
     public function findPermissionsNotInRole($roleId)
     {
-        $role = (new RolesRepository())->findById($roleId);
-        $rolePermissions = [];
-        foreach ($role->permissions as $permission) {
-            array_push($rolePermissions, $permission->id);
-        }
+        try {
+            $role = (new RolesRepository())->findById($roleId);
+            $rolePermissions = [];
+            foreach ($role->permissions as $permission) {
+                array_push($rolePermissions, $permission->id);
+            }
 
-        return Permission::whereNotIn("id", $rolePermissions)->get();
+            return Permission::whereNotIn("id", $rolePermissions)->get();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function store(array $request)
@@ -57,13 +62,17 @@ class PermissionRepository implements PermissionRepositoryInterface
      */
     public function findById($id)
     {
-        $permission = (new RedisRepository())->findById("permissions", $id);
+        try {
+            $permission = (new RedisRepository())->findById("permissions", $id);
 
-        if (empty($permission)) {
-            return Permission::find($id);
+            if (empty($permission)) {
+                return Permission::find($id);
+            }
+
+            return $permission;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
-
-        return $permission;
     }
 
     /**

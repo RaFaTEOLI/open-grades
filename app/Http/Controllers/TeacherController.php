@@ -52,18 +52,26 @@ class TeacherController extends Controller
 
     public function update(int $id, Request $request)
     {
-        $input = $request->only(["name", "email"]);
-        $this->userRepository->update($id, $input);
+        try {
+            $input = $request->only(["name", "email"]);
+            $this->userRepository->update($id, $input);
 
-        return redirect()
-            ->route("teachers")
-            ->withSuccess(__("actions.success"));
+            return redirect()
+                ->route("teachers")
+                ->withSuccess(__("actions.success"));
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 
     public function show(int $id)
     {
-        $teacher = $this->teacherRepository->findById($id);
+        try {
+            $teacher = $this->teacherRepository->findById($id);
 
-        return view("teachers/teacher", ["teacher" => $teacher]);
+            return view("teachers/teacher", ["teacher" => $teacher]);
+        } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
     }
 }
