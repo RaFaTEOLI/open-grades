@@ -4,6 +4,7 @@ namespace App\Repositories\RedisRepository;
 
 use App\Repositories\RedisRepository\RedisRepositoryInterface;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Collection;
 
 class RedisRepository implements RedisRepositoryInterface
 {
@@ -12,7 +13,7 @@ class RedisRepository implements RedisRepositoryInterface
      *
      * @param string $db
      */
-    public function all($db)
+    public function all(string $db): array | null
     {
         $redis = Redis::connection();
         return json_decode($redis->get($db));
@@ -24,7 +25,7 @@ class RedisRepository implements RedisRepositoryInterface
      * @param string $db
      * @param integer $id
      */
-    public function findById($db, $id)
+    public function findById(string $db, int $id): array | object
     {
         $objects = json_decode(Redis::get($db));
         $obj = [];
@@ -39,7 +40,7 @@ class RedisRepository implements RedisRepositoryInterface
         return $obj;
     }
 
-    public function set($db, $request)
+    public function set(string $db, array | Collection $request): void
     {
         $redis = Redis::connection();
         $redis->set($db, json_encode($request));
@@ -51,7 +52,7 @@ class RedisRepository implements RedisRepositoryInterface
      * @return User
      * @param string $db
      */
-    public function invalidate($db)
+    public function invalidate(string $db): void
     {
         $redis = Redis::connection();
         $redis->set($db, "");

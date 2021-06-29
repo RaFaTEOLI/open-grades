@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Repositories\RolesRepository\RolesRepository;
 use App\Repositories\RedisRepository\RedisRepository;
 use Exception;
+use Illuminate\Support\Collection;
 
 class PermissionRepository implements PermissionRepositoryInterface
 {
@@ -14,7 +15,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return Permission
      */
-    public function all()
+    public function all(): Collection
     {
         $permissions = (new RedisRepository())->all("permissions");
 
@@ -30,7 +31,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return Permission
      */
-    public function findPermissionsNotInRole($roleId)
+    public function findPermissionsNotInRole(int $roleId): Collection
     {
         try {
             $role = (new RolesRepository())->findById($roleId);
@@ -45,13 +46,17 @@ class PermissionRepository implements PermissionRepositoryInterface
         }
     }
 
-    public function store(array $request)
+    public function store(array $request): Permission
     {
-        $permissionCreated = Permission::create($request);
+        try {
+            $permissionCreated = Permission::create($request);
 
-        (new RedisRepository())->set("permissions", $this->all()->map->format());
+            (new RedisRepository())->set("permissions", $this->all()->map->format());
 
-        return $permissionCreated;
+            return $permissionCreated;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
@@ -60,7 +65,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      * @return Permission
      * @param integer $id
      */
-    public function findById($id)
+    public function findById(int $id): Permission
     {
         try {
             $permission = (new RedisRepository())->findById("permissions", $id);
@@ -82,15 +87,19 @@ class PermissionRepository implements PermissionRepositoryInterface
      * @param integer $id
      * @param array $set
      */
-    public function update($id, $set)
+    public function update(int $id, array $set): Permission
     {
-        $obj = Permission::where("id", $id)->first();
+        try {
+            $obj = Permission::where("id", $id)->first();
 
-        $obj->update($set);
+            $obj->update($set);
 
-        (new RedisRepository())->invalidate("permissions");
+            (new RedisRepository())->invalidate("permissions");
 
-        return $obj;
+            return $obj;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
@@ -99,11 +108,15 @@ class PermissionRepository implements PermissionRepositoryInterface
      * @return Boolean
      * @param integer $id
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        Permission::where("id", $id)->delete();
-        (new RedisRepository())->invalidate("permissions");
+        try {
+            Permission::where("id", $id)->delete();
+            (new RedisRepository())->invalidate("permissions");
 
-        return true;
+            return true;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }
