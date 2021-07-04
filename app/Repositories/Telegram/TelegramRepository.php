@@ -5,6 +5,7 @@ namespace App\Repositories\Telegram;
 use App\Models\Telegram;
 use App\Repositories\Telegram\TelegramRepositoryInterface;
 use Exception;
+use Illuminate\Support\Collection;
 
 class TelegramRepository implements TelegramRepositoryInterface
 {
@@ -12,7 +13,7 @@ class TelegramRepository implements TelegramRepositoryInterface
     /**
      * Get All Messages
      */
-    public function all()
+    public function all(): Collection
     {
         return Telegram::all()
             ->map->format();
@@ -21,12 +22,12 @@ class TelegramRepository implements TelegramRepositoryInterface
     /**
      * Get Message By Id
      */
-    public function findById($id)
+    public function findById(int $id): object
     {
         return Telegram::findOrFail($id)->format();
     }
 
-    public function update($id, $set)
+    public function update(int $id, array $set): void
     {
         try {
             $object = Telegram::findOrFail($id);
@@ -37,7 +38,7 @@ class TelegramRepository implements TelegramRepositoryInterface
         }
     }
 
-    public function register($request)
+    public function register(array $request): Telegram
     {
         try {
             return Telegram::create($request);

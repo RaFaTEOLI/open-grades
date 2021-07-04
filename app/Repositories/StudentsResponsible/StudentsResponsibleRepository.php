@@ -4,13 +4,14 @@ namespace App\Repositories\StudentsResponsible;
 
 use App\Repositories\StudentsResponsible\StudentsResponsibleRepositoryInterface;
 use App\Models\StudentsResponsible;
+use Illuminate\Support\Collection;
 
 class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInterface
 {
     /*
         Get All Active Students Responsibles
     */
-    public function all()
+    public function all(): Collection
     {
         return StudentsResponsible::all()->map->format();
     }
@@ -18,7 +19,7 @@ class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInte
     /*
         Get A Student Responsible By Id
     */
-    public function findById($id)
+    public function findById(int $id): object
     {
         return StudentsResponsible::where("id", $id)
             ->first()
@@ -28,7 +29,7 @@ class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInte
     /*
         Get A Student Responsible By Id
     */
-    public function findByResponsibleId($id)
+    public function findByResponsibleId(int $id): object
     {
         return StudentsResponsible::where("responsible_id", $id)
             ->first()
@@ -38,7 +39,7 @@ class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInte
     /*
         Get A Student Responsible By Id
     */
-    public function findByStudentId($id)
+    public function findByStudentId(int $id): object
     {
         return StudentsResponsible::where("student_id", $id)
             ->first()

@@ -4,13 +4,14 @@ namespace App\Repositories\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
 use App\Models\Student;
+use Illuminate\Support\Collection;
 
 class StudentRepository implements StudentRepositoryInterface
 {
     /*
         Get All Active Students
     */
-    public function all()
+    public function all(): Collection
     {
         return Student::where("deleted_at", null)
             ->withRole("student")
@@ -21,15 +22,12 @@ class StudentRepository implements StudentRepositoryInterface
     /*
         Get A Student By Id
     */
-    public function findById($id)
+    public function findById(int $id): object
     {
-        if (empty($user)) {
-            $user = Student::where("id", $id)
-                ->where("deleted_at", null)
-                ->first()
-                ->format();
-        }
 
-        return $user;
+        return Student::where("id", $id)
+            ->where("deleted_at", null)
+            ->first()
+            ->format();
     }
 }

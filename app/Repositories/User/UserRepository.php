@@ -8,13 +8,14 @@ use App\Models\Role;
 use App\Repositories\RedisRepository\RedisRepository;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
 {
     /*
         Get All Active Users
     */
-    public function all()
+    public function all(): Collection | array
     {
         $users = (new RedisRepository())->all("users");
 
@@ -30,7 +31,7 @@ class UserRepository implements UserRepositoryInterface
     /*
         Get All Active Students
     */
-    public function allStudents()
+    public function allStudents(): Collection
     {
         return User::where("deleted_at", null)
             ->withRole("student")
@@ -38,7 +39,7 @@ class UserRepository implements UserRepositoryInterface
             ->map->format();
     }
 
-    public function store(array $request)
+    public function store(array $request): User
     {
         $userCreated = User::create($request);
 
@@ -50,7 +51,7 @@ class UserRepository implements UserRepositoryInterface
     /*
         Get An User By Id
     */
-    public function findById($id)
+    public function findById(int $id): object
     {
         $user = (new RedisRepository())->findById("users", $id);
 
@@ -64,11 +65,7 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function findByUsername($username)
-    {
-    }
-
-    public function update($userId, $set)
+    public function update(int $userId, array $set): void
     {
         $user = User::where("id", $userId)->first();
 
@@ -76,7 +73,7 @@ class UserRepository implements UserRepositoryInterface
         (new RedisRepository())->invalidate("users");
     }
 
-    public function delete($userId)
+    public function delete(int $userId): bool
     {
         $this->update($userId, ["deleted_at" => Carbon::now()]);
         (new RedisRepository())->invalidate("users");
@@ -84,7 +81,7 @@ class UserRepository implements UserRepositoryInterface
         return true;
     }
 
-    public function createType($type, $userId)
+    public function createType(string $type, int $userId): void
     {
         $user = User::find($userId);
         $role = Role::where("name", strtolower($type))->first();

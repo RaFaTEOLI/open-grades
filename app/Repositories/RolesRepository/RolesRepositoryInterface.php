@@ -2,10 +2,15 @@
 
 namespace App\Repositories\RolesRepository;
 
+use App\Models\Role;
+use Illuminate\Support\Collection;
+
 interface RolesRepositoryInterface
 {
-    public function all();
-    public function findById($userId);
-    public function update($userId, $set);
-    public function delete($userId);
+    public function all(): Collection;
+    public function allWithoutPermissions(): Collection;
+    public function findRolesNotInUser(int $userId): Collection;
+    public function findById(int $userId): object;
+    public function update(int $userId, array $set): Role;
+    public function delete(int $userId): bool;
 }

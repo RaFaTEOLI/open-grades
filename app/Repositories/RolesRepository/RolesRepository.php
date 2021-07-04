@@ -3,9 +3,9 @@
 namespace App\Repositories\RolesRepository;
 
 use App\Models\Role;
-use App\Models\User;
 use App\Repositories\RolesRepository\RolesRepositoryInterface;
 use App\Repositories\User\UserRepository;
+use Illuminate\Support\Collection;
 
 class RolesRepository implements RolesRepositoryInterface
 {
@@ -14,7 +14,7 @@ class RolesRepository implements RolesRepositoryInterface
      *
      * @return Role
      */
-    public function all()
+    public function all(): Collection
     {
         return Role::all()->map->format();
     }
@@ -24,7 +24,7 @@ class RolesRepository implements RolesRepositoryInterface
      *
      * @return Role
      */
-    public function allWithoutPermissions()
+    public function allWithoutPermissions(): Collection
     {
         return Role::all()->map->formatWithoutPermissions();
     }
@@ -34,7 +34,7 @@ class RolesRepository implements RolesRepositoryInterface
      *
      * @return Role
      */
-    public function findRolesNotInUser($userId)
+    public function findRolesNotInUser(int $userId): Collection
     {
         $user = (new UserRepository())->findById($userId);
         $userRoles = [];
@@ -53,7 +53,7 @@ class RolesRepository implements RolesRepositoryInterface
      * @return Role
      * @param integer $id
      */
-    public function findById($id)
+    public function findById(int $id): object
     {
         return Role::find($id)->format();
     }
@@ -65,7 +65,7 @@ class RolesRepository implements RolesRepositoryInterface
      * @param integer $id
      * @param array $set
      */
-    public function update($id, $set)
+    public function update(int $id, array $set): Role
     {
         $obj = Role::where("id", $id)->first();
 
@@ -80,9 +80,9 @@ class RolesRepository implements RolesRepositoryInterface
      * @return Boolean
      * @param integer $id
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $obj = Role::where("id", $id)->delete();
+        Role::where("id", $id)->delete();
 
         return true;
     }
