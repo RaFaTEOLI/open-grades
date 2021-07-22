@@ -8,7 +8,7 @@ use App\Models\Role;
 
 class UpdateRolePermissionService
 {
-    public function execute(array $request)
+    public function execute(array $request): object
     {
         try {
             $role = Role::findOrFail($request["roleId"]);

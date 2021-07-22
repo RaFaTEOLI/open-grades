@@ -42,8 +42,8 @@ class AuthenticationTest extends TestCase
 
         $response = $this->json("POST", env("APP_API") . "/login", $user);
 
-        $response->assertStatus(HttpStatus::UNAUTHORIZED)->assertJson([
-            "error" => "Unauthorized",
+        $response->assertStatus(HttpStatus::UNPROCESSABLE_ENTITY)->assertJson([
+            "error" => "Sorry, wrong email address or password. Please try again",
         ]);
     }
 }

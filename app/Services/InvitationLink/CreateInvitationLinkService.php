@@ -3,6 +3,7 @@
 namespace App\Services\InvitationLink;
 
 use App\Http\Controllers\Auth\AdminController;
+use App\Models\InvitationLink;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class CreateInvitationLinkService
         $this->invitationLinkRepository = new InvitationLinkRepository();
     }
 
-    public function execute(array $request)
+    public function execute(array $request): InvitationLink
     {
         try {
             AdminController::isAdminOrFail();

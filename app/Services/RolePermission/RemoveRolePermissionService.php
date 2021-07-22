@@ -8,7 +8,7 @@ use App\Models\Role;
 
 class RemoveRolePermissionService
 {
-    public function execute(array $request)
+    public function execute(array $request): Role
     {
         try {
             $role = Role::find($request["roleId"]);

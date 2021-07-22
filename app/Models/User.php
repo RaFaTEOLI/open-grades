@@ -9,6 +9,21 @@ use Shanmuga\LaravelEntrust\Traits\LaravelEntrustUserTrait;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ *
+ * @OA\Schema(
+ * required={"password"},
+ * @OA\Xml(name="User"),
+ * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ * @OA\Property(property="name", type="string", description="Name of the user", example="John Doe"),
+ * @OA\Property(property="email", type="string", format="email", description="User unique email address", example="johndoe@email.com"),
+ * @OA\Property(property="photo", type="string", format="string", description="User photo", example="/images/johndoe.png"),
+ * @OA\Property(property="created_at", type="string", readOnly="true", format="date-time", description="Datetime of when user was created", example="2019-02-25 12:59:20"),
+ * )
+ *
+ * Class User
+ *
+ */
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use Notifiable;

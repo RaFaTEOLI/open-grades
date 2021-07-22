@@ -7,7 +7,7 @@ use App\Models\Permission;
 
 class CreatePermissionService
 {
-    public function execute(array $request)
+    public function execute(array $request): bool
     {
         $actions = ["create", "read", "update", "delete"];
 

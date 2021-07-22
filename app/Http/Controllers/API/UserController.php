@@ -25,6 +25,42 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Post(
+     * path="/login",
+     * summary="Sign in",
+     * description="Login by email, password",
+     * operationId="login",
+     * tags={"Authentication"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass user credentials",
+     *    @OA\JsonContent(
+     *       required={"email","password"},
+     *       @OA\Property(property="email", type="string", format="email", example="user@email.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+     *        )
+     *     ),
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *       @OA\Property(property="access_token", type="string", format="access_token", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYyNjgyMzQ1OCwiZXhwIjoxNjI2ODI3MDU4LCJuYmYiOjE2MjY4MjM0NTgsImp0aSI6IkZmdWVSa21DRDVKbGJiZTUiLCJzdWIiOjEsInBydiI6IjIzd4rdsffdYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IRcT8xxb8XqMmRCMMjEO_WZF764k6VV-gBDCXtQLBiU"),
+     *       @OA\Property(property="token_type", type="string", format="string", example="bearer"),
+     *       @OA\Property(property="expires_in", type="integer", format="string", example=3600),
+     *       @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+     *    ),
+     *  ),
+     * )
+     *
+     */
+    /**
      * login api
      *
      * @return \Illuminate\Http\Response
@@ -39,10 +75,45 @@ class UserController extends Controller
         if ($userLoginAttempt) {
             return $this->createNewToken($userLoginAttempt);
         } else {
-            return response()->json(["error" => "Unauthorized"], HttpStatus::UNAUTHORIZED);
+            return response()->json(["error" => "Sorry, wrong email address or password. Please try again"], HttpStatus::UNPROCESSABLE_ENTITY);
         }
     }
 
+    /**
+     * @OA\Post(
+     * path="/register",
+     * summary="Sign up",
+     * description="Sign up by name, email, password",
+     * operationId="register",
+     * tags={"Authentication"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send user name, email, password and hash to sign up",
+     *    @OA\JsonContent(
+     *       required={"name", "email","password", "hash"},
+     *       @OA\Property(property="name", type="string", example="user@email.com"),
+     *       @OA\Property(property="email", type="string", format="email", example="user@email.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="hash", type="string", example="2y10mQJ6icVKtp7anWURyy1WOMEDM26k7SI4CqJOFhgQcqo4bEr8RVW"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+     *        )
+     *     ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/UserRoles",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     /**
      * Register api
      *
@@ -65,6 +136,32 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     * path="/users",
+     * summary="Create",
+     * description="Create user by name, email, password",
+     * operationId="register",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send email, password",
+     *    @OA\JsonContent(
+     *       required={"email","password"},
+     *       @OA\Property(property="email", type="string", format="email", example="user@email.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+     *        )
+     *     )
+     * )
+     */
     public function store(UserRequest $request)
     {
         try {
@@ -82,6 +179,24 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/logout",
+     * summary="Logout",
+     * description="Log the user out (Invalidate the token)",
+     * operationId="details",
+     * tags={"Authentication"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      @OA\Property(property="message", type="string", example="User successfully signed out"),
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     /**
      * Log the user out (Invalidate the token).
      *
@@ -120,10 +235,43 @@ class UserController extends Controller
             auth("api")
                 ->factory()
                 ->getTTL() * 60,
-            "user" => auth("api")->user(),
+            "user" => auth("api")->user()->formatSimple(),
         ]);
     }
 
+    /**
+     * @OA\Put(
+     * path="/users/{id}",
+     * summary="Update",
+     * description="Update user",
+     * operationId="update",
+     * security={ {"bearerAuth":{}} },
+     * tags={"User"},
+     * @OA\Parameter(
+     *      name="id",
+     *      description="User id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, email, photo to update user",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="name", type="string", example="user@email.com"),
+     *       @OA\Property(property="email", type="string", format="email", example="user@email.com"),
+     *       @OA\Property(property="photo", type="string", example="/images/johndoe.png"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     /**
      * update user by id
      *
@@ -143,6 +291,24 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Get(
+     * path="/details",
+     * summary="Details",
+     * description="Get details from the user signed in",
+     * operationId="details",
+     * tags={"Authentication"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/UserRoles",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
+    /**
      * details api
      *
      * @return \Illuminate\Http\Response
@@ -153,6 +319,33 @@ class UserController extends Controller
         return response()->json($user, HttpStatus::SUCCESS);
     }
 
+    /**
+     * @OA\Get(
+     * path="/users/{id}",
+     * summary="Show",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="User id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Show user data by id",
+     * operationId="show",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/UserRoles",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     /**
      * Show an user by id
      *
@@ -181,6 +374,30 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     * path="/users/{id}",
+     * summary="Destroy",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="User id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Delete user by id",
+     * operationId="destroy",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
+    /**
      * Remove an user
      *
      * @return void
@@ -196,6 +413,25 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/users",
+     * summary="Index",
+     * description="Get a list of users",
+     * operationId="all",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/UserRoles")
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     /**
      * Show all users
      *
