@@ -17,15 +17,19 @@ class UserRepository implements UserRepositoryInterface
     */
     public function all(): Collection | array
     {
-        $users = (new RedisRepository())->all("users");
+        try {
+            $users = (new RedisRepository())->all("users");
 
-        if (empty($users)) {
-            $users = User::where("deleted_at", null)
-                ->get()
-                ->map->format();
+            if (empty($users)) {
+                $users = User::where("deleted_at", null)
+                    ->get()
+                    ->map->format();
+            }
+
+            return $users;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
-
-        return $users;
     }
 
     /*
@@ -33,19 +37,27 @@ class UserRepository implements UserRepositoryInterface
     */
     public function allStudents(): Collection
     {
-        return User::where("deleted_at", null)
-            ->withRole("student")
-            ->get()
-            ->map->format();
+        try {
+            return User::where("deleted_at", null)
+                ->withRole("student")
+                ->get()
+                ->map->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function store(array $request): User
     {
-        $userCreated = User::create($request);
+        try {
+            $userCreated = User::create($request);
 
-        (new RedisRepository())->set("users", $this->all());
+            (new RedisRepository())->set("users", $this->all());
 
-        return $userCreated;
+            return $userCreated;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /*
@@ -53,32 +65,41 @@ class UserRepository implements UserRepositoryInterface
     */
     public function findById(int $id): object
     {
-        $user = (new RedisRepository())->findById("users", $id);
+        try {
+            $user = (new RedisRepository())->findById("users", $id);
 
-        if (empty($user)) {
-            $user = User::where("id", $id)
-                ->where("deleted_at", null)
-                ->first()
-                ->format();
+            if (empty($user)) {
+                $user = User::findOrFail($id)->where("deleted_at", null)->first()->format();
+            }
+
+            return $user;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
-
-        return $user;
     }
 
     public function update(int $userId, array $set): void
     {
-        $user = User::where("id", $userId)->first();
+        try {
+            $user = User::findOrFail($userId)->first();
 
-        $user->update($set);
-        (new RedisRepository())->invalidate("users");
+            $user->update($set);
+            (new RedisRepository())->invalidate("users");
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function delete(int $userId): bool
     {
-        $this->update($userId, ["deleted_at" => Carbon::now()]);
-        (new RedisRepository())->invalidate("users");
+        try {
+            $this->update($userId, ["deleted_at" => Carbon::now()]);
+            (new RedisRepository())->invalidate("users");
 
-        return true;
+            return true;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function createType(string $type, int $userId): void

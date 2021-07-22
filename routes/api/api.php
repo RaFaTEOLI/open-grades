@@ -19,3 +19,7 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::get("details", "API\UserController@details");
     Route::get("logout", "API\UserController@logout");
 });
+
+Route::fallback(function () {
+    return response()->json(["error" => "Page Not Found"], 404);
+});

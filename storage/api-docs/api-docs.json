@@ -440,6 +440,33 @@
                     }
                 ]
             }
+        },
+        "/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Profile",
+                "description": "Show user profile",
+                "operationId": "profile",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserRoles"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

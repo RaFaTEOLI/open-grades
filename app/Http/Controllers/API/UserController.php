@@ -362,6 +362,24 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/profile",
+     * summary="Profile",
+     * description="Show user profile",
+     * operationId="profile",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/UserRoles",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function profile()
     {
         if (Auth::user()->hasRole("student")) {
