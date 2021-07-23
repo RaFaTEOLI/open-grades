@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\PermissionRepository;
+namespace App\Repositories\Permission;
 
 use App\Models\Permission;
-use App\Repositories\RolesRepository\RolesRepository;
-use App\Repositories\RedisRepository\RedisRepository;
+use App\Repositories\Roles\RolesRepository;
+use App\Repositories\Redis\RedisRepository;
 use Exception;
 use Illuminate\Support\Collection;
 

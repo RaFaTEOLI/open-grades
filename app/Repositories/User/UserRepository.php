@@ -5,7 +5,7 @@ namespace App\Repositories\User;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 use App\Models\Role;
-use App\Repositories\RedisRepository\RedisRepository;
+use App\Repositories\Redis\RedisRepository;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Collection;
@@ -69,7 +69,7 @@ class UserRepository implements UserRepositoryInterface
             $user = (new RedisRepository())->findById("users", $id);
 
             if (empty($user)) {
-                $user = User::findOrFail($id)->where("deleted_at", null)->first()->format();
+                $user = User::where("id", $id)->where("deleted_at", null)->firstOrFail()->format();
             }
 
             return $user;

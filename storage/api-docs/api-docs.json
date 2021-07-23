@@ -128,37 +128,6 @@
                     }
                 ]
             },
-            "delete": {
-                "tags": [
-                    "Configuration"
-                ],
-                "summary": "Delete Configuration",
-                "description": "Delete configuration by id",
-                "operationId": "destroy",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Configuration id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/configuration/{id}": {
             "put": {
                 "tags": [
                     "Configuration"
@@ -198,6 +167,177 @@
                         }
                     }
                 },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "Delete Configuration",
+                "description": "Delete configuration by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Configuration id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/invitations": {
+            "get": {
+                "tags": [
+                    "Invitation"
+                ],
+                "summary": "Get Invitations",
+                "description": "Get a list of invitations",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InvitationLink"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Invitation"
+                ],
+                "summary": "Create Invitations",
+                "description": "Create Invitations by type",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send type to create invitation [TEACHER, STUDENT]",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "STUDENT"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvitationLink"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/invitations/{id}": {
+            "get": {
+                "tags": [
+                    "Invitation"
+                ],
+                "summary": "Get Invitation",
+                "description": "Show Invitation by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Invitation id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvitationLink"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Invitation"
+                ],
+                "summary": "Delete Invitation",
+                "description": "Delete invitation by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Invitation id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "204": {
                         "description": "No Content"
@@ -764,6 +904,62 @@
                 "type": "object",
                 "xml": {
                     "name": "Configuration"
+                }
+            },
+            "InvitationLink": {
+                "required": [
+                    "name",
+                    "value"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "student": {
+                        "description": "Student that used the link",
+                        "type": "boolean",
+                        "example": null
+                    },
+                    "hash": {
+                        "description": "Hash that was created for the invitation",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2y1fAnF2c42ZiGxDkwuTu14UeU1IxnRKnSyPv8vuMIbQu13xCkvCOXS"
+                    },
+                    "link": {
+                        "description": "URL with the respective hash to be sign in",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "http:\\/\\/localhost\\/register\\/?hash=2y1fAnF2c42ZiGxDkwuTu14UeU1IxnRKnSyPv8vuMIbQu13xCkvCOXS"
+                    },
+                    "type": {
+                        "description": "Type of the user's role that will be signed up through the invite. Option: [STUDENT, TEACHER, RESPONSIBLE]",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "STUDENT"
+                    },
+                    "used_at": {
+                        "description": "Datetime of when invite was used",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2019-04-25 12:59:20"
+                    },
+                    "created_at": {
+                        "description": "Datetime of when invite was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": "true",
+                        "example": "2019-02-25 12:59:20"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "InvitationLink"
                 }
             },
             "Role": {

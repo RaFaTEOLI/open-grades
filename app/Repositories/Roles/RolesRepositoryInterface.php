@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\RolesRepository;
+namespace App\Repositories\Roles;
 
 use App\Models\Role;
 use Illuminate\Support\Collection;

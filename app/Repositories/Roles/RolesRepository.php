@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\RolesRepository;
+namespace App\Repositories\Roles;
 
 use App\Models\Role;
-use App\Repositories\RolesRepository\RolesRepositoryInterface;
+use App\Repositories\Roles\RolesRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Collection;
 

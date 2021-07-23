@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\RedisRepository;
+namespace App\Repositories\Redis;
 
 use Illuminate\Support\Collection;
 

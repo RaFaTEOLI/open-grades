@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Services\User\CreateUserService;
-use App\Repositories\RolesRepository\RolesRepository;
+use App\Repositories\Roles\RolesRepository;
 use App\Http\Requests\User\UserRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;

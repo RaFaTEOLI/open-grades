@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Role\RoleRequest;
-use App\Repositories\PermissionRepository\PermissionRepository;
+use App\Repositories\Permission\PermissionRepository;
 use Illuminate\Http\Request;
-use App\Repositories\RolesRepository\RolesRepository;
+use App\Repositories\Roles\RolesRepository;
 use App\Services\Role\CreateRoleService;
 use Exception;
 

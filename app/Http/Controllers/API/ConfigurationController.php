@@ -127,7 +127,7 @@ class ConfigurationController extends Controller
 
     /**
      * @OA\Put(
-     * path="/configuration/{id}",
+     * path="/configurations/{id}",
      * summary="Update Configuration",
      * description="Update Configuration",
      * operationId="update",

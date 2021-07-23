@@ -9,7 +9,7 @@ use App\Http\Controllers\API\HttpStatus;
 use App\Http\Requests\Role\RoleRequest;
 use App\Models\Role;
 use App\Services\Role\CreateRoleService;
-use App\Repositories\RolesRepository\RolesRepository;
+use App\Repositories\Roles\RolesRepository;
 use Exception;
 
 class RolesController extends Controller

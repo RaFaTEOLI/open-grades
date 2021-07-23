@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\RedisRepository;
+namespace App\Repositories\Redis;
 
-use App\Repositories\RedisRepository\RedisRepositoryInterface;
+use App\Repositories\Redis\RedisRepositoryInterface;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Collection;
 

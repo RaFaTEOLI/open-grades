@@ -29,7 +29,6 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
     {
         try {
             return InvitationLink::where("id", $id)
-                ->where("used_at", null)
                 ->firstOrFail()
                 ->format();
         } catch (Exception $e) {
@@ -51,9 +50,9 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
 
     public function update(int $id, array $set): void
     {
-        $user = InvitationLink::where("id", $id)->first();
+        $invitation = InvitationLink::where("id", $id)->first();
 
-        $user->update($set);
+        $invitation->update($set);
     }
 
     public function delete(int $id): bool

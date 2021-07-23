@@ -14,7 +14,7 @@ class InvitationLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            "type" => "required|in:STUDENT,TEACHER,RESPONSIBLE",
+            "type" => "required|in:STUDENT,TEACHER",
         ];
     }
 }
