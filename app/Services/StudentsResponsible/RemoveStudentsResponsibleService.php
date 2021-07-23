@@ -7,7 +7,7 @@ use Exception;
 
 class RemoveStudentsResponsibleService
 {
-    public function execute(array $request)
+    public function execute(array $request): bool
     {
         try {
             $responsible = StudentsResponsible::where($request);

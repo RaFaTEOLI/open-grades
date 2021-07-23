@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 /**
  *
  *  @OA\Server(
- *      url="http://localhost:8000/api/",
+ *      url=L5_SWAGGER_CONST_HOST,
  *      description="Open Grades API Server"
  * )
  */

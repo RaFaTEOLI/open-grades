@@ -9,6 +9,7 @@ use Shanmuga\LaravelEntrust\Models\EntrustRole;
  *
  * @OA\Schema(
  * @OA\Xml(name="Role"),
+ * required={"name", "display_name", "description"},
  * @OA\Property(property="id", type="integer", readOnly="true", example="3"),
  * @OA\Property(property="name", type="string", description="Name of the role", example="student"),
  * @OA\Property(property="display_name", type="string", description="Display name of the role", example="Student"),

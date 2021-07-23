@@ -3,16 +3,14 @@
 namespace App\Services\User;
 
 use App\Http\Controllers\Auth\AdminController;
-use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\RolesRepository\RolesRepository;
 use Exception;
 use App\Models\User;
 use App\Models\Role;
 
 class UpdateUserRoleService
 {
-    public function execute(array $request)
+    public function execute(array $request): User
     {
         try {
             AdminController::isAdminOrFail();

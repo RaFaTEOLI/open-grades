@@ -132,7 +132,7 @@ class UserController extends Controller
     /**
      * @OA\Post(
      * path="/users",
-     * summary="Create",
+     * summary="Create User",
      * description="Create user by name, email, password",
      * operationId="register",
      * tags={"User"},
@@ -236,8 +236,8 @@ class UserController extends Controller
     /**
      * @OA\Put(
      * path="/users/{id}",
-     * summary="Update",
-     * description="Update user",
+     * summary="Update User",
+     * description="Update User",
      * operationId="update",
      * security={ {"bearerAuth":{}} },
      * tags={"User"},
@@ -250,6 +250,7 @@ class UserController extends Controller
      *          type="integer"
      *      )
      * ),
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Send name, email, photo to update user",
@@ -287,7 +288,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      * path="/details",
-     * summary="Details",
+     * summary="Get User Details",
      * description="Get details from the user signed in",
      * operationId="details",
      * tags={"Authentication"},
@@ -316,7 +317,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      * path="/users/{id}",
-     * summary="Show",
+     * summary="Get User",
      * @OA\Parameter(
      *      name="id",
      *      description="User id",
@@ -359,7 +360,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      * path="/profile",
-     * summary="Profile",
+     * summary="Get User Profile",
      * description="Show user profile",
      * operationId="profile",
      * tags={"User"},
@@ -388,7 +389,7 @@ class UserController extends Controller
     /**
      * @OA\Delete(
      * path="/users/{id}",
-     * summary="Destroy",
+     * summary="Delete User",
      * @OA\Parameter(
      *      name="id",
      *      description="User id",
@@ -428,7 +429,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      * path="/users",
-     * summary="Index",
+     * summary="Get Users",
      * description="Get a list of users",
      * operationId="all",
      * tags={"User"},

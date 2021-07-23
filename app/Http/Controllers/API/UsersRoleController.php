@@ -14,7 +14,7 @@ class UsersRoleController extends Controller
     /**
      * @OA\Patch(
      * path="/users/{userId}/role/{roleId}",
-     * summary="Update Role",
+     * summary="Add Role to User",
      * description="Pass the role id to be added to the user",
      * operationId="store",
      * tags={"User"},
@@ -69,9 +69,9 @@ class UsersRoleController extends Controller
     /**
      * @OA\Delete(
      * path="/users/{userId}/role/{roleId}",
-     * summary="Remove Role",
+     * summary="Remove Role From User",
      * description="Pass the role id to be remove from the user",
-     * operationId="destroy",
+     * operationId="destroyRole",
      * tags={"User"},
      * security={ {"bearerAuth":{}} },
      * @OA\Parameter(
@@ -92,7 +92,7 @@ class UsersRoleController extends Controller
      *          type="integer"
      *      )
      * ),
-     * * @OA\Response(
+     * @OA\Response(
      *     response=204,
      *     description="No Content",
      *    ),

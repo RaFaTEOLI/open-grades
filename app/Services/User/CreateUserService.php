@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\User;
+
 use App\Repositories\User\UserRepository;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Illuminate\Support\Facades\DB;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Exception;
 use App\Models\StudentsResponsible;
+use App\Models\User;
 
 class CreateUserService
 {
@@ -18,7 +20,7 @@ class CreateUserService
         $this->userRepository = new UserRepository();
     }
 
-    public function execute(array $request)
+    public function execute(array $request): User
     {
         $invitationLinkRepository = new InvitationLinkRepository();
 

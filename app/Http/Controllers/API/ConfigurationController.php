@@ -18,6 +18,25 @@ class ConfigurationController extends Controller
         $this->configurationRepository = new ConfigurationRepository();
     }
 
+    /**
+     * @OA\Get(
+     * path="/configurations",
+     * summary="Get Configurations",
+     * description="Get a list of configurations",
+     * operationId="index",
+     * tags={"Configuration"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/Configuration")
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function index()
     {
         $configurations = $this->configurationRepository->all();
@@ -25,6 +44,33 @@ class ConfigurationController extends Controller
         return response()->json($configurations, HttpStatus::SUCCESS);
     }
 
+    /**
+     * @OA\Post(
+     * path="/configurations",
+     * summary="Create Configuration",
+     * description="Create Configuration by name, value",
+     * operationId="store",
+     * tags={"Configuration"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, value",
+     *    @OA\JsonContent(
+     *       required={"name","value"},
+     *       @OA\Property(property="name", type="string", example="school-year-division"),
+     *       @OA\Property(property="value", type="string", example="4"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Configuration",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function store(ConfigurationRequest $request)
     {
         try {
@@ -39,6 +85,33 @@ class ConfigurationController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/configurations/{id}",
+     * summary="Get Configuration",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Configuration id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Show Configuration by id",
+     * operationId="show",
+     * tags={"Configuration"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Configuration",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function show(int $id)
     {
         try {
@@ -52,6 +125,39 @@ class ConfigurationController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     * path="/configuration/{id}",
+     * summary="Update Configuration",
+     * description="Update Configuration",
+     * operationId="update",
+     * security={ {"bearerAuth":{}} },
+     * tags={"Configuration"},
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Configuration id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, value to update configuration",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="name", type="string", example="school-year-division"),
+     *       @OA\Property(property="value", type="string", example="4"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     public function update(int $id, Request $request)
     {
         try {
@@ -65,6 +171,30 @@ class ConfigurationController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     * path="/configurations/{id}",
+     * summary="Delete Configuration",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Configuration id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Delete configuration by id",
+     * operationId="destroy",
+     * tags={"Configuration"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     public function destroy(int $id)
     {
         try {

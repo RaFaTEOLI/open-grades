@@ -9,7 +9,7 @@ use App\Models\Role;
 
 class RemoveUserRoleService
 {
-    public function execute(array $request)
+    public function execute(array $request): User
     {
         try {
             if ($request["userId"] == 1 && $request["roleId"] == 1) {

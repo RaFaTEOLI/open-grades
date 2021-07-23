@@ -12,7 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  *
  * @OA\Schema(
- * required={"password"},
+ * required={"name", "email"},
  * @OA\Xml(name="User"),
  * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
  * @OA\Property(property="name", type="string", description="Name of the user", example="John Doe"),

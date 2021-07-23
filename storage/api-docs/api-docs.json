@@ -11,6 +11,205 @@
         }
     ],
     "paths": {
+        "/configurations": {
+            "get": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "Get Configurations",
+                "description": "Get a list of configurations",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Configuration"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "Create Configuration",
+                "description": "Create Configuration by name, value",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send name, value",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "value"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "school-year-division"
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "example": "4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Configuration"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/configurations/{id}": {
+            "get": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "Get Configuration",
+                "description": "Show Configuration by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Configuration id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Configuration"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "Delete Configuration",
+                "description": "Delete configuration by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Configuration id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/configuration/{id}": {
+            "put": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "Update Configuration",
+                "description": "Update Configuration",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Configuration id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Send name, value to update configuration",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "school-year-division"
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "example": "4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -160,7 +359,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Index",
+                "summary": "Get Users",
                 "description": "Get a list of users",
                 "operationId": "all",
                 "responses": {
@@ -188,7 +387,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Create",
+                "summary": "Create User",
                 "description": "Create user by name, email, password",
                 "operationId": "register",
                 "requestBody": {
@@ -275,7 +474,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Show",
+                "summary": "Get User",
                 "description": "Show user data by id",
                 "operationId": "show",
                 "parameters": [
@@ -311,8 +510,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Update",
-                "description": "Update user",
+                "summary": "Update User",
+                "description": "Update User",
                 "operationId": "update",
                 "parameters": [
                     {
@@ -366,7 +565,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Destroy",
+                "summary": "Delete User",
                 "description": "Delete user by id",
                 "operationId": "destroy",
                 "parameters": [
@@ -397,7 +596,7 @@
                 "tags": [
                     "Authentication"
                 ],
-                "summary": "Details",
+                "summary": "Get User Details",
                 "description": "Get details from the user signed in",
                 "operationId": "details",
                 "responses": {
@@ -424,7 +623,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Profile",
+                "summary": "Get User Profile",
                 "description": "Show user profile",
                 "operationId": "profile",
                 "responses": {
@@ -451,9 +650,9 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Remove Role",
+                "summary": "Remove Role From User",
                 "description": "Pass the role id to be remove from the user",
-                "operationId": "destroy",
+                "operationId": "destroyRole",
                 "parameters": [
                     {
                         "name": "userId",
@@ -489,7 +688,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Update Role",
+                "summary": "Add Role to User",
                 "description": "Pass the role id to be added to the user",
                 "operationId": "store",
                 "parameters": [
@@ -527,7 +726,52 @@
     },
     "components": {
         "schemas": {
+            "Configuration": {
+                "required": [
+                    "name",
+                    "value"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "name": {
+                        "description": "Name of the configuration",
+                        "type": "string",
+                        "example": "school-year-division"
+                    },
+                    "value": {
+                        "description": "Value of the configuration",
+                        "type": "string",
+                        "example": "4"
+                    },
+                    "created_at": {
+                        "description": "Datetime of when configuration was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": "true",
+                        "example": "2019-02-25 12:59:20"
+                    },
+                    "updated_at": {
+                        "description": "Datetime of when configuration was updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2020-02-25 13:30:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Configuration"
+                }
+            },
             "Role": {
+                "required": [
+                    "name",
+                    "display_name",
+                    "description"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -557,7 +801,8 @@
             },
             "User": {
                 "required": [
-                    "password"
+                    "name",
+                    "email"
                 ],
                 "properties": {
                     "id": {
@@ -597,7 +842,8 @@
             },
             "UserRoles": {
                 "required": [
-                    "password"
+                    "name",
+                    "email"
                 ],
                 "properties": {
                     "id": {
