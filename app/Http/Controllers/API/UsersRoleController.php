@@ -11,6 +11,40 @@ use App\Services\User\RemoveUserRoleService;
 
 class UsersRoleController extends Controller
 {
+    /**
+     * @OA\Patch(
+     * path="/users/{userId}/role/{roleId}",
+     * summary="Update Role",
+     * description="Pass the role id to be added to the user",
+     * operationId="store",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="userId",
+     *      description="Id of the user you want to add the role",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="roleId",
+     *      description="Id of the role that will be added to the user",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *   ),
+     *  ),
+     * )
+     */
     public function store(int $userId, int $roleId)
     {
         try {
@@ -32,6 +66,40 @@ class UsersRoleController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     * path="/users/{userId}/role/{roleId}",
+     * summary="Remove Role",
+     * description="Pass the role id to be remove from the user",
+     * operationId="destroy",
+     * tags={"User"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="userId",
+     *      description="Id of the user you want to remove the role",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="roleId",
+     *      description="Id of the role that will be removed from the user",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *   ),
+     *  ),
+     * )
+     */
     public function destroy(int $userId, int $roleId)
     {
         try {
@@ -46,7 +114,7 @@ class UsersRoleController extends Controller
 
             return response()->noContent();
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
+            return response()->json(["message" => $e->getMessage()], $e->getCode() ? $e->getCode() : HttpStatus::SERVER_ERROR);
         }
     }
 }

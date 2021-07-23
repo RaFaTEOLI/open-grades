@@ -98,13 +98,6 @@ class UserController extends Controller
      *    ),
      * ),
      * @OA\Response(
-     *    response=422,
-     *    description="Wrong credentials response",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
-     *        )
-     *     ),
-     * @OA\Response(
      *     response=201,
      *     description="Created",
      *     @OA\JsonContent(
@@ -154,12 +147,13 @@ class UserController extends Controller
      *    ),
      * ),
      * @OA\Response(
-     *    response=422,
-     *    description="Wrong credentials response",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
-     *        )
-     *     )
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/UserRoles",
+     *      ),
+     *    ),
+     *  ),
      * )
      */
     public function store(UserRequest $request)

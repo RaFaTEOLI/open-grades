@@ -152,6 +152,6 @@ class UserTest extends TestCase
         $user = User::find(1);
         $response = $this->actingAs($user, "api")->json("DELETE", env("APP_API") . "/users/{$user->id}/role/1");
 
-        $response->assertStatus(HttpStatus::SERVER_ERROR);
+        $response->assertStatus(HttpStatus::BAD_REQUEST);
     }
 }

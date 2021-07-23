@@ -2,7 +2,6 @@
 
 namespace App\Services\User;
 
-use App\Http\Controllers\Auth\AdminController;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\User;
@@ -14,7 +13,7 @@ class RemoveUserRoleService
     {
         try {
             if ($request["userId"] == 1 && $request["roleId"] == 1) {
-                throw new Exception(__("role.user_is_admin"));
+                throw new Exception(__("role.user_is_admin"), 400);
             }
             $user = DB::transaction(function () use ($request) {
                 $user = User::where("id", $request["userId"])
@@ -28,7 +27,7 @@ class RemoveUserRoleService
             });
             return $user;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 }
