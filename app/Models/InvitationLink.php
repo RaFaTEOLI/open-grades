@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  *
  * @OA\Schema(
- * required={"name", "value"},
+ * required={"type"},
  * @OA\Xml(name="InvitationLink"),
  * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
  * @OA\Property(property="user", type="object", description="User that created the invitation", ref="#/components/schemas/User"),

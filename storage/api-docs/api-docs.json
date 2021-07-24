@@ -350,6 +350,216 @@
                 ]
             }
         },
+        "/permissions": {
+            "get": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Get Permissions",
+                "description": "Get a list of permissions",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Permission"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Create Permission",
+                "description": "Create Permission by name, description",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send name, value",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "create-users"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Create Users"
+                                    },
+                                    "create": {
+                                        "type": "string",
+                                        "example": "on"
+                                    },
+                                    "update": {
+                                        "type": "string",
+                                        "example": "on"
+                                    },
+                                    "read": {
+                                        "type": "string",
+                                        "example": "on"
+                                    },
+                                    "delete": {
+                                        "type": "string",
+                                        "example": "on"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/permissions/{id}": {
+            "get": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Get Permission",
+                "description": "Show Permission by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Permission id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Update Permission",
+                "description": "Update Permission",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Permission id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Send name or display_name or description to update permission",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "create-users"
+                                    },
+                                    "display_name": {
+                                        "type": "string",
+                                        "example": "Create Users"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Create Users"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Delete Permission",
+                "description": "Delete Permission by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Permission id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -908,8 +1118,7 @@
             },
             "InvitationLink": {
                 "required": [
-                    "name",
-                    "value"
+                    "type"
                 ],
                 "properties": {
                     "id": {
@@ -960,6 +1169,39 @@
                 "type": "object",
                 "xml": {
                     "name": "InvitationLink"
+                }
+            },
+            "Permission": {
+                "required": [
+                    "name",
+                    "display_name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "3"
+                    },
+                    "name": {
+                        "description": "Name of the role",
+                        "type": "string",
+                        "example": "create-users"
+                    },
+                    "display_name": {
+                        "description": "Display name of the role",
+                        "type": "string",
+                        "example": "Create Users"
+                    },
+                    "description": {
+                        "description": "Role description",
+                        "type": "string",
+                        "example": "Create Users"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Permission"
                 }
             },
             "Role": {

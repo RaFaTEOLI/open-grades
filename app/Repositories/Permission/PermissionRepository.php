@@ -20,7 +20,7 @@ class PermissionRepository implements PermissionRepositoryInterface
         $permissions = (new RedisRepository())->all("permissions");
 
         if (empty($permissions)) {
-            return Permission::all();
+            return Permission::all()->map->format();
         }
 
         return $permissions;
@@ -62,16 +62,16 @@ class PermissionRepository implements PermissionRepositoryInterface
     /**
      * Get By Id
      *
-     * @return Permission
+     * @return object
      * @param integer $id
      */
-    public function findById(int $id): Permission
+    public function findById(int $id): object
     {
         try {
             $permission = (new RedisRepository())->findById("permissions", $id);
 
             if (empty($permission)) {
-                return Permission::find($id);
+                return Permission::find($id)->format();
             }
 
             return $permission;

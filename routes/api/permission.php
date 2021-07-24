@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,15 +8,16 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
 Route::group(["middleware" => "auth:api"], function () {
     Route::group(["middleware" => ["role:admin"]], function () {
         Route::get("/permissions", "API\PermissionController@index")
             ->name("permissions")
             ->middleware("permission:read-permissions");
 
-        Route::get("/permission/{id}", "API\PermissionController@show")->middleware("permission:read-permissions");
+        Route::get("/permissions/{id}", "API\PermissionController@show")->middleware("permission:read-permissions");
 
-        Route::delete("/permission/{id}", "API\PermissionController@destroy")->middleware(
+        Route::delete("/permissions/{id}", "API\PermissionController@destroy")->middleware(
             "permission:delete-permissions",
         );
         Route::post("/permissions", "API\PermissionController@store")->middleware("permission:create-permissions");

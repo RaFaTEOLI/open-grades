@@ -36,7 +36,7 @@ class PermissionTest extends TestCase
     {
         $user = User::find(1);
         $permission = factory(Permission::class)->create();
-        $response = $this->actingAs($user, "api")->json("get", env("APP_API") . "/permission/{$permission->id}");
+        $response = $this->actingAs($user, "api")->json("get", env("APP_API") . "/permissions/{$permission->id}");
 
         $response->assertStatus(HttpStatus::SUCCESS);
     }
@@ -90,7 +90,7 @@ class PermissionTest extends TestCase
 
         $permission = factory(Permission::class)->create();
 
-        $response = $this->actingAs($user, "api")->json("DELETE", env("APP_API") . "/permission/{$permission->id}");
+        $response = $this->actingAs($user, "api")->json("DELETE", env("APP_API") . "/permissions/{$permission->id}");
 
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
