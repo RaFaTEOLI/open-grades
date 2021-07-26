@@ -8,15 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 /**
  *
  * @OA\Schema(
- * required={"name", "email"},
+ * required={"type"},
  * @OA\Xml(name="StudentsResponsible"),
  * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
- * @OA\Property(property="name", type="string", description="Name of the user", example="John Doe"),
- * @OA\Property(property="email", type="string", format="email", description="User unique email address", example="johndoe@email.com"),
- * @OA\Property(property="photo", type="string", format="string", description="User photo", example="/images/johndoe.png"),
- * @OA\Property(property="created_at", type="string", readOnly="true", format="date-time", description="Datetime of when student was created", example="2019-02-25 12:59:20"),
- * @OA\Property(property="updated_at", type="string", format="date-time", description="Datetime of when student was updated", example="2019-09-25 14:15:16"),
- * @OA\Property(property="responsibles", type="array", @OA\Items(ref="#/components/schemas/User")),
+ * @OA\Property(property="user_id", type="integer", description="User that created the invitation", example="1"),
+ * @OA\Property(property="student_id", type="integer", description="Student that is linked in the invitation", example="2"),
+ * @OA\Property(property="hash", type="string", description="Hash that was created for the invitation", readOnly="true", example="2y1fAnF2c42ZiGxDkwuTu14UeU1IxnRKnSyPv8vuMIbQu13xCkvCOXS"),
+ * @OA\Property(property="link", type="string", description="URL with the respective hash to be sign in", readOnly="true", example="http:\/\/localhost\/register\/?hash=2y1fAnF2c42ZiGxDkwuTu14UeU1IxnRKnSyPv8vuMIbQu13xCkvCOXS"),
+ * @OA\Property(property="type", type="string", description="Type of the user's role that will be signed up through the invite. Option: [STUDENT, TEACHER, RESPONSIBLE]", readOnly="true", example="STUDENT"),
+ * @OA\Property(property="used_at", type="string", format="date-time", description="Datetime of when invite was used", example="2019-04-25 12:59:20"),
+ * @OA\Property(property="created_at", type="string", readOnly="true", format="date-time", description="Datetime of when invite was created", example="2019-02-25 12:59:20"),
+ * @OA\Property(property="updated_at", type="string", format="date-time", description="Datetime of when invite was updated", example="2019-05-25 12:59:20"),
  * )
  *
  * Class StudentsResponsible

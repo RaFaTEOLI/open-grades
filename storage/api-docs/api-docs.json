@@ -944,6 +944,98 @@
                 ]
             }
         },
+        "/student-responsible": {
+            "post": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Create Invitation Student's Responsible",
+                "description": "Create invitation link for a student's responsible",
+                "operationId": "link",
+                "requestBody": {
+                    "description": "Send student_id for a link",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "student_id"
+                                ],
+                                "properties": {
+                                    "student_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "invitation": {
+                                            "$ref": "#/components/schemas/StudentsResponsible"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/students/{studentId}/responsible/{responsibleId}": {
+            "delete": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Delete Student's Responsible",
+                "description": "Delete student's Responsible by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "responsibleId",
+                        "in": "path",
+                        "description": "Responsible id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -1715,8 +1807,7 @@
             },
             "StudentsResponsible": {
                 "required": [
-                    "name",
-                    "email"
+                    "type"
                 ],
                 "properties": {
                     "id": {
@@ -1724,41 +1815,52 @@
                         "readOnly": "true",
                         "example": "1"
                     },
-                    "name": {
-                        "description": "Name of the user",
-                        "type": "string",
-                        "example": "John Doe"
+                    "user_id": {
+                        "description": "User that created the invitation",
+                        "type": "integer",
+                        "example": "1"
                     },
-                    "email": {
-                        "description": "User unique email address",
-                        "type": "string",
-                        "format": "email",
-                        "example": "johndoe@email.com"
+                    "student_id": {
+                        "description": "Student that is linked in the invitation",
+                        "type": "integer",
+                        "example": "2"
                     },
-                    "photo": {
-                        "description": "User photo",
+                    "hash": {
+                        "description": "Hash that was created for the invitation",
                         "type": "string",
-                        "format": "string",
-                        "example": "/images/johndoe.png"
+                        "readOnly": "true",
+                        "example": "2y1fAnF2c42ZiGxDkwuTu14UeU1IxnRKnSyPv8vuMIbQu13xCkvCOXS"
+                    },
+                    "link": {
+                        "description": "URL with the respective hash to be sign in",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "http:\\/\\/localhost\\/register\\/?hash=2y1fAnF2c42ZiGxDkwuTu14UeU1IxnRKnSyPv8vuMIbQu13xCkvCOXS"
+                    },
+                    "type": {
+                        "description": "Type of the user's role that will be signed up through the invite. Option: [STUDENT, TEACHER, RESPONSIBLE]",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "STUDENT"
+                    },
+                    "used_at": {
+                        "description": "Datetime of when invite was used",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2019-04-25 12:59:20"
                     },
                     "created_at": {
-                        "description": "Datetime of when student was created",
+                        "description": "Datetime of when invite was created",
                         "type": "string",
                         "format": "date-time",
                         "readOnly": "true",
                         "example": "2019-02-25 12:59:20"
                     },
                     "updated_at": {
-                        "description": "Datetime of when student was updated",
+                        "description": "Datetime of when invite was updated",
                         "type": "string",
                         "format": "date-time",
-                        "example": "2019-09-25 14:15:16"
-                    },
-                    "responsibles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/User"
-                        }
+                        "example": "2019-05-25 12:59:20"
                     }
                 },
                 "type": "object",

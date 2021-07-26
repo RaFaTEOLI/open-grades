@@ -10,6 +10,32 @@ use Exception;
 
 class StudentsResponsibleController extends Controller
 {
+    /**
+     * @OA\Post(
+     * path="/student-responsible",
+     * summary="Create Invitation Student's Responsible",
+     * description="Create invitation link for a student's responsible",
+     * operationId="link",
+     * tags={"Student"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send student_id for a link",
+     *    @OA\JsonContent(
+     *       required={"student_id"},
+     *       @OA\Property(property="student_id", type="integer", example="1"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      @OA\Property(property="invitation", type="object", ref="#/components/schemas/StudentsResponsible"),
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function link(StudentResponsibleLinkRequest $request)
     {
         try {
@@ -25,6 +51,39 @@ class StudentsResponsibleController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     * path="/students/{studentId}/responsible/{responsibleId}",
+     * summary="Delete Student's Responsible",
+     * @OA\Parameter(
+     *      name="studentId",
+     *      description="Student id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="responsibleId",
+     *      description="Responsible id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Delete student's Responsible by id",
+     * operationId="destroy",
+     * tags={"Student"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     public function destroy(int $studentId, int $responsibleId)
     {
         try {
