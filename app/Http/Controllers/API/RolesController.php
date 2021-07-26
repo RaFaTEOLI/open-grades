@@ -22,13 +22,60 @@ class RolesController extends Controller
         $this->rolesRepository = new RolesRepository();
     }
 
+    /**
+     * @OA\Get(
+     * path="/roles",
+     * summary="Get Roles",
+     * description="Get a list of roles",
+     * operationId="index",
+     * tags={"Role"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/Role")
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function index()
     {
-        $roles = $this->rolesRepository->all();
+        $roles = $this->rolesRepository->allWithoutPermissions();
 
         return response()->json($roles, HttpStatus::SUCCESS);
     }
 
+    /**
+     * @OA\Post(
+     * path="/roles",
+     * summary="Create Role",
+     * description="Create Role by name, display_name, description",
+     * operationId="store",
+     * tags={"Role"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, display_name, description",
+     *    @OA\JsonContent(
+     *       required={"name","display_name", "description"},
+     *       @OA\Property(property="name", type="string", example="student"),
+     *       @OA\Property(property="display_name", type="string", example="Student"),
+     *       @OA\Property(property="description", type="string", example="Student"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Role",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function store(RoleRequest $request)
     {
         try {
@@ -43,6 +90,33 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/roles/{id}",
+     * summary="Get Role",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Role id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Show Role by id",
+     * operationId="show",
+     * tags={"Role"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/RolePermissions",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function show(int $id)
     {
         try {
@@ -54,18 +128,77 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     * path="/roles/{id}",
+     * summary="Update Role",
+     * description="Update Role",
+     * operationId="update",
+     * security={ {"bearerAuth":{}} },
+     * tags={"Role"},
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Role id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, value to update role",
+     *    @OA\JsonContent(
+     *       required={"name","display_name", "description"},
+     *       @OA\Property(property="name", type="string", example="student"),
+     *       @OA\Property(property="display_name", type="string", example="Student"),
+     *       @OA\Property(property="description", type="string", example="Student"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     public function update(int $id, Request $request)
     {
         try {
             $input = $request->only(["name", "display_name", "description"]);
-            $role = $this->rolesRepository->update($id, $input);
+            $this->rolesRepository->update($id, $input);
 
-            return response()->json($role, HttpStatus::SUCCESS);
+            return response()->noContent();
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }
     }
 
+    /**
+     * @OA\Delete(
+     * path="/roles/{id}",
+     * summary="Delete Role",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Role id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Delete role by id",
+     * operationId="destroy",
+     * tags={"Role"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     public function destroy(int $id)
     {
         try {
