@@ -22,6 +22,25 @@ class TeacherController extends Controller
         $this->teacherRepository = new TeacherRepository();
     }
 
+    /**
+     * @OA\Get(
+     * path="/teachers",
+     * summary="Get Teachers",
+     * description="Get a list of teachers",
+     * operationId="index",
+     * tags={"Teacher"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/User")
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function index()
     {
         $teachers = $this->teacherRepository->all();
@@ -29,11 +48,39 @@ class TeacherController extends Controller
         return response()->json($teachers, HttpStatus::SUCCESS);
     }
 
+    /**
+     * @OA\Post(
+     * path="/teachers",
+     * summary="Create Teacher",
+     * description="Create Teacher by name, email, password",
+     * operationId="store",
+     * tags={"Teacher"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, email, password",
+     *    @OA\JsonContent(
+     *       required={"name","email", "password"},
+     *       @OA\Property(property="name", type="string", example="John Doe"),
+     *       @OA\Property(property="email", type="string", example="johndoe@email.com"),
+     *       @OA\Property(property="password", type="string", example="12345678"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Teacher",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function store(TeacherRequest $request)
     {
         try {
             $input = $request->all();
-            $input["type"] = "RESPONSIBLE";
+            $input["type"] = "TEACHER";
 
             $createUserService = new CreateUserService();
             $user = $createUserService->execute($input);
@@ -47,6 +94,39 @@ class TeacherController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     * path="/teachers/{id}",
+     * summary="Update Teacher",
+     * description="Update Teacher",
+     * operationId="update",
+     * security={ {"bearerAuth":{}} },
+     * tags={"Teacher"},
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Teacher id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send name, email to update teacher",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="name", type="string", example="John Doe"),
+     *       @OA\Property(property="email", type="string", example="johndoe@email.com"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=204,
+     *     description="No Content",
+     *    ),
+     *  ),
+     * )
+     */
     public function update(int $id, Request $request)
     {
         try {
@@ -59,6 +139,33 @@ class TeacherController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/teachers/{id}",
+     * summary="Get Teacher",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Teacher id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Show Teacher by id",
+     * operationId="show",
+     * tags={"Teacher"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Teacher",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function show(int $id)
     {
         $teacher = $this->teacherRepository->findById($id);

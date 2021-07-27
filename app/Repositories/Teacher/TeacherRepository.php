@@ -16,7 +16,7 @@ class TeacherRepository implements TeacherRepositoryInterface
         return User::where("deleted_at", null)
             ->withRole("teacher")
             ->get()
-            ->map->format();
+            ->map->formatSimple();
     }
 
     /*

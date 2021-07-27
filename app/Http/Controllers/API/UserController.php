@@ -178,7 +178,7 @@ class UserController extends Controller
      * path="/logout",
      * summary="Logout",
      * description="Log the user out (Invalidate the token)",
-     * operationId="details",
+     * operationId="logout",
      * tags={"Authentication"},
      * security={ {"bearerAuth":{}} },
      * @OA\Response(

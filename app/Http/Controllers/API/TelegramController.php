@@ -19,6 +19,25 @@ class TelegramController extends Controller
         $this->telegramRepository = new TelegramRepository();
     }
 
+    /**
+     * @OA\Get(
+     * path="/messages",
+     * summary="Get Messages",
+     * description="Get a list of messages",
+     * operationId="index",
+     * tags={"Message"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/Telegram")
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function index()
     {
         $results = $this->telegramRepository->all();
@@ -26,6 +45,32 @@ class TelegramController extends Controller
         return response()->json($results, HttpStatus::SUCCESS);
     }
 
+    /**
+     * @OA\Post(
+     * path="/messages",
+     * summary="Create Message",
+     * description="Create Message by passing a message",
+     * operationId="store",
+     * tags={"Message"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Send message",
+     *    @OA\JsonContent(
+     *       required={"message"},
+     *       @OA\Property(property="message", type="string", example="Hello, this is a message"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Created",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Telegram",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function store(TelegramRequest $request)
     {
         try {
@@ -42,6 +87,33 @@ class TelegramController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * path="/messages/{id}",
+     * summary="Get Message",
+     * @OA\Parameter(
+     *      name="id",
+     *      description="Message id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * description="Show Message by id",
+     * operationId="show",
+     * tags={"Message"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *      ref="#/components/schemas/Telegram",
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
     public function show(int $id)
     {
         try {
@@ -50,19 +122,6 @@ class TelegramController extends Controller
             $result = $this->telegramRepository->findById($id);
 
             return response()->json($result, HttpStatus::SUCCESS);
-        } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
-        }
-    }
-
-    public function update(int $id, Request $request)
-    {
-        try {
-            $input = $request->all();
-
-            $this->telegramRepository->update($id, $input);
-
-            return response()->noContent();
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
