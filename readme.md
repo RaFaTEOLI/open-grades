@@ -20,10 +20,6 @@ We believe that every school or independent teacher should have access to an eas
 We would like to extend our thanks to the following members of the team. If you are interested in becoming a member of the team, please send an email to [rafinha.tessarolo@hotmail.com](mailto:rafinha.tessarolo@hotmail.com)
 
 - **[Rafael Tessarolo](https://github.com/RaFaTEOLI)**
-- **[Allan Galdino](https://github.com/GaldinoAllan)**
-- **[Paulo Victor](https://github.com/paulovictor01)**
-- **[Jean Souza](https://github.com/jeanhrsouza)**
-- **[Leonardo Giorgiani](https://github.com/leogiorgiani)**
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/RaFaTEOLI/open-grades/issues)
 
