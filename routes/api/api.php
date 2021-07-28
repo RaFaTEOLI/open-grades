@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\ApiResponseTime;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,20 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::get("details", "API\UserController@details");
     Route::get("logout", "API\UserController@logout");
 });
+
+Route::get("/", function () {
+    return response()->json(["message" => "It's working"]);
+});
+
+Route::get("/health", function () {
+    return response()->json(["message" => "It's working"], 200);
+});
+
+Route::get("/version", function () {
+    return response()->json(["version" => env("APP_VERSION")], 200);
+});
+
+Route::get("/metrics", "API\MetricsController@index");
 
 Route::fallback(function () {
     return response()->json(["error" => "Page Not Found"], 404);

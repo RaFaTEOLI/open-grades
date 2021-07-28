@@ -350,6 +350,28 @@
                 ]
             }
         },
+        "/metrics": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get API Metrics",
+                "description": "Get metrics from API",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseTime"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/permissions": {
             "get": {
                 "tags": [
@@ -1838,6 +1860,24 @@
     },
     "components": {
         "schemas": {
+            "ApiResponseTime": {
+                "properties": {
+                    "average_response_time": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "0.1395"
+                    },
+                    "requests_count": {
+                        "description": "Name of the user",
+                        "type": "string",
+                        "example": "25"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ApiResponseTime"
+                }
+            },
             "Configuration": {
                 "required": [
                     "name",
