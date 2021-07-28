@@ -104,13 +104,4 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
         }
         return true;
     }
-
-    public function generateHash(): string
-    {
-        $hash = str_replace('$', "", Hash::make(Carbon::now()));
-        $hash = str_replace("/", "", $hash);
-        $hash = str_replace(".", "", $hash);
-
-        return $hash;
-    }
 }

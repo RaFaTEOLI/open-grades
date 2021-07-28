@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Controllers\API\HttpStatus;
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class RoleTest extends TestCase
 {
@@ -73,6 +74,54 @@ class RoleTest extends TestCase
             env("APP_API") . "/roles/{$role->id}/permission/{$permission->id}",
         );
 
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
+     * It should list all roles
+     *
+     * @return void
+     */
+    public function testShouldListAllRoles()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/roles");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'name', 'display_name', 'description']]);
+    }
+
+    /**
+     * It should show a role by id
+     *
+     * @return void
+     */
+    public function testShouldShowARoleById()
+    {
+        $user = User::find(1);
+
+        $role = factory(Role::class)->create();
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/roles/{$role->id}");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure(['id', 'name', 'display_name', 'description']);
+    }
+
+    /**
+     * It should delete a role by id
+     *
+     * @return void
+     */
+    public function testShouldDeleteARoleById()
+    {
+        $user = User::find(1);
+
+        $role = factory(Role::class)->create();
+
+        $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/roles/{$role->id}");
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 }

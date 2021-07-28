@@ -14,5 +14,4 @@ interface InvitationLinkRepositoryInterface
     public function delete(int $invitationId): bool;
     public function register(array $request): InvitationLink;
     public function getValidatedHash(string $hash): InvitationLink;
-    public function generateHash(): string;
 }

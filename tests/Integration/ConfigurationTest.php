@@ -45,12 +45,10 @@ class ConfigurationTest extends TestCase
     public function testShouldFetchAConfigurationById()
     {
         $user = User::find(1);
-        Configuration::create([
-            'name' => $this->faker->name,
-            'value' => '1'
-        ]);
 
-        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . '/configurations/1');
+        $configuration = factory(Configuration::class)->create();
+
+        $response = $this->actingAs($user, 'api')->json('GET', env('APP_API') . "/configurations/{$configuration->id}");
         $response->assertStatus(HttpStatus::SUCCESS);
     }
 
@@ -62,10 +60,7 @@ class ConfigurationTest extends TestCase
     public function testShouldUpdateAConfigurationById()
     {
         $user = User::find(1);
-        $configToUpdate = Configuration::create([
-            'name' => $this->faker->name,
-            'value' => '1'
-        ]);
+        $configToUpdate = factory(Configuration::class)->create();
 
         $response = $this->actingAs($user, 'api')->json('PUT', env('APP_API') . "/configurations/{$configToUpdate->id}", ["value" => "0"]);
         $response->assertStatus(HttpStatus::NO_CONTENT);
@@ -79,10 +74,7 @@ class ConfigurationTest extends TestCase
     public function testShouldDeleteAConfigurationById()
     {
         $user = User::find(1);
-        $configToDelete = Configuration::create([
-            'name' => $this->faker->name,
-            'value' => '1'
-        ]);
+        $configToDelete = factory(Configuration::class)->create();
 
         $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/configurations/{$configToDelete->id}");
         $response->assertStatus(HttpStatus::NO_CONTENT);

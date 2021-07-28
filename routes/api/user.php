@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
 Route::group(["middleware" => "auth:api"], function () {
     Route::get("/profile", "API\UserController@profile");
 
@@ -15,7 +17,7 @@ Route::group(["middleware" => "auth:api"], function () {
 
         Route::get("users", "API\UserController@all")->middleware("permission:read-users");
 
-        Route::delete("/user/{id}", "API\UserController@destroy")->middleware("permission:delete-users");
+        Route::delete("/users/{id}", "API\UserController@destroy")->middleware("permission:delete-users");
 
         Route::post("/users", "API\UserController@store")->middleware("permission:create-users");
 

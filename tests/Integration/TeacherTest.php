@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Http\Controllers\API\HttpStatus;
+use App\Models\Role;
 
 class TeacherTest extends TestCase
 {
@@ -32,5 +33,77 @@ class TeacherTest extends TestCase
         $response = $this->json('POST', env('APP_API') . '/register', $teacher);
 
         $response->assertStatus(HttpStatus::CREATED);
+    }
+
+    /**
+     * It should create a new teacher
+     *
+     * @return void
+     */
+    public function testShouldCreateANewTeacher()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/teachers", [
+            "name" => $this->faker->name(),
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => "password",
+        ]);
+
+        $response->assertStatus(HttpStatus::CREATED)->assertJsonStructure(['id', 'name', 'email']);
+    }
+
+    /**
+     * It should list all teachers
+     *
+     * @return void
+     */
+    public function testShouldListAllTeachers()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/teachers");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'name', 'email']]);
+    }
+
+    /**
+     * It should show a teacher by id
+     *
+     * @return void
+     */
+    public function testShouldShowATeacherById()
+    {
+        $user = User::find(1);
+
+        $teacher = factory(User::class)->create();
+        $teacherRole = Role::where("name", "teacher")->first();
+        $teacher->attachRole($teacherRole);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/teachers/{$teacher->id}");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure(['id', 'name', 'email']);
+    }
+
+    /**
+     * It should update a teacher
+     *
+     * @return void
+     */
+    public function testShouldUpdateTeacher()
+    {
+        $user = User::find(1);
+
+        $teacher = factory(User::class)->create();
+        $teacherRole = Role::where("name", "teacher")->first();
+        $teacher->attachRole($teacherRole);
+
+        $response = $this->actingAs($user, "api")->json("PUT", env("APP_API") . "/teachers/{$teacher->id}", [
+            "name" => "Updated Name",
+        ]);
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 }

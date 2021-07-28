@@ -24,7 +24,7 @@ class CreateInvitationLinkService
 
             $request["user_id"] = Auth::id();
 
-            $request["hash"] = $this->invitationLinkRepository->generateHash();
+            $request["hash"] = InvitationLink::generateHash();
 
             return $this->invitationLinkRepository->register($request);
         } catch (Exception $e) {

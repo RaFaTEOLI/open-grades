@@ -7,6 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\API\HttpStatus;
+use App\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class UserTest extends TestCase
@@ -153,5 +154,53 @@ class UserTest extends TestCase
         $response = $this->actingAs($user, "api")->json("DELETE", env("APP_API") . "/users/{$user->id}/role/1");
 
         $response->assertStatus(HttpStatus::BAD_REQUEST);
+    }
+
+    /**
+     * It should delete an user by id
+     *
+     * @return void
+     */
+    public function testShouldDeleteAnUserById()
+    {
+        $user = User::find(1);
+
+        $userToDelete = factory(User::class)->create();
+
+        $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/users/{$userToDelete->id}");
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
+     * It should delete user's role
+     *
+     * @return void
+     */
+    public function testShouldDeleteRoleFromUser()
+    {
+        $user = User::find(1);
+        $userToDeleteRole = factory(User::class)->create();
+
+        $studentRole = Role::where("name", "student")->first();
+        $userToDeleteRole->attachRole($studentRole);
+
+        $response = $this->actingAs($user, "api")->json("DELETE", env("APP_API") . "/users/{$userToDeleteRole->id}/role/{$studentRole->id}");
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
+     * It should add role to user
+     *
+     * @return void
+     */
+    public function testShouldAddRoleToUser()
+    {
+        $user = User::find(1);
+
+        $userToAddRole = factory(User::class)->create();
+        $response = $this->actingAs($user, "api")->json("PATCH", env("APP_API") . "/users/{$userToAddRole->id}/role/1");
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 }

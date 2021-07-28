@@ -4,6 +4,7 @@ namespace Tests\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
 use App\Models\Role;
+use App\Models\StudentsResponsible;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -95,6 +96,114 @@ class StudentTest extends TestCase
 
         $response = $this->json("DELETE", env("APP_API") . "/students/{$student->id}/responsible/{$responsibleId}");
 
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
+     * It should create a new student's responsible invitation link
+     *
+     * @return void
+     */
+    public function testShouldCreateANewStudentResponsibleInvitationLink()
+    {
+        $user = User::find(1);
+
+        $student = factory(User::class)->create();
+
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/student-responsible", [
+            "student_id" => $student->id,
+        ]);
+
+        $response->assertStatus(HttpStatus::CREATED)->assertJsonStructure(['invitation' => ['student_id', 'type', 'user_id', 'hash', 'link']]);
+    }
+
+    /**
+     * It should create a new student
+     *
+     * @return void
+     */
+    public function testShouldCreateANewStudent()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("POST", env("APP_API") . "/students", [
+            "name" => $this->faker->name(),
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => "password",
+        ]);
+
+        $response->assertStatus(HttpStatus::CREATED)->assertJsonStructure(['id', 'name', 'email']);
+    }
+
+    /**
+     * It should list all students
+     *
+     * @return void
+     */
+    public function testShouldListAllStudents()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'name', 'email', 'responsibles']]);
+    }
+
+    /**
+     * It should show a student by id
+     *
+     * @return void
+     */
+    public function testShouldShowAStudentById()
+    {
+        $user = User::find(1);
+
+        $student = factory(User::class)->create();
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students/{$student->id}");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure(['id', 'name', 'email', 'responsibles']);
+    }
+
+    /**
+     * It should update a student
+     *
+     * @return void
+     */
+    public function testShouldUpdateStudent()
+    {
+        $user = User::find(1);
+
+        $student = factory(User::class)->create();
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        $response = $this->actingAs($user, "api")->json("PUT", env("APP_API") . "/students/{$student->id}", [
+            "name" => "Updated Name",
+        ]);
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
+     * It should delete a student responsible
+     *
+     * @return void
+     */
+    public function testShouldDeleteAStudentResponsible()
+    {
+        $user = User::find(1);
+
+        $studentsResponsible = factory(StudentsResponsible::class)->create();
+
+        $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/students/{$studentsResponsible->student_id}/responsible/{$studentsResponsible->responsible_id}");
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 }

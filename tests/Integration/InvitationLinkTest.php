@@ -3,11 +3,13 @@
 namespace Tests\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
+use App\Models\InvitationLink;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\User;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class InvitationLinkTest extends TestCase
 {
@@ -54,5 +56,55 @@ class InvitationLinkTest extends TestCase
         $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/invitations/{$response->original->id}");
 
         $response->assertStatus(HttpStatus::BAD_REQUEST);
+    }
+
+    /**
+     * It should fetch all invitations
+     *
+     * @return void
+     */
+    public function testShouldFetchAllInvitations()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/invitations");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'user', 'student', 'hash', 'link', 'type']]);
+    }
+
+    /**
+     * It should fetch an invitations by id
+     *
+     * @return void
+     */
+    public function testShouldFetchAnInvitationById()
+    {
+        $user = User::find(1);
+        Auth::login($user);
+
+        $invitationLink = factory(InvitationLink::class)->create();
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/invitations/{$invitationLink->id}");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure(['id', 'user', 'student', 'hash', 'link', 'type']);
+    }
+
+    /**
+     * It should delete an invitation link
+     *
+     * @return void
+     */
+    public function testShouldDeleteAnInvitationLinkById()
+    {
+        $user = User::find(1);
+        Auth::login($user);
+
+        $invitationLink = factory(InvitationLink::class)->create();
+
+        $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/invitations/{$invitationLink->id}");
+        $response->assertStatus(HttpStatus::NO_CONTENT);
     }
 }

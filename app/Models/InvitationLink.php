@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 /**
  *
@@ -63,8 +65,17 @@ class InvitationLink extends Model
         ];
     }
 
-    public static function getLinkFromHash($hash)
+    public static function getLinkFromHash($hash): string
     {
         return env("APP_URL") . "/register/?hash={$hash}";
+    }
+
+    public static function generateHash(): string
+    {
+        $hash = str_replace('$', "", Hash::make(Carbon::now()));
+        $hash = str_replace("/", "", $hash);
+        $hash = str_replace(".", "", $hash);
+
+        return $hash;
     }
 }

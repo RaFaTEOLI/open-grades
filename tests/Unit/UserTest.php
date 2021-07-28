@@ -32,7 +32,7 @@ class UserTest extends TestCase
 
         $this->actingAs($user);
 
-        $invitationLink = (new CreateInvitationLinkService($user))->execute([
+        $invitationLink = (new CreateInvitationLinkService())->execute([
             "type" => "STUDENT",
         ]);
 
