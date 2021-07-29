@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\ApiResponseTime;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
