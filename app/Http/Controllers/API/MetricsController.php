@@ -29,7 +29,9 @@ class MetricsController extends Controller
     {
         return response()->json(
             [
-                "average_response_time" => ApiResponseTime::whereDay('created_at', Carbon::today())->avg('time') / 1000,
+                "average_response_time" => ApiResponseTime::whereDay('created_at', Carbon::today())
+                    ->where('count', '<>', 0)
+                    ->avg('time') / 1000,
                 "requests_count" => ApiResponseTime::whereDay('created_at', Carbon::today())->sum('count'),
             ]
         );

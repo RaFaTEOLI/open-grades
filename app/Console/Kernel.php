@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\ApiResponse',
+        'App\Console\Commands\DeleteOldApiResponseTimes',
     ];
 
     /**
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('command:apiresponse')->everyMinute();
+        $schedule->command('command:deleteOldApiResponse')->dailyAt("00:00");
     }
 
     /**

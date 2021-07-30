@@ -20,7 +20,7 @@ class ApiResponse extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command to save new api response times';
 
     /**
      * Create a new command instance.
@@ -40,19 +40,23 @@ class ApiResponse extends Command
     public function handle()
     {
         $redis = Redis::connection();
-        $response_times = $redis->get('API_RESPONSE_TIMES');
+        $responseTimes = $redis->get('API_RESPONSE_TIMES');
         $redis->set('API_RESPONSE_TIMES', json_encode([]));
-        $response_times = json_decode($response_times);
-        $response_times = array_filter($response_times);
-        if (count($response_times) < 1) {
+        $responseTimes = json_decode($responseTimes);
+        $responseTimes = array_filter($responseTimes);
+
+        if (count($responseTimes) < 1) {
             $average = 0;
         } else {
             //convert from microseconds to ms
-            $average = array_sum($response_times) / count($response_times);
+            $average = array_sum($responseTimes) / count($responseTimes);
         }
-        ApiResponseTime::create([
-            'time' => $average,
-            'count' => count($response_times),
-        ]);
+
+        if (count($responseTimes)) {
+            ApiResponseTime::create([
+                'time' => $average,
+                'count' => count($responseTimes),
+            ]);
+        }
     }
 }
