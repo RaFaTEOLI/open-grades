@@ -35,7 +35,7 @@ class UserRepository implements UserRepositoryInterface
 
             return $users;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), 500);
         }
     }
 

@@ -461,7 +461,7 @@ class UserController extends Controller
 
             return response()->json($user, HttpStatus::SUCCESS);
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
+            return response()->json(["message" => $e->getMessage()], ($e->getCode() == '500') ? HttpStatus::SERVER_ERROR : HttpStatus::UNAUTHORIZED);
         }
     }
 }

@@ -17,10 +17,12 @@ class RedisRepository implements RedisRepositoryInterface
     {
         $redis = Redis::connection();
         $result = json_decode($redis->get($db));
+        if (!$result) return null;
 
         $newResult = [];
 
         if ($limit) {
+            $limit--;
             if ($offset > $limit) {
                 $limit = $offset - $limit;
             }

@@ -30,7 +30,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
         }
     }
 
-    public function store(array $request): Model | object
+    public function store(array $request): Model
     {
         try {
             return $this->model->create($request);

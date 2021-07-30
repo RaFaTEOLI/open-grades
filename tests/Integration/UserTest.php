@@ -28,6 +28,20 @@ class UserTest extends TestCase
     }
 
     /**
+     * It should return the list of users with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfUsersWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/users?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
+
+    /**
      * It should return the user by id
      *
      * @return void

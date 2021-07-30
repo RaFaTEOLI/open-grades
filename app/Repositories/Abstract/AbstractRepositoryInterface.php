@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 interface AbstractRepositoryInterface
 {
     public function all(): Collection | array;
-    public function store(array $request): Model | object;
+    public function store(array $request): Model;
     public function findById(int $id): object;
     public function update(int $id, array $set): void;
     public function delete(int $id): bool;
