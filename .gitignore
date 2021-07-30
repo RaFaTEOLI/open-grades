@@ -6,7 +6,6 @@
 /report
 /reports
 /docker-compose/mysql/
-/docker-compose/redis/appendonly.aof
 .env
 .env.backup
 .phpunit.result.cache
@@ -14,3 +13,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+docker-compose/redis/appendonly.aof
