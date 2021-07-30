@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApiResponseTime;
+use App\Repositories\Example\ExampleRepository;
 use Illuminate\Support\Carbon;
 
 class APIController extends Controller

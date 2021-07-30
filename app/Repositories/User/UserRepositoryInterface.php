@@ -4,7 +4,6 @@ namespace App\Repositories\User;
 
 use Illuminate\Support\Collection;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 interface UserRepositoryInterface
 {
