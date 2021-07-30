@@ -6,7 +6,7 @@
 /report
 /reports
 /docker-compose/mysql/
-/docker-compose/redis/appendonly.aof
+/docker-compose/redis/
 .env
 .env.backup
 .phpunit.result.cache
