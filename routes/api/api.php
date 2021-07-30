@@ -20,15 +20,9 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::get("logout", "API\UserController@logout");
 });
 
-Route::get("/health", function () {
-    return response()->json(["message" => "It's working"], 200);
-});
-
-Route::get("/version", function () {
-    return response()->json(["version" => env("APP_VERSION")], 200);
-});
-
-Route::get("/metrics", "API\MetricsController@index");
+Route::get("/health", "API\APIController@health");
+Route::get("/version", "API\APIController@version");
+Route::get("/metrics", "API\APIController@metrics");
 
 Route::fallback(function () {
     return response()->json(["error" => "Page Not Found"], 404);

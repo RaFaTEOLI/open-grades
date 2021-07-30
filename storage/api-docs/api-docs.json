@@ -11,6 +11,86 @@
         }
     ],
     "paths": {
+        "/metrics": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get API Metrics",
+                "description": "Get metrics from API",
+                "operationId": "metrics",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseTime"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/version": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get API Version",
+                "description": "Get API Version",
+                "operationId": "version",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "version": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "1.0.0"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get Status 200 if API is running",
+                "description": "Get Status 200 if API is running",
+                "operationId": "health",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "It's working"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/configurations": {
             "get": {
                 "tags": [
@@ -348,28 +428,6 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/metrics": {
-            "get": {
-                "tags": [
-                    "API"
-                ],
-                "summary": "Get API Metrics",
-                "description": "Get metrics from API",
-                "operationId": "index",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseTime"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/permissions": {
