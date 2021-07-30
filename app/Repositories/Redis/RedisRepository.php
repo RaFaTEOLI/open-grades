@@ -13,10 +13,25 @@ class RedisRepository implements RedisRepositoryInterface
      *
      * @param string $db
      */
-    public function all(string $db): array | null
+    public function all(string $db, int $limit = 0, int $offset = 0): array | null
     {
         $redis = Redis::connection();
-        return json_decode($redis->get($db));
+        $result = json_decode($redis->get($db));
+
+        $newResult = [];
+
+        if ($limit) {
+            if ($offset > $limit) {
+                $limit = $offset - $limit;
+            }
+            for ($i = $offset; $i <= $limit; $i++) {
+                array_push($newResult, $result[$i]);
+            }
+        } else {
+            $newResult = $result;
+        }
+
+        return $newResult;
     }
 
     /**

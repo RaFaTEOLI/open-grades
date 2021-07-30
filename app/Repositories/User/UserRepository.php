@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Repositories\Redis\RedisRepository;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
@@ -15,13 +16,19 @@ class UserRepository implements UserRepositoryInterface
     /*
         Get All Active Users
     */
-    public function all(): Collection | array
+    public function all(int $limit = 0, int $offset = 0): Collection | array
     {
         try {
-            $users = (new RedisRepository())->all("users");
+            $users = (new RedisRepository())->all("users", $limit, $offset);
 
             if (empty($users)) {
                 $users = User::where("deleted_at", null)
+                    ->when($limit, function ($query, $limit) {
+                        return $query->limit($limit);
+                    })
+                    ->when($offset && $limit, function ($query, $offset) {
+                        return $query->offset($offset);
+                    })
                     ->get()
                     ->map->format();
             }

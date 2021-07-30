@@ -20,10 +20,6 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::get("logout", "API\UserController@logout");
 });
 
-Route::get("/", function () {
-    return response()->json(["message" => "It's working"]);
-});
-
 Route::get("/health", function () {
     return response()->json(["message" => "It's working"], 200);
 });

@@ -4,10 +4,11 @@ namespace App\Repositories\User;
 
 use Illuminate\Support\Collection;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 interface UserRepositoryInterface
 {
-    public function all(): Collection | array;
+    public function all(int $limit = 0, int $offset = 0): Collection | array;
     public function allStudents(): Collection;
     public function store(array $request): User;
     public function findById(int $id): object;

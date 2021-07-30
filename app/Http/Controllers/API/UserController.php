@@ -9,12 +9,14 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\API\HttpStatus;
 use App\Http\Requests\User\InviteUserRequest;
 use App\Http\Requests\User\UserRequest;
+use App\Http\Traits\Pagination;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
 use Exception;
 
 class UserController extends Controller
 {
+    use Pagination;
     use RegistersUsers;
 
     private $userRepository;
@@ -450,10 +452,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function all(Request $request)
     {
-        $user = $this->userRepository->all();
+        try {
+            $paginated = $this->paginate($request);
 
-        return response()->json($user, HttpStatus::SUCCESS);
+            $user = $this->userRepository->all($paginated["limit"], $paginated["offset"]);
+
+            return response()->json($user, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::UNAUTHORIZED);
+        }
     }
 }
