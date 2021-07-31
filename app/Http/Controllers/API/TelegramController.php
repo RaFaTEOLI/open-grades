@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Telegram\TelegramRequest;
+use App\Http\Traits\Pagination;
 use App\Repositories\Telegram\TelegramRepository;
 use App\Services\Telegram\CreateMessageService;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TelegramController extends Controller
 {
+    use Pagination;
     private $telegramRepository;
 
     public function __construct()
@@ -27,6 +29,24 @@ class TelegramController extends Controller
      * operationId="index",
      * tags={"Message"},
      * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
      * @OA\Response(
      *     response=200,
      *     description="Success",
@@ -38,11 +58,16 @@ class TelegramController extends Controller
      *  ),
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $results = $this->telegramRepository->all();
+        try {
+            $paginated = $this->paginate($request);
+            $results = $this->telegramRepository->all($paginated["limit"], $paginated["offset"]);
 
-        return response()->json($results, HttpStatus::SUCCESS);
+            return response()->json($results, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 500);
+        }
     }
 
     /**

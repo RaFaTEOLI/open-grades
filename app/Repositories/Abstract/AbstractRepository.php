@@ -21,10 +21,18 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
         return app($this->model);
     }
 
-    public function all(): Collection | array
+    public function all(int $limit = 0, int $offset = 0): Collection | array
     {
         try {
-            return $this->model->all();
+            // return $this->model->all();
+            return $this->model->when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+                ->when($offset && $limit, function ($query, $offset) {
+                    return $query->offset($offset);
+                })
+                ->get()
+                ->map->format();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

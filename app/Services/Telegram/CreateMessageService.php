@@ -22,7 +22,7 @@ class CreateMessageService
             AdminController::isAdminOrFail();
 
             Http::get("https://api.telegram.org/bot" . env('BOT_KEY') . "/sendMessage?chat_id=" . env('CHANNEL_ID') . "&text=" . $request["message"]);
-            $this->telegramRepository->register($request);
+            $this->telegramRepository->store($request);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
