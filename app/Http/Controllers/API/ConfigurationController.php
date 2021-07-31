@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Configuration\ConfigurationRequest;
+use App\Http\Traits\Pagination;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Services\Configuration\CreateConfigurationService;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Exception;
 
 class ConfigurationController extends Controller
 {
+    use Pagination;
     private $configurationRepository;
 
     public function __construct()
@@ -26,6 +28,24 @@ class ConfigurationController extends Controller
      * operationId="index",
      * tags={"Configuration"},
      * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
      * @OA\Response(
      *     response=200,
      *     description="Success",
@@ -37,11 +57,17 @@ class ConfigurationController extends Controller
      *  ),
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $configurations = $this->configurationRepository->all();
+        try {
+            $paginated = $this->paginate($request);
 
-        return response()->json($configurations, HttpStatus::SUCCESS);
+            $configurations = $this->configurationRepository->all($paginated["limit"], $paginated["offset"]);
+
+            return response()->json($configurations, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], ($e->getCode() == '500') ? HttpStatus::SERVER_ERROR : HttpStatus::UNAUTHORIZED);
+        }
     }
 
     /**

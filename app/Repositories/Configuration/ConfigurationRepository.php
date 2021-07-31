@@ -14,10 +14,20 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
     /**
      * Get All Configurations
      */
-    public function all(): Collection
+    public function all(int $limit = 0, int $offset = 0): Collection
     {
-        return Configuration::all()
-            ->map->format();
+        try {
+            return Configuration::when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+                ->when($offset && $limit, function ($query, $offset) {
+                    return $query->offset($offset);
+                })
+                ->get()
+                ->map->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 500);
+        }
     }
 
     /**

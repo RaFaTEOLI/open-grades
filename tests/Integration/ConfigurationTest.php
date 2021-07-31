@@ -26,6 +26,20 @@ class ConfigurationTest extends TestCase
     }
 
     /**
+     * It should return the list of configurations with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfConfigurationsWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/configurations?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
+
+    /**
      * It should create a new configuration
      *
      * @return void
