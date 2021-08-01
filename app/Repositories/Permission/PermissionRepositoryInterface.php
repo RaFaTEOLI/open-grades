@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 interface PermissionRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(int $limit = 0, int $offset = 0): Collection;
     public function store(array $request): Permission;
     public function findPermissionsNotInRole(int $roleId): Collection;
     public function findById(int $id): object;

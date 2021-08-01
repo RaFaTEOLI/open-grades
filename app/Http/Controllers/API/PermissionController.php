@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Permission\PermissionRequest;
+use App\Http\Traits\Pagination;
 use App\Repositories\Permission\PermissionRepository;
 use App\Services\Permission\CreatePermissionService;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Exception;
 
 class PermissionController extends Controller
 {
+    use Pagination;
     private $permissionRepository;
 
     public function __construct()
@@ -42,9 +44,10 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = $this->permissionRepository->all();
+        $paginated = $this->paginate($request);
+        $permissions = $this->permissionRepository->all($paginated["limit"], $paginated["offset"]);
 
         return response()->json($permissions, HttpStatus::SUCCESS);
     }

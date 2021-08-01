@@ -15,12 +15,17 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return Permission
      */
-    public function all(): Collection
+    public function all(int $limit = 0, int $offset = 0): Collection
     {
-        $permissions = (new RedisRepository())->all("permissions");
+        $permissions = (new RedisRepository())->all("permissions", $limit, $offset);
 
         if (empty($permissions)) {
-            return Permission::all()->map->format();
+            return Permission::when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+                ->when($offset && $limit, function ($query, $offset) {
+                    return $query->offset($offset);
+                })->get()->map->format();
         }
 
         return $permissions;
