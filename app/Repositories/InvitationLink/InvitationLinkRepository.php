@@ -14,9 +14,15 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
     /**
      * Get All Active Invitation Links
      */
-    public function all(): Collection
+    public function all(int $limit = 0, int $offset = 0): Collection
     {
         return InvitationLink::where("used_at", null)
+            ->when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+            ->when($offset && $limit, function ($query, $offset) {
+                return $query->offset($offset);
+            })
             ->with("user")
             ->get()
             ->map->format();

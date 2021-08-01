@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 interface InvitationLinkRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(int $limit = 0, int $offset = 0): Collection;
     public function findById(int $invitationId): object;
     public function findByUserId(int $userId): object;
     public function update(int $invitationId, array $set): void;

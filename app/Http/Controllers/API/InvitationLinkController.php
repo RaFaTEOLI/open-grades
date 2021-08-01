@@ -4,13 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InvitationLink\InvitationLinkRequest;
+use App\Http\Traits\Pagination;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
 use Exception;
 use App\Services\InvitationLink\CreateInvitationLinkService;
 use App\Services\InvitationLink\RemoveInvitationLinkService;
+use Illuminate\Http\Request;
 
 class InvitationLinkController extends Controller
 {
+    use Pagination;
     private $invitationLinkRepository;
 
     public function __construct()
@@ -26,6 +29,24 @@ class InvitationLinkController extends Controller
      * operationId="index",
      * tags={"Invitation"},
      * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
      * @OA\Response(
      *     response=200,
      *     description="Success",
@@ -37,9 +58,10 @@ class InvitationLinkController extends Controller
      *  ),
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invitations = $this->invitationLinkRepository->all();
+        $paginated = $this->paginate($request);
+        $invitations = $this->invitationLinkRepository->all($paginated["limit"], $paginated["offset"]);
 
         return response()->json($invitations, HttpStatus::SUCCESS);
     }
