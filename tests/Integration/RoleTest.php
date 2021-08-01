@@ -124,4 +124,18 @@ class RoleTest extends TestCase
         $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/roles/{$role->id}");
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
+
+    /**
+     * It should return the list of roles with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfRolesWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/roles?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
 }

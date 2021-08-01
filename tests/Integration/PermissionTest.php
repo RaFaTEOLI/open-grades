@@ -28,6 +28,20 @@ class PermissionTest extends TestCase
     }
 
     /**
+     * It should return the list of permissions with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfPermissionsWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/permissions?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
+
+    /**
      * It should list a permission
      *
      * @return void

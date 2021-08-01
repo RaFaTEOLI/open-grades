@@ -107,4 +107,18 @@ class InvitationLinkTest extends TestCase
         $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/invitations/{$invitationLink->id}");
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
+
+    /**
+     * It should return the list of invitations with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfInvitationsWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/invitations?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
 }

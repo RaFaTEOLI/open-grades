@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\HttpStatus;
 use App\Http\Requests\Role\RoleRequest;
+use App\Http\Traits\Pagination;
 use App\Models\Role;
 use App\Services\Role\CreateRoleService;
 use App\Repositories\Roles\RolesRepository;
@@ -14,6 +15,7 @@ use Exception;
 
 class RolesController extends Controller
 {
+    use Pagination;
     private $rolesRepository;
 
     public function __construct()
@@ -30,6 +32,24 @@ class RolesController extends Controller
      * operationId="index",
      * tags={"Role"},
      * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
      * @OA\Response(
      *     response=200,
      *     description="Success",
@@ -41,11 +61,16 @@ class RolesController extends Controller
      *  ),
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = $this->rolesRepository->allWithoutPermissions();
+        try {
+            $paginated = $this->paginate($request);
+            $roles = $this->rolesRepository->allWithoutPermissions($paginated["limit"], $paginated["offset"]);
 
-        return response()->json($roles, HttpStatus::SUCCESS);
+            return response()->json($roles, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
+        }
     }
 
     /**

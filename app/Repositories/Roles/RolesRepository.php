@@ -5,6 +5,7 @@ namespace App\Repositories\Roles;
 use App\Models\Role;
 use App\Repositories\Roles\RolesRepositoryInterface;
 use App\Repositories\User\UserRepository;
+use Exception;
 use Illuminate\Support\Collection;
 
 class RolesRepository implements RolesRepositoryInterface
@@ -24,9 +25,18 @@ class RolesRepository implements RolesRepositoryInterface
      *
      * @return Role
      */
-    public function allWithoutPermissions(): Collection
+    public function allWithoutPermissions(int $limit = 0, int $offset = 0): Collection
     {
-        return Role::all()->map->formatWithoutPermissions();
+        try {
+            return Role::when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+                ->when($offset && $limit, function ($query, $offset) {
+                    return $query->offset($offset);
+                })->get()->map->formatWithoutPermissions();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 500);
+        }
     }
 
     /**

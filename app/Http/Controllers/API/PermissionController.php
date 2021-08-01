@@ -64,10 +64,14 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $paginated = $this->paginate($request);
-        $permissions = $this->permissionRepository->all($paginated["limit"], $paginated["offset"]);
+        try {
+            $paginated = $this->paginate($request);
+            $permissions = $this->permissionRepository->all($paginated["limit"], $paginated["offset"]);
 
-        return response()->json($permissions, HttpStatus::SUCCESS);
+            return response()->json($permissions, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
+        }
     }
 
     /**
