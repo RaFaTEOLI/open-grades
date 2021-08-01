@@ -206,4 +206,18 @@ class StudentTest extends TestCase
         $response = $this->actingAs($user, 'api')->json('DELETE', env('APP_API') . "/students/{$studentsResponsible->student_id}/responsible/{$studentsResponsible->responsible_id}");
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
+
+    /**
+     * It should return the list of students with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfStudentsWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
 }

@@ -11,10 +11,16 @@ class StudentRepository implements StudentRepositoryInterface
     /*
         Get All Active Students
     */
-    public function all(): Collection
+    public function all(int $limit = 0, int $offset = 0): Collection
     {
         return Student::where("deleted_at", null)
             ->withRole("student")
+            ->when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+            ->when($offset && $limit, function ($query, $offset) {
+                return $query->offset($offset);
+            })
             ->get()
             ->map->format();
     }

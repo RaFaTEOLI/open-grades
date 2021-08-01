@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\Student\StudentRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\Pagination;
 use App\Repositories\Student\StudentRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    use Pagination;
     private $userRepository;
     private $studentRepository;
 
@@ -30,6 +32,24 @@ class StudentController extends Controller
      * operationId="index",
      * tags={"Student"},
      * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
      * @OA\Response(
      *     response=200,
      *     description="Success",
@@ -41,11 +61,16 @@ class StudentController extends Controller
      *  ),
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = $this->studentRepository->all();
+        try {
+            $paginated = $this->paginate($request);
+            $students = $this->studentRepository->all($paginated["limit"], $paginated["offset"]);
 
-        return response()->json($students, HttpStatus::SUCCESS);
+            return response()->json($students, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
     }
 
     /**
