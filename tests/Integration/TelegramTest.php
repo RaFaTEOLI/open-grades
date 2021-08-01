@@ -61,4 +61,18 @@ class TelegramTest extends TestCase
         );
         $response->assertStatus(HttpStatus::SUCCESS);
     }
+
+    /**
+     * It should return the list of messages with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfMessagesWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/messages?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
 }

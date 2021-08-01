@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\Teacher\TeacherRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\Pagination;
 use App\Repositories\Teacher\TeacherRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    use Pagination;
     private $userRepository;
     private $teacherRepository;
 
@@ -30,6 +32,24 @@ class TeacherController extends Controller
      * operationId="index",
      * tags={"Teacher"},
      * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
      * @OA\Response(
      *     response=200,
      *     description="Success",
@@ -41,11 +61,16 @@ class TeacherController extends Controller
      *  ),
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $teachers = $this->teacherRepository->all();
+        try {
+            $paginated = $this->paginate($request);
+            $teachers = $this->teacherRepository->all($paginated["limit"], $paginated["offset"]);
 
-        return response()->json($teachers, HttpStatus::SUCCESS);
+            return response()->json($teachers, HttpStatus::SUCCESS);
+        } catch (Exception $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
+        }
     }
 
     /**

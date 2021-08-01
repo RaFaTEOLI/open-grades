@@ -11,10 +11,16 @@ class TeacherRepository implements TeacherRepositoryInterface
     /*
         Get All Active Teachers
     */
-    public function all(): Collection
+    public function all(int $limit = 0, int $offset = 0): Collection
     {
         return User::where("deleted_at", null)
             ->withRole("teacher")
+            ->when($limit, function ($query, $limit) {
+                return $query->limit($limit);
+            })
+            ->when($offset && $limit, function ($query, $offset) {
+                return $query->offset($offset);
+            })
             ->get()
             ->map->formatSimple();
     }

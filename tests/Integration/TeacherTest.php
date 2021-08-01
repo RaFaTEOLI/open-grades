@@ -106,4 +106,18 @@ class TeacherTest extends TestCase
 
         $response->assertStatus(HttpStatus::NO_CONTENT);
     }
+
+    /**
+     * It should return the list of teachers with limit and offset
+     *
+     * @return void
+     */
+    public function testShouldFetchListOfTeachersWithLimitAndOffset()
+    {
+        $user = User::find(1);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/teachers?offset=0&limit=1");
+
+        $response->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($response->original) == 1);
+    }
 }
