@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * required={"name"},
  * @OA\Xml(name="Subject"),
  * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ * @OA\Property(property="name", type="string", readOnly="true", example="Math"),
  * )
  *
  * Class Subject
