@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
  * Admin Middleware
  */
 Route::group(
-    ["prefix" => "student", ["middleware" => ["role:admin"]], ["middleware" => ["role:teacher"]]],
+    ["prefix" => "school", ["middleware" => ["role:admin"]], ["middleware" => ["role:teacher"]]],
     function () {
         Route::get("/students", "StudentController@index")
             ->name("students")

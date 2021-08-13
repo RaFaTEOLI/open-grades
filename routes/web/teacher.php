@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,8 +8,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
 Route::group(
-    ["prefix" => "teacher", ["middleware" => ["role:admin"]], ["middleware" => ["role:teacher"]]],
+    ["prefix" => "school", ["middleware" => ["role:admin"]], ["middleware" => ["role:teacher"]]],
     function () {
         Route::get("/teachers", "TeacherController@index")
             ->name("teachers")

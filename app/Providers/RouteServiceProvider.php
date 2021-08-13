@@ -62,6 +62,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->loadWebRoute("permission");
         $this->loadWebRoute("student");
         $this->loadWebRoute("teacher");
+        $this->loadWebRoute("subject");
     }
 
     /**

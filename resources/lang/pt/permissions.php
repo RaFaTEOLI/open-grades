@@ -26,4 +26,5 @@ return [
     "permissions" => "Permissões",
     "configuration" => "Configuração",
     "invitation" => "Convites",
+    "subjects" => "Matérias"
 ];
