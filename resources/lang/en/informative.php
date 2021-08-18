@@ -16,5 +16,7 @@ return [
     'forbidden' => "You can't access this page!",
     'unauthorized' => "You don't have permission to access this page!",
     'not_found' => "This page doesn't exist!",
-    'back_home' => "Back to home"
+    'back_home' => "Back to home",
+    'yes' => 'Yes',
+    'no' => 'No'
 ];

@@ -171,6 +171,9 @@
                     <li>
                         <a href="{{ route('subjects') }}" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>{{ __('menu.subjects') }}</a>
                     </li>
+                    <li>
+                        <a href="{{ route('years') }}" class="waves-effect"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ __('menu.years') }}</a>
+                    </li>
                     @endif
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))
                     <li>

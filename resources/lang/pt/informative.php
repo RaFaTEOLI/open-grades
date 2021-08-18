@@ -16,5 +16,7 @@ return [
     'forbidden' => 'Você não pode acessar essa página!',
     'unauthorized' => 'Você não possui permissão para acessar essa página!',
     'not_found' => 'Essa página não existe',
-    'back_home' => "Voltar para ínicio"
+    'back_home' => "Voltar para ínicio",
+    'yes' => 'Sim',
+    'no' => 'Não'
 ];

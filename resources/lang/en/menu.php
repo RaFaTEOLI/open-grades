@@ -22,4 +22,5 @@ return [
     "configuration" => "Configuration",
     "roles" => "User Roles",
     "permissions" => "Permissions",
+    "years" => "School Years"
 ];

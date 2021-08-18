@@ -22,4 +22,5 @@ return [
     "configuration" => "Configurações",
     "roles" => "Tipos de Usuário",
     "permissions" => "Permissões",
+    "years" => "Anos Escolares"
 ];

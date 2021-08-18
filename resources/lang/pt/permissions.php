@@ -26,5 +26,6 @@ return [
     "permissions" => "Permissões",
     "configuration" => "Configuração",
     "invitation" => "Convites",
-    "subjects" => "Matérias"
+    "subjects" => "Matérias",
+    "years" => "Anos Escolares"
 ];

@@ -16,4 +16,7 @@ return [
     'subjects' => 'Subjects',
     'subject' => 'Subject',
     'name' => 'Name',
+    "start_date" => "Start",
+    "end_date" => "End",
+    "closed" => "Closed"
 ];
