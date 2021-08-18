@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["middleware" => "auth:api"], function () {
-    Route::group(["middleware" => ["role:admin"], ["middleware" => ["role:admin"]]], function () {
+    Route::group(["middleware" => ["role:admin"]], function () {
         Route::get("/subjects", "API\SubjectController@index")->middleware("permission:read-subjects");
 
         Route::get("/subjects/{id}", "API\SubjectController@show")

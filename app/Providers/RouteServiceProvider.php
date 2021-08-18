@@ -89,6 +89,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->loadApiRoute("student");
         $this->loadApiRoute("teacher");
         $this->loadApiRoute("subject");
+        $this->loadApiRoute("year");
     }
 
     private function loadWebRoute($routeName)

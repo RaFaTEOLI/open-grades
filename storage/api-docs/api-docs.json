@@ -2282,6 +2282,227 @@
                     }
                 ]
             }
+        },
+        "/years": {
+            "get": {
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Get Years",
+                "description": "Get a list of years",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of results for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Year"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Subject"
+                ],
+                "summary": "Create School Year",
+                "description": "Create School Year by start_date and end_date",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send start_date and end_date",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "start_date": {
+                                        "type": "datetime",
+                                        "example": "2020-01-31"
+                                    },
+                                    "end_date": {
+                                        "type": "datetime",
+                                        "example": "2020-11-31"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Year"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/years/{id}": {
+            "get": {
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Get Year",
+                "description": "Show Year by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Year id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Year"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Update Year",
+                "description": "Update Year",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Year id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Send start_date, end_date, closed",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "start_date": {
+                                        "type": "datetime",
+                                        "example": "2020-01-31"
+                                    },
+                                    "end_date": {
+                                        "type": "datetime",
+                                        "example": "2020-11-31"
+                                    },
+                                    "closed": {
+                                        "type": "boolean",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Delete Year",
+                "description": "Delete year by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Year id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -2632,7 +2853,6 @@
                     },
                     "name": {
                         "type": "string",
-                        "readOnly": "true",
                         "example": "Math"
                     }
                 },
@@ -2832,6 +3052,35 @@
                 "type": "object",
                 "xml": {
                     "name": "UserRoles"
+                }
+            },
+            "Year": {
+                "required": [
+                    "start_date",
+                    "end_date"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "start_date": {
+                        "type": "datetime",
+                        "example": "2020-01-27"
+                    },
+                    "end_date": {
+                        "type": "datetime",
+                        "example": "2020-12-10"
+                    },
+                    "closed": {
+                        "type": "integer",
+                        "example": "0"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Year"
                 }
             }
         },
