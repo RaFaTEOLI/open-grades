@@ -5,4 +5,4 @@
 #php artisan test
 
 # For Docker Users
-docker exec -it 34c43ea35d7c php artisan test
+docker exec 34c43ea35d7c php artisan test
