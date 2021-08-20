@@ -174,6 +174,12 @@
                     <li>
                         <a href="{{ route('years') }}" class="waves-effect"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ __('menu.years') }}</a>
                     </li>
+                    <li>
+                        <a href="{{ route('grades') }}" class="waves-effect"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i>{{ __('menu.grades') }}</a>
+                    </li>
+                    <li>
+                        <a href="map-google.html" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.classes') }}</a>
+                    </li>
                     @endif
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))
                     <li>
@@ -185,15 +191,6 @@
                     @endif
                     <li>
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ __('menu.calendars') }}</a>
-                    </li>
-                    <li>
-                        <a href="fontawesome.html" class="waves-effect"><i class="fa fa-font fa-fw" aria-hidden="true"></i>{{ __('menu.grades') }}</a>
-                    </li>
-                    <li>
-                        <a href="map-google.html" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.classes') }}</a>
-                    </li>
-                    <li>
-                        <a href="blank.html" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>{{ __('menu.subjects') }}</a>
                     </li>
                 </ul>
                 <!-- <div class="center p-20">

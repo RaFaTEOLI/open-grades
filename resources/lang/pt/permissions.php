@@ -27,5 +27,6 @@ return [
     "configuration" => "Configuração",
     "invitation" => "Convites",
     "subjects" => "Matérias",
-    "years" => "Anos Escolares"
+    "years" => "Anos Escolares",
+    "grades" => "Séries",
 ];

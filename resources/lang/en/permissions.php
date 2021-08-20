@@ -27,5 +27,6 @@ return [
     "configuration" => "Configuration",
     "invitation" => "Invitation",
     "subjects" => "Subjects",
-    "years" => "School Years"
+    "years" => "School Years",
+    "grades" => "Grades",
 ];

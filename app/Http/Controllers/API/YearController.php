@@ -61,9 +61,9 @@ class YearController extends Controller
     {
         try {
             $paginated = $this->paginate($request);
-            $subjects = $this->yearRepository->all($paginated["limit"], $paginated["offset"]);
+            $years = $this->yearRepository->all($paginated["limit"], $paginated["offset"]);
 
-            return response()->json($subjects, HttpStatus::SUCCESS);
+            return response()->json($years, HttpStatus::SUCCESS);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
@@ -101,9 +101,9 @@ class YearController extends Controller
         try {
             $input = $request->only(["start_date", "end_date"]);
 
-            $subject = $this->yearRepository->store($input);
+            $year = $this->yearRepository->store($input);
 
-            return response()->json($subject->format(), HttpStatus::CREATED);
+            return response()->json($year->format(), HttpStatus::CREATED);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
@@ -185,9 +185,9 @@ class YearController extends Controller
     public function show(int $id)
     {
         try {
-            $subject = $this->yearRepository->findById($id);
+            $year = $this->yearRepository->findById($id);
 
-            return response()->json($subject, HttpStatus::SUCCESS);
+            return response()->json($year, HttpStatus::SUCCESS);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }

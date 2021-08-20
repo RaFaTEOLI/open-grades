@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# For Non-Docker Users
+#php artisan test
+
+# For Docker Users
+#docker exec -it <containerId> php artisan test

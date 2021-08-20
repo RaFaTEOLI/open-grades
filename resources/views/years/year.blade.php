@@ -22,7 +22,7 @@
             <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
                 <a type="button" href="{{ route('years') }}" class="btn btn-success pull-right row b-none"><i class="fa fa-arrow-left"></i></a>
             </div>
-            <h3 class="box-title">{{ __('school.years') }}</h3>
+            <h3 class="box-title">{{ __('menu.years') }}</h3>
             <form role="form" action="{{ empty($year) ? route('years') : route('years.update', $year->id ?? '') }}" method="POST">
                 @csrf
                 @method(empty($year) ? 'POST' : 'PUT')
@@ -60,20 +60,4 @@
     </div>
 </div>
 <!-- /.container-fluid -->
-<script>
-    function copyToClipboard() {
-        const inputToCopy = document.querySelector('#link');
-        inputToCopy.select();
-        document.execCommand("copy");
-        $.toast({
-            heading: 'Open Grades',
-            text: '<?= __("messages.copied") ?>',
-            position: 'top-right',
-            loaderBg: '#fff',
-            icon: 'success',
-            hideAfter: 5000,
-            stack: 6
-        });
-    }
-</script>
 @endsection
