@@ -26,7 +26,6 @@ class GradeController extends Controller
                 "grades" => $grades,
             ]);
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }
@@ -42,7 +41,6 @@ class GradeController extends Controller
                 ->route("grades")
                 ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }
@@ -66,7 +64,7 @@ class GradeController extends Controller
         try {
             $grade = $this->gradeRepository->findById($id);
 
-            return view("grade/grade", ["grade" => $grade]);
+            return view("grades/grade", ["grade" => $grade]);
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }

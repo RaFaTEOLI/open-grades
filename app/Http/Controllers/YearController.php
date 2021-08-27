@@ -28,7 +28,6 @@ class YearController extends Controller
                 "years" => $years,
             ]);
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }
@@ -95,7 +94,6 @@ class YearController extends Controller
                 ->route("years")
                 ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }

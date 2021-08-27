@@ -57,6 +57,9 @@
                             <td class="txt-oflo">{{ $grade->name }}</td>
                             <td>
                                 <div class="d-flex">
+                                    @if (Auth::user()->can(['update-grades']))
+                                    <a type="button" href="{{ route('grades.show', $grade->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                    @endif
                                     @if (Auth::user()->can(['delete-grades']))
                                     <form class="btn" action="{{ route('grades.destroy', $grade->id) }}" method="post">
                                         @csrf

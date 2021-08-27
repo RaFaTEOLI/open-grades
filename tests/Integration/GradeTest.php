@@ -78,6 +78,24 @@ class GradeTest extends TestCase
     }
 
     /**
+     * It should update a grade
+     *
+     * @return void
+     */
+    public function testShouldUpdateGrade()
+    {
+        $user = User::find(1);
+
+        $grade = factory(Grade::class)->create();
+
+        $response = $this->actingAs($user, "api")->json("PUT", env("APP_API") . "/grades/{$grade->id}", [
+            "name" => $this->faker->name(),
+        ]);
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
      * It should return the list of Grades with limit and offset
      *
      * @return void

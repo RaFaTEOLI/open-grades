@@ -17,7 +17,7 @@ class CreateStudentsExamsTable extends Migration
             $table->bigIncrements("id");
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("exam_id");
-            $table->double("weight", 15, 8);
+            $table->double("grade", 15, 8);
             $table->timestamps();
 
             $table

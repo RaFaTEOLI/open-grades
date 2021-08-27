@@ -79,6 +79,25 @@ class YearTest extends TestCase
     }
 
     /**
+     * It should update a year
+     *
+     * @return void
+     */
+    public function testShouldUpdateYear()
+    {
+        $user = User::find(1);
+
+        $year = factory(Year::class)->create();
+
+        $response = $this->actingAs($user, "api")->json("PUT", env("APP_API") . "/years/{$year->id}", [
+            "start_date" => $this->faker->date('Y-m-d'),
+            "end_date" => $this->faker->dateTimeBetween('+10 month', '+12 month')->format('Y-m-d')
+        ]);
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
      * It should return the list of Years with limit and offset
      *
      * @return void

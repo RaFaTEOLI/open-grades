@@ -16,6 +16,7 @@ class CreateExamsTable extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('class_id');
+            $table->smallInteger('year_division')->nullable();
             $table->double('weight', 15, 8);
             $table->timestamps();
 

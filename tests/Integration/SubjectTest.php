@@ -78,6 +78,24 @@ class SubjectTest extends TestCase
     }
 
     /**
+     * It should update a subject
+     *
+     * @return void
+     */
+    public function testShouldUpdateSubject()
+    {
+        $user = User::find(1);
+
+        $subject = factory(Subject::class)->create();
+
+        $response = $this->actingAs($user, "api")->json("PUT", env("APP_API") . "/subjects/{$subject->id}", [
+            "name" => $this->faker->name(),
+        ]);
+
+        $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
      * It should return the list of Subjects with limit and offset
      *
      * @return void

@@ -17,6 +17,7 @@ class CreateStudentsEvaluationTable extends Migration
             $table->bigIncrements("id");
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("class_evaluation_id");
+            $table->double("grade", 15, 8);
             $table->timestamps();
 
             $table

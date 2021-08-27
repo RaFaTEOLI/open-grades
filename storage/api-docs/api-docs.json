@@ -91,6 +91,239 @@
                 }
             }
         },
+        "/classes": {
+            "get": {
+                "tags": [
+                    "Class"
+                ],
+                "summary": "Get Classes",
+                "description": "Get a list of Classes",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of results for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Classes"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Class"
+                ],
+                "summary": "Create Class",
+                "description": "Create Class by name",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send subject_id, grade_id and user_id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "subject_id",
+                                    "grade_id",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "subject_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "grade_id": {
+                                        "type": "integer",
+                                        "example": "5"
+                                    },
+                                    "user_id": {
+                                        "description": "The user that will teach the class",
+                                        "type": "integer",
+                                        "example": "6"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Classes"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/classes/{id}": {
+            "get": {
+                "tags": [
+                    "Class"
+                ],
+                "summary": "Get Class",
+                "description": "Show Class by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Class id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Classes"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Class"
+                ],
+                "summary": "Update Class",
+                "description": "Update Class",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Class id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Send subject_id, grade_id and user_id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "subject_id",
+                                    "grade_id",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "subject_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "grade_id": {
+                                        "type": "integer",
+                                        "example": "5"
+                                    },
+                                    "user_id": {
+                                        "description": "The user that will teach the class",
+                                        "type": "integer",
+                                        "example": "6"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Class"
+                ],
+                "summary": "Delete Class",
+                "description": "Delete Class by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Class id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/configurations": {
             "get": {
                 "tags": [
@@ -290,6 +523,214 @@
                         "name": "id",
                         "in": "path",
                         "description": "Configuration id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/grades": {
+            "get": {
+                "tags": [
+                    "Grade"
+                ],
+                "summary": "Get Grades",
+                "description": "Get a list of Grades",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of results for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Grade"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Grade"
+                ],
+                "summary": "Create Grade",
+                "description": "Create Grade by name",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Preschool"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Grade"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/grades/{id}": {
+            "get": {
+                "tags": [
+                    "Grade"
+                ],
+                "summary": "Get Grade",
+                "description": "Show Grade by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Grade id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Grade"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Grade"
+                ],
+                "summary": "Update Grade",
+                "description": "Update Grade",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Grade id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Send name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Preschool"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Grade"
+                ],
+                "summary": "Delete Grade",
+                "description": "Delete Grade by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Grade id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -2525,6 +2966,34 @@
                     "name": "ApiResponseTime"
                 }
             },
+            "Classes": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "year": {
+                        "$ref": "#/components/schemas/Year"
+                    },
+                    "subject": {
+                        "$ref": "#/components/schemas/Subject"
+                    },
+                    "grade": {
+                        "$ref": "#/components/schemas/Grade"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Classes"
+                }
+            },
             "Configuration": {
                 "required": [
                     "name",
@@ -2563,6 +3032,26 @@
                 "type": "object",
                 "xml": {
                     "name": "Configuration"
+                }
+            },
+            "Grade": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Preschool"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Grade"
                 }
             },
             "InvitationLink": {

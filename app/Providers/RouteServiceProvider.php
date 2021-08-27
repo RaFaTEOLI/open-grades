@@ -65,6 +65,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->loadWebRoute("subject");
         $this->loadWebRoute("year");
         $this->loadWebRoute("grade");
+        $this->loadWebRoute("class");
     }
 
     /**
@@ -92,6 +93,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->loadApiRoute("subject");
         $this->loadApiRoute("year");
         $this->loadApiRoute("grade");
+        $this->loadApiRoute("class");
     }
 
     private function loadWebRoute($routeName)

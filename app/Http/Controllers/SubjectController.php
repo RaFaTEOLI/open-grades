@@ -26,7 +26,6 @@ class SubjectController extends Controller
                 "subjects" => $subjects,
             ]);
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }

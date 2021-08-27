@@ -178,7 +178,7 @@
                         <a href="{{ route('grades') }}" class="waves-effect"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i>{{ __('menu.grades') }}</a>
                     </li>
                     <li>
-                        <a href="map-google.html" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.classes') }}</a>
+                        <a href="{{ route('classes') }}" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.classes') }}</a>
                     </li>
                     @endif
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))

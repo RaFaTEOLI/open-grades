@@ -75,7 +75,7 @@ class GradeController extends Controller
      * summary="Create Grade",
      * description="Create Grade by name",
      * operationId="store",
-     * tags={"Subject"},
+     * tags={"Grade"},
      * security={ {"bearerAuth":{}} },
      * @OA\RequestBody(
      *    required=true,
