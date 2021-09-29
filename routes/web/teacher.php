@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(
-    ["prefix" => "school", ["middleware" => ["role:admin"]], ["middleware" => ["role:teacher"]]],
+    ["prefix" => "school", ["middleware" => ["role:admin|teacher"]]],
     function () {
         Route::get("/teachers", "TeacherController@index")
             ->name("teachers")

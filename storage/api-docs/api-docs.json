@@ -1372,6 +1372,273 @@
                 ]
             }
         },
+        "/student/{studentId}/classes": {
+            "get": {
+                "tags": [
+                    "Student Class"
+                ],
+                "summary": "Get Classes from Student",
+                "description": "Get a list of Classes from Student",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of results for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StudentsClasses"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/student/classes": {
+            "post": {
+                "tags": [
+                    "Student Class"
+                ],
+                "summary": "Enroll Student to a class",
+                "description": "Enroll student by class_id and student_id",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send class_id and student_id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "class_id",
+                                    "student_id"
+                                ],
+                                "properties": {
+                                    "class_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "student_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentsClasses"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/student/{studentId}/classes/{classId}": {
+            "get": {
+                "tags": [
+                    "Student Class"
+                ],
+                "summary": "Get Student Class",
+                "description": "Show Student Class by class_id and student_id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "classId",
+                        "in": "path",
+                        "description": "Class id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentsClasses"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Student Class"
+                ],
+                "summary": "Update Student Class",
+                "description": "Update Student Class",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "classId",
+                        "in": "path",
+                        "description": "Class id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Send presence, absent, enroll_date, left_date",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "presence": {
+                                        "description": "Number of times he was present",
+                                        "type": "integer",
+                                        "example": "6"
+                                    },
+                                    "absent": {
+                                        "description": "Number of times he was absent",
+                                        "type": "integer",
+                                        "example": "10"
+                                    },
+                                    "enroll_date": {
+                                        "description": "Date he enrolled",
+                                        "type": "datetime",
+                                        "example": "2021-01-12 10:00:00"
+                                    },
+                                    "left_date": {
+                                        "description": "Date he left or finished",
+                                        "type": "datetime",
+                                        "example": "2021-06-12 10:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Student Class"
+                ],
+                "summary": "Delete Student Class",
+                "description": "Delete Student Class by student_id and class_id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "classId",
+                        "in": "path",
+                        "description": "Class id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/students": {
             "get": {
                 "tags": [
@@ -3265,6 +3532,45 @@
                 "type": "object",
                 "xml": {
                     "name": "Student"
+                }
+            },
+            "StudentsClasses": {
+                "required": [
+                    "user_id",
+                    "class_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "class": {
+                        "$ref": "#/components/schemas/Classes"
+                    },
+                    "presence": {
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "absent": {
+                        "type": "integer",
+                        "example": "2"
+                    },
+                    "enroll_date": {
+                        "type": "datetime",
+                        "example": "2021-08-01"
+                    },
+                    "left_date": {
+                        "type": "datetime",
+                        "example": "2022-08-01"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StudentsClasses"
                 }
             },
             "StudentsResponsible": {

@@ -42,6 +42,20 @@ class ConfigurationRepository implements ConfigurationRepositoryInterface
         }
     }
 
+    /**
+     * Get Configuration By Name
+     */
+    public function findByName(string $name): object
+    {
+        try {
+            return Configuration::where("name", $name)
+                ->firstOrFail()
+                ->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function update(int $id, array $set): void
     {
         try {

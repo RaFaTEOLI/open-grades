@@ -177,16 +177,23 @@
                     <li>
                         <a href="{{ route('grades') }}" class="waves-effect"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i>{{ __('menu.grades') }}</a>
                     </li>
+                    @endif
                     <li>
                         <a href="{{ route('classes') }}" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.classes') }}</a>
                     </li>
-                    @endif
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))
                     <li>
                         <a href="{{ route('teachers') }}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{ __('menu.teachers') }}</a>
                     </li>
+                    @endif
+                    @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher") || Auth::user()->hasRole("responsible"))
                     <li>
                         <a href="{{ route('students') }}" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>{{ __('menu.students') }}</a>
+                    </li>
+                    @endif
+                    @if (Auth::user()->hasRole("student"))
+                    <li>
+                        <a href="{{ route('student.classes') }}" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.my_classes') }}</a>
                     </li>
                     @endif
                     <li>

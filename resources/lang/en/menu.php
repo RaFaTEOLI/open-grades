@@ -18,6 +18,7 @@ return [
     "calendars" => "Calendars",
     "grades" => "Grades",
     "classes" => "Classes",
+    "my_classes" => "My Classes",
     "subjects" => "Subjects",
     "configuration" => "Configuration",
     "roles" => "User Roles",

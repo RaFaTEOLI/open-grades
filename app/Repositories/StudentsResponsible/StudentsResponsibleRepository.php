@@ -4,6 +4,7 @@ namespace App\Repositories\StudentsResponsible;
 
 use App\Repositories\StudentsResponsible\StudentsResponsibleRepositoryInterface;
 use App\Models\StudentsResponsible;
+use Exception;
 use Illuminate\Support\Collection;
 
 class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInterface
@@ -27,13 +28,14 @@ class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInte
     }
 
     /*
-        Get A Student Responsible By Id
+        Get All Students from a Responsible Id
     */
-    public function findByResponsibleId(int $id): object
+    public function findByResponsibleId(int $id): Collection
     {
         return StudentsResponsible::where("responsible_id", $id)
-            ->first()
-            ->format();
+            ->get()
+            ->map
+            ->formatStudentsOnly();
     }
 
     /*
@@ -44,5 +46,14 @@ class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInte
         return StudentsResponsible::where("student_id", $id)
             ->first()
             ->format();
+    }
+
+    /*
+        Check if an user is responsible to a student
+    */
+    public function findByResponsibleIdAndStudentId(int $responsibleId, int $studentId): object | null
+    {
+        return StudentsResponsible::where("student_id", $studentId)->where('responsible_id', $responsibleId)
+            ->first();
     }
 }

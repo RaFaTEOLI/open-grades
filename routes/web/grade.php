@@ -37,9 +37,5 @@ Route::group(
         Route::delete("/grades/{id}", "GradeController@destroy")
             ->name("grades.destroy")
             ->middleware("permission:delete-grades");
-
-        Route::patch("/grades/{id}", "GradeController@close")
-            ->name("grades.close")
-            ->middleware("permission:update-grades");
     },
 );

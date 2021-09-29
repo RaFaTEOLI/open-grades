@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InvitationLink\InvitationLinkRequest;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
 use App\Services\InvitationLink\CreateInvitationLinkService;
+use App\Services\StudentsResponsible\UpdateStudentsResponsibleService;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvitationLinkController extends Controller
 {
@@ -13,7 +16,6 @@ class InvitationLinkController extends Controller
 
     public function __construct()
     {
-        $this->middleware(["auth", "verified"]);
         $this->invitationLinkRepository = new InvitationLinkRepository();
     }
 
@@ -66,6 +68,30 @@ class InvitationLinkController extends Controller
                 ->route("invitations")
                 ->withSuccess(__("actions.success"));
         } catch (Exception $e) {
+            return back()->with("error", __("actions.error"));
+        }
+    }
+
+    public function handle(Request $request)
+    {
+        try {
+            if ($request->has('hash')) {
+                $hash = $request->query('hash');
+
+                if (Auth::user()) {
+                    (new UpdateStudentsResponsibleService())->execute(["hash" => $hash]);
+                    return redirect()
+                        ->route("students")
+                        ->withSuccess(__("actions.success"));
+                } else {
+                    return redirect(env('APP_URL') . "/register?hash={$hash}");
+                }
+            }
+        } catch (Exception $e) {
+            if ($e->getMessage() == __("validation.invalid_link")) {
+                return redirect()
+                    ->route("students")->with("error", $e->getMessage());
+            }
             return back()->with("error", __("actions.error"));
         }
     }

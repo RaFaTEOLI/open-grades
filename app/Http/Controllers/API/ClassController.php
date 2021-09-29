@@ -62,9 +62,9 @@ class ClassController extends Controller
     {
         try {
             $paginated = $this->paginate($request);
-            $grades = $this->classRepository->all($paginated["limit"], $paginated["offset"]);
+            $classes = $this->classRepository->all($paginated["limit"], $paginated["offset"]);
 
-            return response()->json($grades, HttpStatus::SUCCESS);
+            return response()->json($classes, HttpStatus::SUCCESS);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
@@ -103,9 +103,9 @@ class ClassController extends Controller
         try {
             $input = $request->only(["subject_id", "grade_id", "user_id"]);
 
-            $grade = (new CreateClassService())->execute($input);
+            $class = (new CreateClassService())->execute($input);
 
-            return response()->json($grade->format(), HttpStatus::CREATED);
+            return response()->json($class->format(), HttpStatus::CREATED);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
@@ -188,9 +188,9 @@ class ClassController extends Controller
     public function show(int $id)
     {
         try {
-            $grade = $this->classRepository->findById($id)->format();
+            $class = $this->classRepository->findById($id)->format();
 
-            return response()->json($grade, HttpStatus::SUCCESS);
+            return response()->json($class, HttpStatus::SUCCESS);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }

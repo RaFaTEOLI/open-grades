@@ -20,6 +20,7 @@ return [
     "admin" => "Admin",
     "classes" => "Classes",
     "students" => "Students",
+    "student-classes" => "Student Classes",
     "teachers" => "Teachers",
     "profile" => "Profile",
     "roles" => "Roles",

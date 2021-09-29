@@ -20,6 +20,7 @@ return [
     "admin" => "Admin",
     "classes" => "Aulas",
     "students" => "Alunos",
+    "student-classes" => "Aulas Alunos",
     "teachers" => "Professores",
     "profile" => "Perfil",
     "roles" => "Tipos",

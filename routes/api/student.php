@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["middleware" => "auth:api"], function () {
-    Route::group(["middleware" => ["role:admin"], ["middleware" => ["role:teacher"]]], function () {
+    Route::group(["middleware" => ["role:admin|teacher|responsible"]], function () {
         Route::get("/students", "API\StudentController@index")->middleware("permission:read-students");
 
         Route::get("/students/{id}", "API\StudentController@show")

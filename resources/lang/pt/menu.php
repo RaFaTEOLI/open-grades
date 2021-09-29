@@ -18,6 +18,7 @@ return [
     "calendars" => "Calendários",
     "grades" => "Séries/Anos",
     "classes" => "Aulas",
+    "my_classes" => "Minhas Aulas",
     "subjects" => "Matérias",
     "configuration" => "Configurações",
     "roles" => "Tipos de Usuário",

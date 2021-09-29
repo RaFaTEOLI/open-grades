@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Class\ClassRequest;
 use App\Repositories\Class\ClassRepository;
+use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\Grade\GradeRepository;
+use App\Repositories\Student\StudentRepository;
 use App\Repositories\Subject\SubjectRepository;
 use App\Repositories\Teacher\TeacherRepository;
 use App\Services\Class\CreateClassService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
@@ -26,6 +29,17 @@ class ClassController extends Controller
         try {
             $classes = $this->classRepository->all();
 
+            if (Auth::user()->hasRole("student")) {
+                return view("student_classes/class/classes", [
+                    "classes" => $classes,
+                    "canStudentEnroll" => (new ConfigurationRepository())->findByName('can-student-enroll')
+                ]);
+            } else if (Auth::user()->hasRole("responsible")) {
+                return view("student_classes/class/classes", [
+                    "classes" => $classes,
+                    "students" => (new StudentRepository())->all()
+                ]);
+            }
             return view("classes/classes", [
                 "classes" => $classes,
             ]);

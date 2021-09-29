@@ -67,7 +67,7 @@ class InvitationLink extends Model
 
     public static function getLinkFromHash($hash): string
     {
-        return env("APP_URL") . "/register/?hash={$hash}";
+        return env("APP_URL") . "/invitation-link/?hash={$hash}";
     }
 
     public static function generateHash(): string

@@ -75,7 +75,7 @@ class InvitationLinkRepository implements InvitationLinkRepositoryInterface
     {
         try {
             $invitation = InvitationLink::create($request);
-            $invitation->link = InvitationLink::getLinkFromHash($invitation->hash);
+            $invitation->link = InvitationLink::getLinkFromHash2($invitation->hash);
 
             return $invitation;
         } catch (Exception $e) {

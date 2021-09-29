@@ -57,7 +57,7 @@
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td class="txt-oflo">{{ $user->name }}</td>
-                            @if (Auth::user()->hasRole('admin'))
+                            @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('responsible'))
                                 <td>{{ $user->email }}</td>
                             @else
                                 <td>*******************</td>
@@ -65,6 +65,9 @@
                             <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($user->created_at)) }}</span></td>
                             <td>
                                 <div class="d-flex">
+                                    @if (Auth::user()->can(['read-students']))
+                                    <a type="button" href="{{ route('responsible.student.classes', $user->id) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                    @endif
                                     @if (Auth::user()->can(['update-students']))
                                     <a type="button" href="{{ route('students.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     @endif

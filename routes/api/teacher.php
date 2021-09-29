@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,8 +8,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
 Route::group(["middleware" => "auth:api"], function () {
-    Route::group(["middleware" => ["role:admin"], ["middleware" => ["role:teacher"]]], function () {
+    Route::group(["middleware" => ["role:admin|teacher"]], function () {
         Route::get("/teachers", "API\TeacherController@index")->middleware("permission:read-teachers");
 
         Route::get("/teachers/{id}", "API\TeacherController@show")

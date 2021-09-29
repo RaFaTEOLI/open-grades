@@ -4,7 +4,9 @@ namespace App\Repositories\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
 use App\Models\Student;
+use App\Models\StudentsResponsible;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class StudentRepository implements StudentRepositoryInterface
 {
@@ -13,6 +15,12 @@ class StudentRepository implements StudentRepositoryInterface
     */
     public function all(int $limit = 0, int $offset = 0): Collection
     {
+        if (Auth::user()->hasRole('responsible')) {
+            return StudentsResponsible::where("responsible_id", Auth::user()->id)
+                ->get()
+                ->map
+                ->formatStudentsOnly();
+        }
         return Student::where("deleted_at", null)
             ->withRole("student")
             ->when($limit, function ($query, $limit) {

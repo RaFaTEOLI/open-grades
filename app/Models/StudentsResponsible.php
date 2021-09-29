@@ -54,4 +54,9 @@ class StudentsResponsible extends Model
     {
         return $this->responsible->formatSimple();
     }
+
+    public function formatStudentsOnly()
+    {
+        return $this->student->formatSimple();
+    }
 }

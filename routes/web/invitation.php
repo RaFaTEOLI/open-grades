@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
+
+Route::get("/invitation-link", "InvitationLinkController@handle")
+    ->name("handle-invivation");
 /**
  * Admin Middleware
  */
