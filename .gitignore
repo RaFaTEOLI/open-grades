@@ -7,6 +7,7 @@
 /reports
 /docker-compose/mysql/
 /docker-compose/redis
+/docker-compose/redis/appendonly.aof
 /.husky/pre-commit
 .env
 .env.backup
@@ -15,4 +16,3 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/docker-compose/redis/appendonly.aof
