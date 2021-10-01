@@ -22,6 +22,7 @@ class CreateStudentsClassesTable extends Migration
             $table->bigInteger("absent")->default(0);
             $table->timestamp("enroll_date")->default(Carbon::today());
             $table->timestamp("left_date")->nullable();
+            $table->unique('user_id', 'class_id');
 
             $table
                 ->foreign("user_id")

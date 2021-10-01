@@ -2,9 +2,12 @@
 
 namespace App\Services\StudentClass;
 
+use App\Exceptions\NotResponsible;
+use App\Models\StudentsClasses;
 use App\Repositories\Configuration\ConfigurationRepository;
 use Exception;
 use App\Repositories\StudentClass\StudentClassRepository;
+use App\Repositories\StudentsResponsible\StudentsResponsibleRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,11 +32,27 @@ class CreateStudentClassService
                 }
             }
 
+            if (Auth::user()->hasRole('responsible')) {
+                $isTheResponsible = (new StudentsResponsibleRepository())->findByResponsibleIdAndStudentId(Auth::user()->id, $studentId);
+                if (!$isTheResponsible) {
+                    throw new NotResponsible("Cannot enroll, you're not the student's responsible");
+                }
+            }
+
             $request["user_id"] = $studentId;
             $request["enroll_date"] = Carbon::today();
+
+            $isThere = StudentsClasses::where('class_id', $request['class_id'])->where('user_id', $studentId)->get();
+
+            if (count($isThere) > 0) {
+                throw new Exception('Cannot enroll, student is already enrolled', 500);
+            }
+
             $studentClass = $studentClassRepository->store($request);
 
             return $studentClass;
+        } catch (NotResponsible $e) {
+            throw new NotResponsible($e->getMessage());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

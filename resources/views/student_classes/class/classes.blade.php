@@ -95,6 +95,7 @@
         </div>
     </div>
 </div>
+@if (Auth::user()->hasRole('responsible') || Auth::user()->hasRole('admin'))
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -119,6 +120,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+@endif
 </div>
 <!-- /.container-fluid -->
 <script>

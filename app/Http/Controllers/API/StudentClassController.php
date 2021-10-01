@@ -8,8 +8,10 @@ use App\Http\Requests\StudentClass\StudentClassRequest;
 use App\Http\Traits\Pagination;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\StudentClass\StudentClassRepository;
-use App\Services\Class\CreateClassService;
 use App\Services\StudentClass\CreateStudentClassService;
+use App\Services\StudentClass\FetchStudentClassService;
+use App\Services\StudentClass\RemoveStudentClassService;
+use App\Services\StudentClass\UpdateStudentClassService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +73,44 @@ class StudentClassController extends Controller
      *  ),
      * )
      */
-    public function index(Request $request, int $studentId)
+    /**
+     * @OA\Get(
+     * path="/student/classes",
+     * summary="Get Classes from logged student",
+     * description="Get a list of Classes from logged student",
+     * operationId="index",
+     * tags={"Student Class (Logged Student Only)"},
+     * security={ {"bearerAuth":{}} },
+     * @OA\Parameter(
+     *      name="offset",
+     *      description="Offset for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="limit",
+     *      description="Limit of results for pagination",
+     *      required=false,
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/StudentsClasses")
+     *      ),
+     *    ),
+     *  ),
+     * )
+     */
+    public function index(Request $request, int $studentId = 0)
     {
         try {
             $paginated = $this->paginate($request);
@@ -79,12 +118,17 @@ class StudentClassController extends Controller
 
             if (Auth::user()->hasRole("student")) {
                 return response()->json([
-                    "classes" => $classes,
+                    "classes" => (new StudentClassRepository())->findClassesByStudentId(Auth::user()->id),
                     "canStudentEnroll" => (new ConfigurationRepository())->findByName('can-student-enroll')
                 ], HttpStatus::SUCCESS);
             } else if (Auth::user()->hasRole("responsible")) {
                 $classes = (new StudentClassRepository())->findClassesByStudentId($studentId);
             }
+
+            if ($studentId > 0) {
+                $classes = (new StudentClassRepository())->findClassesByStudentId($studentId);
+            }
+
             return response()->json([
                 "classes" => $classes,
                 "studentId" => $studentId
@@ -112,7 +156,7 @@ class StudentClassController extends Controller
      *    @OA\JsonContent(
      *       required={"class_id", "student_id"},
      *       @OA\Property(property="class_id", type="integer", example="1"),
-     *       @OA\Property(property="student_id", type="integer", example="1"),
+     *       @OA\Property(property="student_id", type="integer", example="1", description="Not required for logged student"),
      *    ),
      * ),
      * @OA\Response(
@@ -128,11 +172,17 @@ class StudentClassController extends Controller
     public function store(StudentClassRequest $request)
     {
         try {
-            $input = $request->only(["class_id"]);
+            if ($request->has('student_id')) {
+                $input = $request->only(["class_id", "student_id"]);
+            } else {
+                $input = $request->only(["class_id"]);
+            }
 
             $studentClass = (new CreateStudentClassService())->execute($input);
 
             return response()->json($studentClass->format(), HttpStatus::CREATED);
+        } catch (NotResponsible $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::FORBIDDEN);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
@@ -140,24 +190,15 @@ class StudentClassController extends Controller
 
     /**
      * @OA\Put(
-     * path="/student/{studentId}/classes/{classId}",
+     * path="/student/classes/{studentClassId}",
      * summary="Update Student Class",
      * description="Update Student Class",
      * operationId="update",
      * security={ {"bearerAuth":{}} },
      * tags={"Student Class"},
      * @OA\Parameter(
-     *      name="classId",
-     *      description="Class id",
-     *      required=true,
-     *      in="path",
-     *      @OA\Schema(
-     *          type="integer"
-     *      )
-     * ),
-     * * @OA\Parameter(
-     *      name="studentId",
-     *      description="Student id",
+     *      name="studentClassId",
+     *      description="Student Class id",
      *      required=true,
      *      in="path",
      *      @OA\Schema(
@@ -180,13 +221,17 @@ class StudentClassController extends Controller
      *  ),
      * )
      */
-    public function update(int $studentId, int $classId, Request $request)
+    public function update(Request $request, int $id)
     {
         try {
             $input = $request->only(["presence", "absent", "left_date"]);
-            $this->studentClassRepository->update($studentId, $classId, $input);
+
+            $input['id'] = $id;
+            (new UpdateStudentClassService())->execute($input);
 
             return response()->noContent();
+        } catch (NotResponsible $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::FORBIDDEN);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }
@@ -194,27 +239,18 @@ class StudentClassController extends Controller
 
     /**
      * @OA\Get(
-     * path="/student/{studentId}/classes/{classId}",
+     * path="/student/classes/{studentClassId}",
      * summary="Get Student Class",
      * @OA\Parameter(
-     *      name="classId",
-     *      description="Class id",
+     *      name="studentClassId",
+     *      description="Student Class id",
      *      required=true,
      *      in="path",
      *      @OA\Schema(
      *          type="integer"
      *      )
      * ),
-     * @OA\Parameter(
-     *      name="studentId",
-     *      description="Student id",
-     *      required=true,
-     *      in="path",
-     *      @OA\Schema(
-     *          type="integer"
-     *      )
-     * ),
-     * description="Show Student Class by class_id and student_id",
+     * description="Show Student Class by student_class_id",
      * operationId="show",
      * tags={"Student Class"},
      * security={ {"bearerAuth":{}} },
@@ -231,9 +267,11 @@ class StudentClassController extends Controller
     public function show(int $id)
     {
         try {
-            $class = $this->studentClassRepository->findById($id)->format();
+            $class = (new FetchStudentClassService())->execute($id);
 
             return response()->json($class, HttpStatus::SUCCESS);
+        } catch (NotResponsible $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::FORBIDDEN);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }
@@ -241,27 +279,18 @@ class StudentClassController extends Controller
 
     /**
      * @OA\Delete(
-     * path="/student/{studentId}/classes/{classId}",
+     * path="/student/classes/{studentClassId}",
      * summary="Delete Student Class",
      * @OA\Parameter(
-     *      name="classId",
-     *      description="Class id",
+     *      name="studentClassId",
+     *      description="Student Class id",
      *      required=true,
      *      in="path",
      *      @OA\Schema(
      *          type="integer"
      *      )
      * ),
-     * @OA\Parameter(
-     *      name="studentId",
-     *      description="Student id",
-     *      required=true,
-     *      in="path",
-     *      @OA\Schema(
-     *          type="integer"
-     *      )
-     * ),
-     * description="Delete Student Class by student_id and class_id",
+     * description="Delete Student Class by student_class_id",
      * operationId="destroy",
      * tags={"Student Class"},
      * security={ {"bearerAuth":{}} },
@@ -272,17 +301,14 @@ class StudentClassController extends Controller
      *  ),
      * )
      */
-    public function destroy(int $studentId, int $classId = 0)
+    public function destroy(int $id)
     {
         try {
-            if ($classId == 0) {
-                $classId = $studentId;
-                $this->studentClassRepository->delete($classId);
-            } else {
-                $this->studentClassRepository->deleteByStudentAndClass($studentId, $classId);
-            }
+            (new RemoveStudentClassService())->execute($id);
 
             return response()->noContent();
+        } catch (NotResponsible $e) {
+            return response()->json(["message" => $e->getMessage()], HttpStatus::FORBIDDEN);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }

@@ -1432,6 +1432,54 @@
             }
         },
         "/student/classes": {
+            "get": {
+                "tags": [
+                    "Student Class (Logged Student Only)"
+                ],
+                "summary": "Get Classes from logged student",
+                "description": "Get a list of Classes from logged student",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of results for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StudentsClasses"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Student Class"
@@ -1455,6 +1503,7 @@
                                         "example": "1"
                                     },
                                     "student_id": {
+                                        "description": "Not required for logged student",
                                         "type": "integer",
                                         "example": "1"
                                     }
@@ -1483,28 +1532,19 @@
                 ]
             }
         },
-        "/student/{studentId}/classes/{classId}": {
+        "/student/classes/{studentClassId}": {
             "get": {
                 "tags": [
                     "Student Class"
                 ],
                 "summary": "Get Student Class",
-                "description": "Show Student Class by class_id and student_id",
+                "description": "Show Student Class by student_class_id",
                 "operationId": "show",
                 "parameters": [
                     {
-                        "name": "classId",
+                        "name": "studentClassId",
                         "in": "path",
-                        "description": "Class id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "studentId",
-                        "in": "path",
-                        "description": "Student id",
+                        "description": "Student Class id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1538,18 +1578,9 @@
                 "operationId": "update",
                 "parameters": [
                     {
-                        "name": "classId",
+                        "name": "studentClassId",
                         "in": "path",
-                        "description": "Class id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "studentId",
-                        "in": "path",
-                        "description": "Student id",
+                        "description": "Student Class id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1557,7 +1588,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Send presence, absent, enroll_date, left_date",
+                    "description": "Send presence, absent, left_date",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -1572,11 +1603,6 @@
                                         "description": "Number of times he was absent",
                                         "type": "integer",
                                         "example": "10"
-                                    },
-                                    "enroll_date": {
-                                        "description": "Date he enrolled",
-                                        "type": "datetime",
-                                        "example": "2021-01-12 10:00:00"
                                     },
                                     "left_date": {
                                         "description": "Date he left or finished",
@@ -1605,22 +1631,13 @@
                     "Student Class"
                 ],
                 "summary": "Delete Student Class",
-                "description": "Delete Student Class by student_id and class_id",
+                "description": "Delete Student Class by student_class_id",
                 "operationId": "destroy",
                 "parameters": [
                     {
-                        "name": "classId",
+                        "name": "studentClassId",
                         "in": "path",
-                        "description": "Class id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "studentId",
-                        "in": "path",
-                        "description": "Student id",
+                        "description": "Student Class id",
                         "required": true,
                         "schema": {
                             "type": "integer"
