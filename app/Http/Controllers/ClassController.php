@@ -39,8 +39,6 @@ class ClassController extends Controller
                     "classes" => $classes,
                     "students" => (new StudentRepository())->all()
                 ]);
-            } else if (Auth::user()->hasRole("teacher")) {
-                $classes = $this->classRepository->findByTeacherId(Auth::user()->id);
             }
             return view("classes/classes", [
                 "classes" => $classes,

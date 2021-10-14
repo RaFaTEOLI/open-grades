@@ -29,6 +29,8 @@ class ClassRepository extends AbstractRepository implements ClassRepositoryInter
                     ->select('classes.*')
                     ->get()
                     ->map->format();
+            } else if (Auth::user()->hasRole("teacher")) {
+                $classes = $this->findByTeacherId(Auth::user()->id);
             } else {
                 $classes = Classes::when($limit, function ($query, $limit) {
                     return $query->limit($limit);
