@@ -30,4 +30,5 @@ return [
     "subjects" => "Subjects",
     "years" => "School Years",
     "grades" => "Grades",
+    "dashboard" => "Dashboard"
 ];

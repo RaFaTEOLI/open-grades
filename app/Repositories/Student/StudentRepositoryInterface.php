@@ -8,4 +8,5 @@ interface StudentRepositoryInterface
 {
     public function all(int $limit = 0, int $offset = 0): Collection;
     public function findById(int $id): object;
+    public function getNewCount(): int;
 }

@@ -5,6 +5,7 @@ namespace App\Repositories\Student;
 use App\Repositories\Student\StudentRepositoryInterface;
 use App\Models\Student;
 use App\Models\StudentsResponsible;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,5 +44,13 @@ class StudentRepository implements StudentRepositoryInterface
             ->where("deleted_at", null)
             ->first()
             ->format();
+    }
+
+    public function getNewCount(): int
+    {
+        $newStudents = Student::where("deleted_at", null)
+            ->whereDate('created_at', '>', Carbon::now()->subDays(30))->get();
+
+        return count($newStudents);
     }
 }

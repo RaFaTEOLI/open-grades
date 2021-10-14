@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Student\StudentRepository;
+use App\Repositories\Teacher\TeacherRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totalStudents = count((new StudentRepository())->all());
+        $newStudents = (new StudentRepository())->getNewCount();
+        $totalTeachers = count((new TeacherRepository())->all());
+
+        return view('home', ["totalStudents" => $totalStudents, "newStudents" => $newStudents, "totalTeachers" => $totalTeachers]);
     }
 }

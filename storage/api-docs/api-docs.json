@@ -541,6 +541,36 @@
                 ]
             }
         },
+        "/dashboard": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get Dashboard Data",
+                "description": "Get all dashboard data",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Dashboard"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/grades": {
             "get": {
                 "tags": [
@@ -3316,6 +3346,29 @@
                 "type": "object",
                 "xml": {
                     "name": "Configuration"
+                }
+            },
+            "Dashboard": {
+                "properties": {
+                    "totalStudents": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "8"
+                    },
+                    "newStudents": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "3"
+                    },
+                    "totalTeachers": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "5"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Dashboard"
                 }
             },
             "Grade": {
