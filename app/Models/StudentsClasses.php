@@ -55,4 +55,9 @@ class StudentsClasses extends Model
     {
         return $this->class->format();
     }
+
+    public function formatStudentsOnly()
+    {
+        return $this->user->format();
+    }
 }

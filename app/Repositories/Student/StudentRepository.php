@@ -4,6 +4,7 @@ namespace App\Repositories\Student;
 
 use App\Repositories\Student\StudentRepositoryInterface;
 use App\Models\Student;
+use App\Models\StudentsClasses;
 use App\Models\StudentsResponsible;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -21,6 +22,8 @@ class StudentRepository implements StudentRepositoryInterface
                 ->get()
                 ->map
                 ->formatStudentsOnly();
+        } else if (Auth::user()->hasRole('teacher')) {
+            return $this->findStudentsByTeacherId(Auth::user()->id);
         }
         return Student::where("deleted_at", null)
             ->withRole("student")
@@ -52,5 +55,15 @@ class StudentRepository implements StudentRepositoryInterface
             ->whereDate('created_at', '>', Carbon::now()->subDays(30))->get();
 
         return count($newStudents);
+    }
+
+    public function findStudentsByTeacherId(int $teacherId): Collection
+    {
+        return StudentsClasses::join('classes', 'students_classes.class_id', 'classes.id')
+            ->join('users', 'users.id', 'students_classes.user_id')
+            ->where('classes.user_id', $teacherId)
+            ->get('students_classes.user_id')
+            ->map
+            ->formatStudentsOnly();
     }
 }
