@@ -6,6 +6,7 @@ use App\Http\Requests\Grade\GradeRequest;
 use App\Repositories\Grade\GradeRepository;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GradeController extends Controller
 {

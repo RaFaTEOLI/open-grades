@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["middleware" => "auth:api"], function () {
-    Route::group(["middleware" => ["role:admin"]], function () {
+    Route::group(["middleware" => ["role:admin|teacher"]], function () {
         Route::get("/grades", "API\GradeController@index")->middleware("permission:read-grades");
 
         Route::get("/grades/{id}", "API\GradeController@show")
             ->name("grades.show")
             ->middleware("permission:read-grades");
+    });
 
+    Route::group(["middleware" => ["role:admin"]], function () {
         Route::post("/grades", "API\GradeController@store")
             ->name("grades.store")
             ->middleware("permission:create-grades");

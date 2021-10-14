@@ -10,20 +10,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(
-    ["prefix" => "admin", "middleware" => ["role:admin"]],
+    ["prefix" => "admin", "middleware" => ["role:admin|teacher"]],
     function () {
         Route::get("/grades", "GradeController@index")
             ->name("grades")
             ->middleware("permission:read-grades");
 
+        Route::get("/grades/{id}", "GradeController@show")
+            ->name("grades.show")
+            ->middleware("permission:read-grades");
+    },
+);
+
+
+Route::group(
+    ["prefix" => "admin", "middleware" => ["role:admin"]],
+    function () {
         Route::get("/grade", function () {
             return view("grades/grade");
         })
             ->name("grades.new")
-            ->middleware("permission:read-grades");
-
-        Route::get("/grades/{id}", "GradeController@show")
-            ->name("grades.show")
             ->middleware("permission:read-grades");
 
         Route::post("/grades", "GradeController@store")
