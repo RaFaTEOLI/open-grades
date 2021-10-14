@@ -7,8 +7,6 @@ use App\Http\Requests\StudentClass\StudentClassRequest;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\StudentClass\StudentClassRepository;
 use App\Repositories\Grade\GradeRepository;
-use App\Repositories\Student\StudentRepository;
-use App\Repositories\StudentsResponsible\StudentsResponsibleRepository;
 use App\Repositories\Subject\SubjectRepository;
 use App\Repositories\Teacher\TeacherRepository;
 use App\Services\StudentClass\CreateStudentClassService;
