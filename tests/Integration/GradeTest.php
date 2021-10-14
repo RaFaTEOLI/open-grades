@@ -59,7 +59,7 @@ class GradeTest extends TestCase
 
         $response
             ->assertStatus(HttpStatus::SUCCESS)
-            ->assertJsonStructure(['id', 'name']);
+            ->assertJsonStructure(['id', 'name', 'classes']);
     }
 
     /**
