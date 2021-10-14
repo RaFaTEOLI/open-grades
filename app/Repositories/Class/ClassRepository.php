@@ -45,4 +45,13 @@ class ClassRepository extends AbstractRepository implements ClassRepositoryInter
             throw new Exception($e->getMessage(), 500);
         }
     }
+
+    public function findByTeacherId(int $teacherId): Collection
+    {
+        try {
+            return Classes::where('user_id', $teacherId)->get();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 500);
+        }
+    }
 }

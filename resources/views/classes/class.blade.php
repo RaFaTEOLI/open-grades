@@ -98,9 +98,11 @@
                     @endif
                 </div>
 
+                @if (Auth::user()->can('update-classes'))
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">{{ __('actions.save') }}</button>
                 </div>
+                @endif
             </form>
         </div>
     </div>
