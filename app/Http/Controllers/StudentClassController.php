@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\AlreadyEnrolled;
 use App\Exceptions\NotResponsible;
 use App\Http\Requests\StudentClass\StudentClassRequest;
 use App\Repositories\Configuration\ConfigurationRepository;
@@ -69,6 +70,14 @@ class StudentClassController extends Controller
             return redirect()
                 ->route("classes")
                 ->withSuccess(__("actions.success"));
+        } catch (AlreadyEnrolled $aR) {
+            return redirect()
+                ->route("students")
+                ->with("error", __("exceptions.already_enrolled"));
+        } catch (NotResponsible $e) {
+            return redirect()
+                ->route("students")
+                ->with("error", __("exceptions.not_responisble"));
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }

@@ -45,7 +45,8 @@ class StudentClassRepository extends AbstractRepository implements StudentClassR
             if (Auth::user()->hasRole('responsible')) {
                 $isResponsible = (new StudentsResponsibleRepository())->findByResponsibleIdAndStudentId(Auth::user()->id, $studentId);
                 if (!empty($isResponsible)) {
-                    return $students;
+                    return StudentsClasses::where("user_id", $studentId)->where("class_id", $classId)
+                        ->firstOrFail()->delete();
                 }
                 throw new NotResponsible();
             }

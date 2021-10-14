@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\AlreadyEnrolled;
 use App\Exceptions\NotResponsible;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentClass\StudentClassRequest;
@@ -183,6 +184,8 @@ class StudentClassController extends Controller
             return response()->json($studentClass->format(), HttpStatus::CREATED);
         } catch (NotResponsible $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::FORBIDDEN);
+        } catch (AlreadyEnrolled $aR) {
+            return response()->json(["message" => __("exceptions.already_enrolled")], HttpStatus::FORBIDDEN);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }

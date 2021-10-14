@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudentsClasses extends Model
 {
     use HasFactory;
-    protected $fillable = ["user_id", "class_id", "presence", "absent"];
+    protected $fillable = ["user_id", "class_id", "presence", "absent", "enroll_date", "left_date"];
     public $timestamps = false;
 
     public function class()

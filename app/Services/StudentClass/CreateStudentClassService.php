@@ -2,6 +2,7 @@
 
 namespace App\Services\StudentClass;
 
+use App\Exceptions\AlreadyEnrolled;
 use App\Exceptions\NotResponsible;
 use App\Models\StudentsClasses;
 use App\Repositories\Configuration\ConfigurationRepository;
@@ -40,12 +41,12 @@ class CreateStudentClassService
             }
 
             $request["user_id"] = $studentId;
-            $request["enroll_date"] = Carbon::today();
+            $request["enroll_date"] = Carbon::now();
 
             $isThere = StudentsClasses::where('class_id', $request['class_id'])->where('user_id', $studentId)->get();
 
             if (count($isThere) > 0) {
-                throw new Exception('Cannot enroll, student is already enrolled', 500);
+                throw new AlreadyEnrolled("Cannot enroll, student is already enrolled", 500);
             }
 
             $studentClass = $studentClassRepository->store($request);
@@ -53,6 +54,8 @@ class CreateStudentClassService
             return $studentClass;
         } catch (NotResponsible $e) {
             throw new NotResponsible($e->getMessage());
+        } catch (AlreadyEnrolled $e) {
+            throw new AlreadyEnrolled($e->getMessage());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
