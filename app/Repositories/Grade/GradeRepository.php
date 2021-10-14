@@ -39,4 +39,13 @@ class GradeRepository extends AbstractRepository implements GradeRepositoryInter
             throw new Exception($e->getMessage());
         }
     }
+
+    public function findById(int $id): object
+    {
+        try {
+            return Grade::findOrFail($id)->first()->formatWithClasses();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

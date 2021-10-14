@@ -23,11 +23,25 @@ class Grade extends Model
     protected $fillable = ["name"];
     public $timestamps = false;
 
+    public function class()
+    {
+        return $this->hasMany("App\Models\Classes", "grade_id", "id");
+    }
+
     public function format()
     {
         return (object) [
             "id" => $this->id,
             "name" => $this->name,
+        ];
+    }
+
+    public function formatWithClasses()
+    {
+        return (object) [
+            "id" => $this->id,
+            "name" => $this->name,
+            "classes" => $this->class->map->format()
         ];
     }
 }

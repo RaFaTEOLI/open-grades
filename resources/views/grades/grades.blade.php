@@ -57,6 +57,9 @@
                             <td class="txt-oflo">{{ $grade->name }}</td>
                             <td>
                                 <div class="d-flex">
+                                    @if (Auth::user()->hasRole('teacher') && Auth::user()->can(['read-grades']))
+                                    <a type="button" href="{{ route('grades.show', $grade->id) }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
+                                    @endif
                                     @if (Auth::user()->can(['update-grades']))
                                     <a type="button" href="{{ route('grades.show', $grade->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     @endif
