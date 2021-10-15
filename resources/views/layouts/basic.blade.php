@@ -62,6 +62,9 @@
                                 @endif
                                 @else
                                 <li class="nav-item pr-3">
+                                    <a href="{{ route('language', (app()->getLocale() === 'en') ? 'pt' : 'en') }}" class="btn btn-custom btn-outline-info btn-lg"><img height="20px" width="20px" style="border-radius: 10px;" src="{{ asset("plugins/images/flags/" . app()->getLocale(). ".png") }} " alt="{{ app()->getLocale() }}" /></a>
+                                </li>
+                                <li class="nav-item pr-3">
                                     <a href="{{ route('home') }}" class="btn btn-custom btn-outline-info btn-lg">{{ __('menu.dashboard') }}</a>
                                 </li>
                                 <li class="nav-item dropdown">

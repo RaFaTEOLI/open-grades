@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,4 +38,4 @@ Route::get("/403", function () {
     return view("informative/403");
 })->name("403");
 
-Route::get("lang/{locale}", "LocalizationController@index");
+Route::get("lang/{locale}", "LocalizationController@index")->name("language");
