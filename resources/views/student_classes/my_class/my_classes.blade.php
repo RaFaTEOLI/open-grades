@@ -46,7 +46,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            @if (!Auth::user()->hasRole('student'))
                             <th>{{ __('student_class.student') }}</th>
+                            @endif
                             <th>{{ __('student_class.class') }}</th>
                             <th>{{ __('student_class.presence') }}</th>
                             <th>{{ __('student_class.absent') }}</th>
@@ -59,7 +61,9 @@
                         @foreach ($classes as $class)
                         <tr>
                             <td>{{ $class->id }}</td>
+                            @if (!Auth::user()->hasRole('student'))
                             <td class="txt-oflo">{{ $class->user->name }}</td>
+                            @endif
                             <td class="txt-oflo">{{ $class->class->id . ' - ' . $class->class->subject->name }}</td>
                             <td class="txt-oflo">{{ $class->presence }}</td>
                             <td class="txt-oflo">{{ $class->absent }}</td>

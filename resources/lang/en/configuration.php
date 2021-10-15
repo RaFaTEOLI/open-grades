@@ -18,4 +18,5 @@ return [
     "school-year-division" => "School Year Division",
     "max-grade" => "Max Grade",
     "point-average" => "Point Average",
+    "can-student-enroll" => "Can Student Enroll? (1 for yes and 0 for no)",
 ];

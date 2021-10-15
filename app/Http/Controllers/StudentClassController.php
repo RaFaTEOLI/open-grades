@@ -32,6 +32,7 @@ class StudentClassController extends Controller
             $classes = $this->studentClassRepository->all();
 
             if (Auth::user()->hasRole("student")) {
+                $classes = (new StudentClassRepository())->findClassesByStudentId(Auth::user()->id);
                 return view("student_classes/my_class/my_classes", [
                     "classes" => $classes,
                     "canStudentEnroll" => (new ConfigurationRepository())->findByName('can-student-enroll')

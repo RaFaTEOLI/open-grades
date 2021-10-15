@@ -54,6 +54,7 @@
                     </thead>
                     <tbody>
                         @foreach ($teachers as $user)
+                        @if (Auth::user()->hasRole('teacher') && Auth::user()->id !== $user->id || !Auth::user()->hasRole('teacher'))
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td class="txt-oflo">{{ $user->name }}</td>
@@ -78,6 +79,7 @@
                                 </div>
                             </td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>

@@ -53,7 +53,7 @@
                 <div class="form-group">
                     <label>{{ __('class.grade') }}</label>
                     <select name="grade_id" class="form-control">
-                        @if (count($grades) > 1)
+                        @if (count($grades) > 0)
                             @foreach ($grades as $grade)
                                 @if (!empty($class))
                                     <option {{ ($class->grade->id == $grade->id ? 'selected' : '') }} value="{{ $grade->id }}">{{ $grade->name }}</option>
@@ -76,7 +76,7 @@
 
                 <div class="form-group">
                     <label>{{ __('class.user') }}</label>
-                    <select name="user_id" class="form-control">
+                    <select {{ Auth::user()->hasRole('teacher') ? 'disabled' : '' }} name="user_id" class="form-control">
                         @if (count($teachers) > 1)
                             @foreach ($teachers as $user)
                                 @if (!empty($class))

@@ -51,7 +51,9 @@
                             <th>{{ __('class.year') }}</th>
                             <th>{{ __('class.subject') }}</th>
                             <th>{{ __('class.grade') }}</th>
+                            @if (!Auth::user()->hasRole('teacher'))
                             <th>{{ __('class.user') }}</th>
+                            @endif
                             <th>{{ __('messages.actions') }}</th>
                         </tr>
                     </thead>
@@ -62,7 +64,9 @@
                             <td class="txt-oflo">{{ $class->year->start_date }}</td>
                             <td class="txt-oflo">{{ $class->subject->name }}</td>
                             <td class="txt-oflo">{{ $class->grade->name }}</td>
+                            @if (!Auth::user()->hasRole('teacher'))
                             <td class="txt-oflo">{{ $class->user->name }}</td>
+                            @endif
                             <td>
                                 <div class="d-flex">
                                     @if (Auth::user()->can(['update-classes']))

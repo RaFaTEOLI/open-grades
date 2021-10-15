@@ -72,7 +72,7 @@
                                     <a type="button" href="{{ route('students.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     @endif
                                     @if (Auth::user()->can(['delete-students']))
-                                    <form class="btn" action="{{ route('users.destroy', $user->id) }}" method="post">
+                                    <form style="padding: 0px;"  class="btn" action="{{ route('users.destroy', $user->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>

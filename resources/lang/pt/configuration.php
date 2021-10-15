@@ -18,4 +18,5 @@ return [
     "school-year-division" => "Divisão do Ano Escolar",
     "max-grade" => "Nota Máxima",
     "point-average" => "Média",
+    "can-student-enroll" => "Aluno pode se matricular? (1 para sim e 0 para não)",
 ];
