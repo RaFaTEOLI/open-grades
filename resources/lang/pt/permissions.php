@@ -30,5 +30,6 @@ return [
     "subjects" => "Matérias",
     "years" => "Anos Escolares",
     "grades" => "Séries",
-    "dashboard" => "Dashboard"
+    "dashboard" => "Dashboard",
+    "evaluation-types" => "Tipos de Avaliação"
 ];

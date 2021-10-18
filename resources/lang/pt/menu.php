@@ -24,5 +24,6 @@ return [
     "roles" => "Tipos de Usuário",
     "permissions" => "Permissões",
     "years" => "Anos Escolares",
-    "grades" => "Séries"
+    "grades" => "Séries",
+    "evaluation_types" => "Tipos de Avaliação"
 ];

@@ -183,6 +183,9 @@
                     </li>
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))
                     <li>
+                        <a href="{{ route('evaluation-types') }}" class="waves-effect"><i class="fa fa-quote-right fa-fw" aria-hidden="true"></i>{{ __('menu.evaluation_types') }}</a>
+                    </li>
+                    <li>
                         <a href="{{ route('teachers') }}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{ __('menu.teachers') }}</a>
                     </li>
                     @endif
