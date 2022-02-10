@@ -40,6 +40,7 @@ class ClassController extends Controller
                     "students" => (new StudentRepository())->all()
                 ]);
             }
+
             return view("classes/classes", [
                 "classes" => $classes,
             ]);
@@ -85,11 +86,17 @@ class ClassController extends Controller
             $subjects = (new SubjectRepository())->all();
             $teachers = (new TeacherRepository())->all();
 
-            return view("classes/class", [
+            $response = [
                 "class" => $class, "grades" => $grades,
                 "subjects" => $subjects,
                 "teachers" => $teachers
-            ]);
+            ];
+
+            if (Auth::user()->hasRole(['admin', 'teacher'])) {
+                $response["students"] = (new StudentRepository())->findStudentsByClassId($id);
+            }
+
+            return view("classes/class", $response);
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }

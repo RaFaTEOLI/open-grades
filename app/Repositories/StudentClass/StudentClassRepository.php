@@ -31,12 +31,11 @@ class StudentClassRepository extends AbstractRepository implements StudentClassR
         }
     }
 
-    public function findClassesByStudentIdAndClassId(int $studentId, int $classId): Collection
+    public function findClassesByStudentIdAndClassId(int $studentId, int $classId): object
     {
         return StudentsClasses::where("user_id", $studentId)->where("class_id", $classId)
             ->get()
-            ->map
-            ->format();
+            ->first();
     }
 
     public function deleteByStudentAndClass(int $studentId, int $classId): bool

@@ -24,7 +24,7 @@ class GradeRepository extends AbstractRepository implements GradeRepositoryInter
                     })
                     ->join('classes', 'classes.grade_id', 'grades.id')
                     ->where('classes.user_id', Auth::user()->id)
-                    ->get()
+                    ->get(['grades.id', 'grades.name'])
                     ->map->format();
             }
             return Grade::when($limit, function ($query, $limit) {

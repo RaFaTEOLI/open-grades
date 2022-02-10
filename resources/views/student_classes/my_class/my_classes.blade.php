@@ -72,13 +72,23 @@
                             <td>
                                 <div class="d-flex">
                                     @if (Auth::user()->hasRole('student'))
+                                    <form class="btn" action="{{ route('student.classes.show', $class->id) }}" method="post">
+                                        @csrf
+                                        @method('GET')
+                                        <button class="btn btn-secondary" type="submit"><i class="fa fa-info"></i> {{ __('student_class.info') }}</button>
+                                    </form>
                                     <form class="btn" action="{{ route('student.classes.destroy', $class->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit"><i class="fa fa-times"></i> {{ __('student_class.quit') }}</button>
                                     </form>
                                     @endif
-                                    @if (Auth::user()->hasRole('responsible') || Auth::user()->hasRole('admin'))
+                                    @if (Auth::user()->hasRole(['responsible', 'admin', 'teacher']))
+                                    <form class="btn" action="{{ route('responsible.student.classes.show', ["studentId" => $studentId, "id" => $class->id]) }}" method="post">
+                                        @csrf
+                                        @method('GET')
+                                        <button class="btn btn-secondary" type="submit"><i class="fa fa-info"></i> {{ __('student_class.info') }}</button>
+                                    </form>
                                     <form class="btn" action="{{ route('responsible.student.classes.destroy', ["studentId" => $studentId, "classId" => $class->class->id]) }}" method="post">
                                         @csrf
                                         @method('DELETE')

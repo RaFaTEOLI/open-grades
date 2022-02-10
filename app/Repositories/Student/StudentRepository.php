@@ -66,4 +66,14 @@ class StudentRepository implements StudentRepositoryInterface
             ->map
             ->formatStudentsOnly();
     }
+
+    public function findStudentsByClassId(int $classId): Collection
+    {
+        return StudentsClasses::join('classes', 'students_classes.class_id', 'classes.id')
+            ->join('users', 'users.id', 'students_classes.user_id')
+            ->where('students_classes.class_id', $classId)
+            ->get('students_classes.user_id')
+            ->map
+            ->formatStudentsOnly();
+    }
 }

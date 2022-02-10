@@ -21,4 +21,5 @@ return [
     "enroll" => "Matricular",
     "quit" => "Sair",
     "choose_student" => "Escolha um aluno para matricular",
+    "info" => "Ver"
 ];

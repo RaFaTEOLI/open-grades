@@ -16,4 +16,5 @@ return [
     "grade" => "Série",
     "subject" => "Matéria",
     "user" => "Professor",
+    "class" => "Aula",
 ];

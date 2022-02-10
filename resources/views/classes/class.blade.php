@@ -107,5 +107,85 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            @if (Auth::user()->can('create-students'))
+            <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
+                <a type="button" href="{{ route('students.new') }}" class="btn btn-success pull-right row b-none"><i class="fa fa-plus"></i></a>
+            </div>
+            @endif
+            <h3 class="box-title">{{ __('menu.students') }}</h3>
+            @if (is_array($errors))
+            @foreach ($errors as $error)
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ $error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            @endforeach
+            @elseif (!empty($error))
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            @endif
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ __('student.name') }}</th>
+                            @if (Auth::user()->hasRole('admin'))
+                            <th>{{ __('student.email') }}</th>
+                            <th>{{ __('student.created_at') }}</th>
+                            @endif
+                            <th>{{ __('messages.actions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($students as $user)
+                        @if ($user->id !== Auth::user()->id)
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td class="txt-oflo">{{ $user->name }}</td>
+                            @if (Auth::user()->hasRole('admin'))
+                                <td>{{ $user->email }}</td>
+                                <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($user->created_at)) }}</span></td>
+                            @endif
+                            <td>
+                                <div class="d-flex">
+                                    @if (Auth::user()->can(['read-students']) && Auth::user()->hasRole(['admin', 'teacher']))
+                                    <a type="button" href="{{ route('responsible.student.classes.show', ["studentId" => $user->id, "id" => $class->id]) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                    @endif
+                                    @if (Auth::user()->can(['update-students']))
+                                    <a type="button" href="{{ route('students.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                    @endif
+                                    @if (Auth::user()->can(['delete-students']))
+                                    <form style="padding: 0px;"  class="btn" action="{{ route('users.destroy', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>
+                </table>
+                @if (count($students) < 1) <div style="text-align: center;">{{ __('messages.no_records') }}
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
 <!-- /.container-fluid -->
 @endsection

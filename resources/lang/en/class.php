@@ -16,4 +16,5 @@ return [
     "grade" => "Grade",
     "subject" => "Subject",
     "user" => "Teacher",
+    "class" => "Class",
 ];

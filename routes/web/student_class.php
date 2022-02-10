@@ -35,14 +35,19 @@ Route::group(
 );
 
 Route::group(
+    ["prefix" => "school", ["middleware" => ["role:admin|responsible|teacher"]]],
+    function () {
+        Route::get("/student/{studentId}/classes/{id}", "StudentClassController@show")
+            ->name("responsible.student.classes.show")
+            ->middleware("permission:read-student-classes");
+    },
+);
+
+Route::group(
     ["prefix" => "school", ["middleware" => ["role:admin|responsible"]]],
     function () {
         Route::get("/student/{studentId}/classes", "StudentClassController@index")
             ->name("responsible.student.classes")
-            ->middleware("permission:read-student-classes");
-
-        Route::get("/student/{studentId}/classes/{id}", "StudentClassController@show")
-            ->name("responsible.student.classes.show")
             ->middleware("permission:read-student-classes");
 
         Route::post("/student/{studentId}/classes", "StudentClassController@store")

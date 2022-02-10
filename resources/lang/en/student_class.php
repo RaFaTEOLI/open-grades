@@ -21,4 +21,5 @@ return [
     "enroll" => "Enroll",
     "quit" => "Quit",
     "choose_student" => "Choose a student to enroll",
+    "info" => "See"
 ];

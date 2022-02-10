@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AlreadyEnrolled;
+use App\Exceptions\Forbidden;
 use App\Exceptions\NotResponsible;
 use App\Http\Requests\StudentClass\StudentClassRequest;
+use App\Repositories\Class\ClassRepository;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\StudentClass\StudentClassRepository;
 use App\Repositories\Grade\GradeRepository;
@@ -32,6 +34,11 @@ class StudentClassController extends Controller
             $classes = $this->studentClassRepository->all();
 
             if (Auth::user()->hasRole("student")) {
+                if ($studentId > 0) {
+                    if ($studentId !== Auth::user()->id) {
+                        throw new Forbidden('You cannot access this page!', 403);
+                    }
+                }
                 $classes = (new StudentClassRepository())->findClassesByStudentId(Auth::user()->id);
                 return view("student_classes/my_class/my_classes", [
                     "classes" => $classes,
@@ -49,6 +56,8 @@ class StudentClassController extends Controller
                     "studentId" => $studentId
                 ]);
             }
+        } catch (Forbidden $e) {
+            return back()->with("error", __("exceptions.forbidden"));
         } catch (NotResponsible $nR) {
             return redirect()
                 ->route("students")
@@ -99,20 +108,42 @@ class StudentClassController extends Controller
         }
     }
 
-    public function show(int $id)
+    public function show(int $studentId, int $id = 0)
     {
         try {
-            $class = $this->studentClassRepository->findById($id);
+            if (Auth::user()->hasRole('student')) {
+                $id = $studentId;
+                $studentClass = $this->studentClassRepository->findById($id);
+                $student = Auth::user();
+
+                if ($studentClass->user_id !== Auth::user()->id) {
+                    throw new Forbidden('You cannot access this page!', 403);
+                }
+            } else if (Auth::user()->hasRole('teacher')) {
+                $studentClass = $this->studentClassRepository->findClassesByStudentIdAndClassId($studentId, $id);
+                $student = (new StudentRepository())->findById($studentId);
+            } else {
+                $studentClass = $this->studentClassRepository->findById($id);
+            }
+
+            $class = (new ClassRepository())->findById($studentClass->class_id);
             $grades = (new GradeRepository())->all();
             $subjects = (new SubjectRepository())->all();
             $teachers = (new TeacherRepository())->all();
+            $students = (new StudentRepository())->findStudentsByClassId($class->id);
 
             return view("student_classes/my_class/my_class", [
                 "class" => $class, "grades" => $grades,
                 "subjects" => $subjects,
-                "teachers" => $teachers
+                "teachers" => $teachers,
+                "studentClass" => $studentClass,
+                "students" => $students,
+                "student" => $student
             ]);
+        } catch (Forbidden $e) {
+            return back()->with("error", __("exceptions.forbidden"));
         } catch (Exception $e) {
+            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }
