@@ -59,6 +59,7 @@ class ClassTest extends TestCase
         $this->expectException(Exception::class);
 
         $user = factory(User::class)->create();
+        factory(Year::class)->create();
 
         $year = Year::where('closed', 0)->first()->get();
 

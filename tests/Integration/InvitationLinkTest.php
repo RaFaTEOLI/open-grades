@@ -66,6 +66,8 @@ class InvitationLinkTest extends TestCase
     public function testShouldFetchAllInvitations()
     {
         $user = User::find(1);
+        Auth::login($user);
+        factory(InvitationLink::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/invitations");
 
         $response
@@ -116,6 +118,8 @@ class InvitationLinkTest extends TestCase
     public function testShouldFetchListOfInvitationsWithLimitAndOffset()
     {
         $user = User::find(1);
+        Auth::login($user);
+        factory(InvitationLink::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/invitations?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

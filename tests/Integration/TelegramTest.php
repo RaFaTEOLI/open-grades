@@ -37,6 +37,9 @@ class TelegramTest extends TestCase
     public function testShouldFetchMessages()
     {
         $user = User::find(1);
+
+        factory(Telegram::class)->create();
+
         $response = $this->actingAs($user, "api")->json(
             "GET",
             env("APP_API") . "/messages",
@@ -70,6 +73,7 @@ class TelegramTest extends TestCase
     public function testShouldFetchListOfMessagesWithLimitAndOffset()
     {
         $user = User::find(1);
+        factory(Telegram::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/messages?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

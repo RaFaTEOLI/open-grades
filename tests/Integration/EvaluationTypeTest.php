@@ -38,6 +38,7 @@ class EvaluationTypeTest extends TestCase
     public function testShouldListAllEvaluationTypes()
     {
         $user = User::find(1);
+        factory(EvaluationType::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/evaluation-types");
 
         $response
@@ -105,6 +106,7 @@ class EvaluationTypeTest extends TestCase
     public function testShouldFetchListOfEvaluationTypesWithLimitAndOffset()
     {
         $user = User::find(1);
+        factory(EvaluationType::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/evaluation-types?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

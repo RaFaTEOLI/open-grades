@@ -38,6 +38,9 @@ class YearTest extends TestCase
     public function testShouldListAllYears()
     {
         $user = User::find(1);
+
+        factory(Year::class)->create();
+
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/years");
 
         $response
@@ -105,6 +108,7 @@ class YearTest extends TestCase
     public function testShouldFetchListOfYearsWithLimitAndOffset()
     {
         $user = User::find(1);
+        factory(Year::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/years?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

@@ -37,6 +37,7 @@ class GradeTest extends TestCase
     public function testShouldListAllGrades()
     {
         $user = User::find(1);
+        factory(Grade::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/grades");
 
         $response
@@ -103,6 +104,7 @@ class GradeTest extends TestCase
     public function testShouldFetchListOfGradesWithLimitAndOffset()
     {
         $user = User::find(1);
+        factory(Grade::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/grades?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);
