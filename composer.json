@@ -1,6 +1,7 @@
 {
     "name": "rafateoli/open-grades",
     "type": "project",
+    "version": "0.0.1",
     "description": "Application for schools to manage grades, classes and calendars.",
     "keywords": [
         "framework",
