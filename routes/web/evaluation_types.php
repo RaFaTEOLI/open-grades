@@ -27,7 +27,7 @@ Route::group(
     ["prefix" => "admin", "middleware" => ["role:admin"]],
     function () {
         Route::get("/evaluation-type", function () {
-            return view("evaluation-types/evaluation-type");
+            return view("evaluation_types/evaluation_type");
         })
             ->name("evaluation-types.new")
             ->middleware("permission:read-evaluation-types");
