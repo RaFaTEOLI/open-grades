@@ -88,7 +88,7 @@ class UserRepository implements UserRepositoryInterface
     public function update(int $userId, array $set): void
     {
         try {
-            $user = User::findOrFail($userId)->first();
+            $user = User::findOrFail($userId);
 
             $user->update($set);
             (new RedisRepository())->invalidate("users");
