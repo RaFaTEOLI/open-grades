@@ -12,12 +12,13 @@ use Exception;
 
 class RolesPermissionController extends Controller
 {
+
     /**
      * @OA\Patch(
      * path="/roles/{roleId}/permission/{permissionId}",
      * summary="Add new permission",
      * description="Add new permission to role",
-     * operationId="index",
+     * operationId="patch-store",
      * tags={"Role"},
      * security={ {"bearerAuth":{}} },
      * @OA\Parameter(
@@ -71,7 +72,7 @@ class RolesPermissionController extends Controller
      * path="/roles/{roleId}/permission/{permissionId}",
      * summary="Remove permission",
      * description="Remove permission from role",
-     * operationId="index",
+     * operationId="delete-destroy",
      * tags={"Role"},
      * security={ {"bearerAuth":{}} },
      * @OA\Parameter(
