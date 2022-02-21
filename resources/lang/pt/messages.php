@@ -18,4 +18,5 @@ return [
     'actions' => 'Ações',
     'no_records' => 'Nenhum registro encontrado!',
     'copied' => 'Texto copiado!',
+    'no_year_ongoing' => 'Não pode criar a aula, não existe ano corrente'
 ];

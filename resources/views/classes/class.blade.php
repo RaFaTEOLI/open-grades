@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label>{{ __('class.subject') }}</label>
                     <select name="subject_id" class="form-control">
-                        @if (count($subjects) > 1)
+                        @if (count($subjects) > 0)
                             @foreach ($subjects as $subject)
                                 @if (!empty($class))
                                     <option {{ ($class->subject->id == $subject->id ? 'selected' : '') }} value="{{ $subject->id }}">{{ $subject->name }}</option>
@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label>{{ __('class.user') }}</label>
                     <select {{ Auth::user()->hasRole('teacher') ? 'disabled' : '' }} name="user_id" class="form-control">
-                        @if (count($teachers) > 1)
+                        @if (count($teachers) > 0)
                             @foreach ($teachers as $user)
                                 @if (!empty($class))
                                     <option {{ ($class->user->id == $user->id ? 'selected' : '') }} value="{{ $user->id }}">{{ $user->name }}</option>
@@ -108,6 +108,7 @@
     </div>
 </div>
 
+@if (!empty($class))
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
@@ -151,41 +152,41 @@
                     </thead>
                     <tbody>
                         @foreach ($students as $user)
-                        @if ($user->id !== Auth::user()->id)
-                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td class="txt-oflo">{{ $user->name }}</td>
-                            @if (Auth::user()->hasRole('admin'))
-                                <td>{{ $user->email }}</td>
-                                <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($user->created_at)) }}</span></td>
+                            @if ($user->id !== Auth::user()->id)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td class="txt-oflo">{{ $user->name }}</td>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <td>{{ $user->email }}</td>
+                                    <td><span class="text-success">{{ date("d/m/Y H:i:s", strtotime($user->created_at)) }}</span></td>
+                                @endif
+                                <td>
+                                    <div class="d-flex">
+                                        @if (Auth::user()->can(['read-students']) && Auth::user()->hasRole(['admin', 'teacher']))
+                                        <a type="button" href="{{ route('responsible.student.classes.show', ["studentId" => $user->id, "id" => $class->id]) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                        @endif
+                                        @if (Auth::user()->can(['update-students']))
+                                        <a type="button" href="{{ route('students.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                        @endif
+                                        @if (Auth::user()->can(['delete-students']))
+                                        <form style="padding: 0px;"  class="btn" action="{{ route('users.destroy', $user->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
                             @endif
-                            <td>
-                                <div class="d-flex">
-                                    @if (Auth::user()->can(['read-students']) && Auth::user()->hasRole(['admin', 'teacher']))
-                                    <a type="button" href="{{ route('responsible.student.classes.show', ["studentId" => $user->id, "id" => $class->id]) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                    @endif
-                                    @if (Auth::user()->can(['update-students']))
-                                    <a type="button" href="{{ route('students.show', $user->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                                    @endif
-                                    @if (Auth::user()->can(['delete-students']))
-                                    <form style="padding: 0px;"  class="btn" action="{{ route('users.destroy', $user->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
                         @endforeach
                     </tbody>
                 </table>
-                @if (count($students) < 1) <div style="text-align: center;">{{ __('messages.no_records') }}
+                @if (count($students) < 1) <div style="text-align: center;">{{ __('messages.no_records') }} </div> @endif
             </div>
-            @endif
         </div>
     </div>
 </div>
+@endif
 <!-- /.container-fluid -->
 @endsection

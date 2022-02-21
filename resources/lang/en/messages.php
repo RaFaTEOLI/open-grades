@@ -18,4 +18,5 @@ return [
     'actions' => 'Actions',
     'no_records' => 'No records found',
     'copied' => 'Copied text to clipboard',
+    'no_year_ongoing' => 'Cannot create a class, there is no school year ongoing'
 ];

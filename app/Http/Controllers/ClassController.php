@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NoYearOngoing;
 use App\Http\Requests\Class\ClassRequest;
 use App\Repositories\Class\ClassRepository;
 use App\Repositories\Configuration\ConfigurationRepository;
@@ -59,6 +60,8 @@ class ClassController extends Controller
             return redirect()
                 ->route("classes")
                 ->withSuccess(__("actions.success"));
+        } catch (NoYearOngoing $n) {
+            return back()->with("error", $n->getMessage());
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }

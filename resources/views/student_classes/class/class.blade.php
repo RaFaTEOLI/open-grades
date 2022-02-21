@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label>{{ __('class.subject') }}</label>
                     <select name="subject_id" class="form-control">
-                        @if (count($subjects) > 1)
+                        @if (count($subjects) > 0)
                             @foreach ($subjects as $subject)
                                 @if (!empty($class))
                                     <option {{ ($class->subject->id == $subject->id ? 'selected' : '') }} value="{{ $subject->id }}">{{ $subject->name }}</option>
@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label>{{ __('class.user') }}</label>
                     <select name="user_id" class="form-control">
-                        @if (count($teachers) > 1)
+                        @if (count($teachers) > 0)
                             @foreach ($teachers as $user)
                                 @if (!empty($class))
                                     <option {{ ($class->user->id == $user->id ? 'selected' : '') }} value="{{ $user->id }}">{{ $user->name }}</option>
