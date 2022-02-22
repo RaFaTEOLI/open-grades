@@ -120,7 +120,7 @@ class StudentClassController extends Controller
                 if ($studentClass->user_id !== Auth::user()->id) {
                     throw new Forbidden('You cannot access this page!', 403);
                 }
-            } else if (Auth::user()->hasRole('teacher')) {
+            } else {
                 $student = (new StudentRepository())->findById($studentId);
             }
 
