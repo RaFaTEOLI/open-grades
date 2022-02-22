@@ -12,9 +12,9 @@ return [
     |
     */
 
-    "students" => "Teachers",
-    "student" => "Teacher",
-    "name" => "name",
+    "teachers" => "Teachers",
+    "teacher" => "Teacher",
+    "name" => "Name",
     "created_at" => "Created at",
     "email" => "E-mail",
     "password" => "Password",
