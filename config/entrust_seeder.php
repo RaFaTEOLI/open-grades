@@ -27,6 +27,7 @@ return [
             "students" => "r",
             "classes" => "c,r,u,d",
             "grades" => "r",
+            "student-classes" => "r"
         ],
         "student" => [
             "profile" => "r,u",
