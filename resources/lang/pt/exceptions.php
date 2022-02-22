@@ -15,4 +15,5 @@ return [
     "not_responsible" => "Você não pode ver esse usuário pois você é o responsável dele",
     "already_enrolled" => "Você não pode matricular esse usuário pois ele já está matriculado",
     "forbidden" => "Você não pode acessar esse conteúdo!",
+    "item_not_found" => "Item não encontrado!"
 ];

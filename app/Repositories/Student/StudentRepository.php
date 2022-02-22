@@ -7,8 +7,10 @@ use App\Models\Student;
 use App\Models\StudentsClasses;
 use App\Models\StudentsResponsible;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ItemNotFoundException;
 
 class StudentRepository implements StudentRepositoryInterface
 {
@@ -42,11 +44,16 @@ class StudentRepository implements StudentRepositoryInterface
     */
     public function findById(int $id): object
     {
-
-        return Student::where("id", $id)
-            ->where("deleted_at", null)
-            ->first()
-            ->format();
+        try {
+            return Student::where("id", $id)
+                ->where("deleted_at", null)
+                ->firstOrFail()
+                ->format();
+        } catch (ItemNotFoundException) {
+            throw new ItemNotFoundException();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function getNewCount(): int
