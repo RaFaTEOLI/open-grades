@@ -22,6 +22,7 @@ return [
         ],
         "teacher" => [
             "profile" => "r,u",
+            "evaluation-types" => "r",
             "teachers" => "r",
             "students" => "r",
             "classes" => "c,r,u,d",
