@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
     "role_structure" => [
         "admin" => [
@@ -33,12 +31,14 @@ return [
             "teachers" => "r",
             "students" => "r",
             "classes" => "r",
+            "student-classes" => "c, r"
         ],
         "responsible" => [
             "profile" => "r,u",
             "teachers" => "r",
             "students" => "r",
             "classes" => "r",
+            "student-classes" => "c, r"
         ],
     ],
     "user_roles" => [
