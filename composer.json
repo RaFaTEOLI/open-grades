@@ -65,6 +65,8 @@
     "prefer-stable": true,
     "scripts": {
         "doc": "@php artisan l5-swagger:generate",
+        "test": "@php artisan test",
+        "schedule": "@php artisan schedule:work",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
