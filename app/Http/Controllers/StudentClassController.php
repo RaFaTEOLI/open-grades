@@ -112,16 +112,20 @@ class StudentClassController extends Controller
     public function show(int $studentId, int $id = 0)
     {
         try {
-            $studentClass = $this->studentClassRepository->findById($id);
+            if ($studentId > 0) {
+                $studentClass = $this->studentClassRepository->findClassesByStudentIdAndClassId($studentId, $id);
+                $student = (new StudentRepository())->findById($studentId);
+            } else {
+                $studentClass = $this->studentClassRepository->findById($id);
+            }
+
             if (Auth::user()->hasRole('student')) {
-                $id = $studentId;
+                $studentClass = $this->studentClassRepository->findById($id);
                 $student = Auth::user();
 
                 if ($studentClass->user_id !== Auth::user()->id) {
                     throw new Forbidden('You cannot access this page!', 403);
                 }
-            } else {
-                $student = (new StudentRepository())->findById($studentId);
             }
 
             $class = (new ClassRepository())->findById($studentClass->class_id);
@@ -143,7 +147,6 @@ class StudentClassController extends Controller
         } catch (Forbidden $e) {
             return back()->with("error", __("exceptions.forbidden"));
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }

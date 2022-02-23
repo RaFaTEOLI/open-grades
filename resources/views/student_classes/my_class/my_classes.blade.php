@@ -84,7 +84,7 @@
                                     </form>
                                     @endif
                                     @if (Auth::user()->hasRole(['responsible', 'admin', 'teacher']))
-                                    <form class="btn" action="{{ route('responsible.student.classes.show', ["studentId" => $studentId, "id" => $class->id]) }}" method="post">
+                                    <form class="btn" action="{{ route('responsible.student.classes.show', ["studentId" => $studentId, "id" => $class->class->id]) }}" method="post">
                                         @csrf
                                         @method('GET')
                                         <button class="btn btn-secondary" type="submit"><i class="fa fa-info"></i> {{ __('student_class.info') }}</button>
