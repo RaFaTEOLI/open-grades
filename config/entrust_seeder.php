@@ -19,6 +19,7 @@ return [
             "student-classes" => "c,r,u,d",
             "subjects" => "c,r,u,d",
             "years" => "c,r,u,d",
+            "warnings" => "c,r,u,d",
         ],
         "teacher" => [
             "profile" => "r,u",
@@ -27,21 +28,24 @@ return [
             "students" => "r",
             "classes" => "c,r,u,d",
             "grades" => "r",
-            "student-classes" => "r"
+            "student-classes" => "r",
+            "warnings" => "c,r,u,d",
         ],
         "student" => [
             "profile" => "r,u",
             "teachers" => "r",
             "students" => "r",
             "classes" => "r",
-            "student-classes" => "c, r"
+            "student-classes" => "c, r",
+            "warnings" => "r",
         ],
         "responsible" => [
             "profile" => "r,u",
             "teachers" => "r",
             "students" => "r",
             "classes" => "r",
-            "student-classes" => "c, r"
+            "student-classes" => "c, r",
+            "warnings" => "r",
         ],
     ],
     "user_roles" => [
