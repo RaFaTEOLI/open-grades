@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Warning;
 
-use App\Models\User;
+use App\Models\Warning;
 use App\Repositories\Abstract\AbstractRepository;
 
 class WarningRepository extends AbstractRepository
 {
-    protected $model = User::class;
+    protected $model = Warning::class;
 }

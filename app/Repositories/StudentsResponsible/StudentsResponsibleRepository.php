@@ -43,9 +43,7 @@ class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInte
     */
     public function findByStudentId(int $id): object
     {
-        return StudentsResponsible::where("student_id", $id)
-            ->first()
-            ->format();
+        return StudentsResponsible::where("student_id", $id)->get()->map->formatResponsible();
     }
 
     /*

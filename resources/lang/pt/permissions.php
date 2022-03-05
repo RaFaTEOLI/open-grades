@@ -31,5 +31,6 @@ return [
     "years" => "Anos Escolares",
     "grades" => "Séries",
     "dashboard" => "Dashboard",
-    "evaluation-types" => "Tipos de Avaliação"
+    "evaluation-types" => "Tipos de Avaliação",
+    "warnings" => "Advertências"
 ];

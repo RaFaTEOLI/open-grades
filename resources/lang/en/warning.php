@@ -1,10 +1,9 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Message Language Lines
+    | Warning Message Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during simple messages for various
@@ -13,11 +12,7 @@ return [
     |
     */
 
-    'subjects' => 'Matérias',
-    'subject' => 'Matéria',
-    'name' => 'Nome',
-    "start_date" => "Inicio",
-    "end_date" => "Fim",
-    "closed" => "Fechado",
-    "reporter" => "Reportado Por"
+    "student" => "The Student",
+    "issued" => "was issued a warning by one of our responsibles!",
+    "click_here" => "Click here to see it"
 ];

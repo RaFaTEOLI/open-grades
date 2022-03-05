@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Warning\WarningRequest;
+use App\Repositories\Class\ClassRepository;
 use App\Repositories\Warning\WarningRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Services\Warning\CreateWarningService;
@@ -28,6 +29,7 @@ class WarningController extends Controller
                 "warnings" => $warnings,
             ]);
         } catch (Exception $e) {
+            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }
@@ -64,9 +66,14 @@ class WarningController extends Controller
     public function show(int $id)
     {
         try {
+            $students = (new StudentRepository())->all();
+            $classes = (new ClassRepository())->all();
             $warning = $this->warningRepository->findById($id);
 
-            return view("classes/class", ["warning" => $warning]);
+            return view("warnings/warning", [
+                "warning" => $warning, "students" => $students,
+                "classes" => $classes,
+            ]);
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }
@@ -76,9 +83,11 @@ class WarningController extends Controller
     {
         try {
             $students = (new StudentRepository())->all();
+            $classes = (new ClassRepository())->all();
 
             return view("warnings/warning", [
                 "students" => $students,
+                "classes" => $classes,
             ]);
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));

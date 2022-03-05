@@ -55,10 +55,10 @@
                     <select name="class_id" class="form-control">
                         @if (count($classes) > 0)
                             @foreach ($classes as $class)
-                                @if (!empty($class))
-                                    <option {{ ($warning->class->id == $class->id ? 'selected' : '') }} value="{{ $class->id }}">{{ $class->name }}</option>
+                                @if (!empty($warning))
+                                    <option {{ ($warning->class->id == $class->id ? 'selected' : '') }} value="{{ $class->id }}">{{ '#' . $class->id . ' - ' . $class->grade->name . ' - ' . $class->user->name }}</option>
                                 @else
-                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                    <option value="{{ $class->id }}">{{ '#' . $class->id . ' - ' . $class->grade->name . ' - ' . $class->user->name }}</option>
                                 @endif
                             @endforeach
                         @endif
@@ -75,8 +75,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>{{ __('class.user') }}</label>
-                    <input name="description" class="form-control" />
+                    <label>{{ __('role.description') }}</label>
+                    <textarea rows="10" cols="50" name="description" class="form-control"></textarea>
                     @if ($errors->get('description'))
                     <p class="label-error">
                         @foreach ($errors->get('description') as $error)
