@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Warning\WarningRequest;
-use App\Repositories\Class\ClassRepository;
 use App\Repositories\Warning\WarningRepository;
 use App\Repositories\Student\StudentRepository;
+use App\Repositories\Classes\ClassRepository;
 use App\Services\Warning\CreateWarningService;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,7 +37,7 @@ class WarningController extends Controller
     public function store(WarningRequest $request)
     {
         try {
-            $input = $request->only(["student_id", "reporter_id", "class_id", "description"]);
+            $input = $request->only(["student_id", "class_id", "description"]);
 
             (new CreateWarningService())->execute($input);
 
@@ -52,7 +52,7 @@ class WarningController extends Controller
     public function update(int $id, Request $request)
     {
         try {
-            $input = $request->only(["student_id", "reporter_id", "class_id", "description"]);
+            $input = $request->only(["description"]);
             $this->warningRepository->update($id, $input);
 
             return redirect()

@@ -3,7 +3,7 @@
 namespace App\Repositories\Warning;
 
 use App\Models\Warning;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 
 class WarningRepository extends AbstractRepository
 {

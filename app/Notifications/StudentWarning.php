@@ -47,7 +47,7 @@ class StudentWarning extends Notification implements ShouldQueue
         return (new MailMessage)
             ->line(__('warning.student') . " #{$this->student->id} {$this->student->name}")
             ->line(__('warning.issued'))
-            ->action(__('warning_click_here'), url("/school/warning/{$this->warning->id}"))
+            ->action(__('warning.click_here'), url("/school/warnings/{$this->warning->id}"))
             ->line(__('messages.thank_you'));
     }
 

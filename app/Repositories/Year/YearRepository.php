@@ -3,7 +3,7 @@
 namespace App\Repositories\Year;
 
 use App\Models\Year;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 use Exception;
 use Illuminate\Support\Collection;
 

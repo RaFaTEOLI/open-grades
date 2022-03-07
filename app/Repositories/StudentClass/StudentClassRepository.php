@@ -4,7 +4,7 @@ namespace App\Repositories\StudentClass;
 
 use App\Exceptions\NotResponsible;
 use App\Models\StudentsClasses;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 use App\Repositories\StudentsResponsible\StudentsResponsibleRepository;
 use Exception;
 use Illuminate\Support\Collection;

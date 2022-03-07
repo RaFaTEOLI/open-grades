@@ -6,7 +6,7 @@ use App\Exceptions\AlreadyEnrolled;
 use App\Exceptions\Forbidden;
 use App\Exceptions\NotResponsible;
 use App\Http\Requests\StudentClass\StudentClassRequest;
-use App\Repositories\Class\ClassRepository;
+use App\Repositories\Classes\ClassRepository;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\StudentClass\StudentClassRepository;
 use App\Repositories\Grade\GradeRepository;
@@ -142,7 +142,7 @@ class StudentClassController extends Controller
                 "students" => $students,
                 "student" => $student
             ]);
-        } catch (ItemNotFoundException) {
+        } catch (ItemNotFoundException $e) {
             return back()->with("error", __("exceptions.item_not_found"));
         } catch (Forbidden $e) {
             return back()->with("error", __("exceptions.forbidden"));

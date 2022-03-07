@@ -28,7 +28,7 @@
                 @method(empty($warning) ? 'POST' : 'PUT')
                 <div class="form-group">
                     <label>{{ __('student.student') }}</label>
-                    <select name="student_id" class="form-control">
+                    <select name="student_id" class="form-control" {{ (!empty($warning) ? 'readonly disabled' : '') }}>
                         @if (count($students) > 0)
                             @foreach ($students as $student)
                                 @if (!empty($warning))
@@ -52,7 +52,7 @@
 
                 <div class="form-group">
                     <label>{{ __('class.class') }}</label>
-                    <select name="class_id" class="form-control">
+                    <select name="class_id" class="form-control" {{ (!empty($warning) ? 'readonly disabled' : '') }}>
                         @if (count($classes) > 0)
                             @foreach ($classes as $class)
                                 @if (!empty($warning))
@@ -76,7 +76,7 @@
 
                 <div class="form-group">
                     <label>{{ __('role.description') }}</label>
-                    <textarea rows="10" cols="50" name="description" class="form-control"></textarea>
+                    <textarea rows="10" cols="50" name="description" class="form-control">{{ empty($warning) ? '' : $warning->description }}</textarea>
                     @if ($errors->get('description'))
                     <p class="label-error">
                         @foreach ($errors->get('description') as $error)

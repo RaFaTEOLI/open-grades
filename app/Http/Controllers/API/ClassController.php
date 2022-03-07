@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Class\ClassRequest;
 use App\Http\Traits\Pagination;
-use App\Repositories\Class\ClassRepository;
+use App\Repositories\Classes\ClassRepository;
 use App\Services\Class\CreateClassService;
 use Exception;
 use Illuminate\Http\Request;

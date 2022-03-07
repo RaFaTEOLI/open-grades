@@ -112,7 +112,7 @@ class WarningController extends Controller
     }
 
     /**
-     * @OA\Put(
+     * @OA\Patch(
      * path="/warnings/{id}",
      * summary="Update Warning",
      * description="Update Warning",
@@ -131,11 +131,9 @@ class WarningController extends Controller
      *
      * @OA\RequestBody(
      *    required=true,
-     *    description="Send student_id, class_id and description",
+     *    description="Update description",
      *    @OA\JsonContent(
-     *       required={"student_id", "class_id", "description"},
-     *       @OA\Property(property="student_id", type="integer", example="1"),
-     *       @OA\Property(property="class_id", type="integer", example="5"),
+     *       required={"description"},
      *       @OA\Property(property="description", type="string", example="Student was being too loud"),
      *    ),
      * ),
@@ -149,7 +147,7 @@ class WarningController extends Controller
     public function update(int $id, Request $request)
     {
         try {
-            $input = $request->only(["student_id", "class_id", "reporter_id"]);
+            $input = $request->only(["description"]);
             $this->warningRepository->update($id, $input);
 
             return response()->noContent();

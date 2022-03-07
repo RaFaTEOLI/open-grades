@@ -5,7 +5,7 @@ namespace App\Services\Class;
 use App\Exceptions\NoYearOngoing;
 use App\Models\Year;
 use Exception;
-use App\Repositories\Class\ClassRepository;
+use App\Repositories\Classes\ClassRepository;
 
 class CreateClassService
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Class;
+namespace App\Repositories\Classes;
 
 use Illuminate\Support\Collection;
 

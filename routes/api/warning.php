@@ -20,7 +20,7 @@ Route::group(["middleware" => "auth:api"], function () {
         ->name("warnings.store")
         ->middleware("permission:create-warnings");
 
-    Route::put("/warnings/{id}", "API\WarningController@update")
+    Route::patch("/warnings/{id}", "API\WarningController@update")
         ->name("warnings.update")
         ->middleware("permission:update-warnings");
 
