@@ -68,7 +68,7 @@
                                 <td class="txt-oflo">{{ $warning->reporter->name }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        @if (Auth::user()->can(['update-warnings']))
+                                        @if (Auth::user()->can(['read-warnings']))
                                         <a type="button" href="{{ route('warnings.show', $warning->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                         @endif
                                         @if (Auth::user()->can(['delete-warnings']))

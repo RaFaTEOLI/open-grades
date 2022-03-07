@@ -48,7 +48,7 @@ class Warning extends Model
             "student" => $this->student->format(),
             "class" => $this->class->format(),
             "reporter" => $this->user->format(),
-            "descript" => $this->description,
+            "description" => $this->description,
         ];
     }
 }

@@ -76,7 +76,7 @@
 
                 <div class="form-group">
                     <label>{{ __('role.description') }}</label>
-                    <textarea rows="10" cols="50" name="description" class="form-control">{{ empty($warning) ? '' : $warning->description }}</textarea>
+                    <textarea rows="10" cols="50" name="description" class="form-control" {{ (Auth::user()->can('update-warnings')) ? '' : 'readonly disabled' }} >{{ empty($warning) ? '' : $warning->description }}</textarea>
                     @if ($errors->get('description'))
                     <p class="label-error">
                         @foreach ($errors->get('description') as $error)

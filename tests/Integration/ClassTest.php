@@ -45,11 +45,11 @@ class ClassTest extends TestCase
     }
 
     /**
-     * It should list all Classs
+     * It should list all Classes
      *
      * @return void
      */
-    public function testShouldListAllClasss()
+    public function testShouldListAllClasses()
     {
         $user = User::find(1);
         factory(Classes::class)->create();

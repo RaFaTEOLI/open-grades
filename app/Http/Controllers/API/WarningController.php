@@ -101,11 +101,11 @@ class WarningController extends Controller
     public function store(WarningRequest $request)
     {
         try {
-            $input = $request->only(["student_id", "class_id", "reporter_id"]);
+            $input = $request->only(["student_id", "class_id", "description"]);
 
-            $Warning = (new CreateWarningService())->execute($input);
+            $warning = (new CreateWarningService())->execute($input);
 
-            return response()->json($Warning->format(), HttpStatus::CREATED);
+            return response()->json($warning, HttpStatus::CREATED);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::BAD_REQUEST);
         }
@@ -186,9 +186,9 @@ class WarningController extends Controller
     public function show(int $id)
     {
         try {
-            $Warning = $this->warningRepository->findById($id)->format();
+            $warning = $this->warningRepository->findById($id)->format();
 
-            return response()->json($Warning, HttpStatus::SUCCESS);
+            return response()->json($warning, HttpStatus::SUCCESS);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::SERVER_ERROR);
         }
