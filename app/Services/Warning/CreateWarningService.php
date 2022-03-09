@@ -42,7 +42,6 @@ class CreateWarningService
             }
             throw new UserNotStudent();
         } catch (Exception $e) {
-            dd($e);
             throw new Exception($e->getMessage());
         }
     }

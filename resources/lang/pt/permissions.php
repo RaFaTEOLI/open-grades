@@ -32,5 +32,6 @@ return [
     "grades" => "Séries",
     "dashboard" => "Dashboard",
     "evaluation-types" => "Tipos de Avaliação",
-    "warnings" => "Advertências"
+    "warnings" => "Advertências",
+    "statements" => "Comunicados"
 ];

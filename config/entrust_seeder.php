@@ -20,6 +20,7 @@ return [
             "subjects" => "c,r,u,d",
             "years" => "c,r,u,d",
             "warnings" => "c,r,u,d",
+            "statements" => "c,r,u,d",
         ],
         "teacher" => [
             "profile" => "r,u",

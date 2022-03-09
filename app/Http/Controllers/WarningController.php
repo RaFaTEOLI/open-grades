@@ -29,7 +29,6 @@ class WarningController extends Controller
                 "warnings" => $warnings,
             ]);
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }

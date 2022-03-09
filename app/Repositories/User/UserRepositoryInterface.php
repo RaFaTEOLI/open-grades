@@ -14,4 +14,6 @@ interface UserRepositoryInterface
     public function update(int $userId, array $set): void;
     public function delete(int $userId): bool;
     public function createType(string $type, int $userId): void;
+    public function allResponsibles(): Collection;
+    public function allButAdmin(): Collection;
 }

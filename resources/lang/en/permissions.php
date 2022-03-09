@@ -32,5 +32,6 @@ return [
     "grades" => "Grades",
     "dashboard" => "Dashboard",
     "evaluation-types" => "Evaluation Types",
-    "warnings" => "Warnings"
+    "warnings" => "Warnings",
+    "statements" => "Statements"
 ];

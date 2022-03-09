@@ -26,5 +26,6 @@ return [
     "years" => "School Years",
     "grades" => "Grades",
     "evaluation_types" => "Evaluation Types",
-    "warnings" => "Warnings"
+    "warnings" => "Warnings",
+    "statements" => "Statements"
 ];
