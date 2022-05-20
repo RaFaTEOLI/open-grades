@@ -12,6 +12,9 @@ class CreatePermissionService
         $actions = ["create", "read", "update", "delete"];
 
         try {
+            if (empty($request)) {
+                throw new Exception('Invalid Request');
+            }
             foreach ($actions as $action) {
                 if (isset($request[$action])) {
                     Permission::create([
