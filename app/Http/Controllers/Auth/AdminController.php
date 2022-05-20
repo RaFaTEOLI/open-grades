@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\UserNotAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -16,7 +17,7 @@ class AdminController extends Controller
         $hasRole = Auth::user()->hasRole("admin");
 
         if (!$hasRole) {
-            throw new Exception("User is not admin");
+            throw new UserNotAdmin("User is not admin");
         }
     }
 }

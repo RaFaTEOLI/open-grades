@@ -17,7 +17,7 @@ class CreateClassService
             $openYear = Year::where('closed', 0)->first();
 
             if (!$openYear) {
-                throw new Exception(__('messages.no_year_ongoing'), 500);
+                throw new NoYearOngoing(__('messages.no_year_ongoing'), 500);
             }
 
             $openYear = $openYear->format();
@@ -26,8 +26,10 @@ class CreateClassService
             $class = $classRepository->store($request);
 
             return $class;
-        } catch (Exception $e) {
+        } catch (NoYearOngoing $e) {
             throw new NoYearOngoing($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 }
