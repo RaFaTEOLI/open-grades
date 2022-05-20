@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Services\Statement\CreateStatementService;
+use Exception;
 
 class StatementTest extends TestCase
 {
@@ -33,5 +34,16 @@ class StatementTest extends TestCase
         ]);
 
         $this->assertTrue(is_numeric($statement->id));
+    }
+
+    /**
+     * It should not create empty statement
+     *
+     * @return void
+     */
+    public function testShouldNotCreateEmptyStatement()
+    {
+        $this->expectException(Exception::class);
+        (new CreateStatementService())->execute([]);
     }
 }
