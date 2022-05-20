@@ -2,6 +2,7 @@
 
 namespace App\Services\Configuration;
 
+use App\Exceptions\UserNotAdmin;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Http\Controllers\Auth\AdminController;
 use App\Models\Configuration;
@@ -21,6 +22,8 @@ class CreateConfigurationService
         try {
             AdminController::isAdminOrFail();
             return $this->configurationRepository->register($request);
+        } catch (UserNotAdmin $e) {
+            throw new UserNotAdmin($e->getMessage());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
