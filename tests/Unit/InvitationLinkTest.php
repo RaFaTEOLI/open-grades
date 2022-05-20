@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\UserNotAdmin;
 use App\Services\InvitationLink\CreateInvitationLinkService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -32,7 +33,7 @@ class InvitationLinkTest extends TestCase
 
         $this->actingAs($user);
 
-        $invitationLink = (new CreateInvitationLinkService($user))->execute([
+        $invitationLink = (new CreateInvitationLinkService())->execute([
             "type" => "STUDENT",
         ]);
 
@@ -64,5 +65,39 @@ class InvitationLinkTest extends TestCase
         $invitationLinkRepository->update($invitationLink->id, ["used_at" => Carbon::now()]);
 
         (new RemoveInvitationLinkService())->execute($invitationLink->id);
+    }
+
+    /**
+     * It should not create a new invitation link because user is not admin
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewInvitationLinkBecauseUserIsNotAdmin()
+    {
+        $this->expectException(UserNotAdmin::class);
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "teacher")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        (new CreateInvitationLinkService())->execute([
+            "type" => "STUDENT",
+        ]);
+    }
+
+    /**
+     * It should not create a new empty invitation link
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewEmptyInvitationLink()
+    {
+        $this->expectException(Exception::class);
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        (new CreateInvitationLinkService())->execute([]);
     }
 }

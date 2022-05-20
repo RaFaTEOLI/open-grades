@@ -2,6 +2,7 @@
 
 namespace App\Services\InvitationLink;
 
+use App\Exceptions\UserNotAdmin;
 use App\Http\Controllers\Auth\AdminController;
 use App\Models\InvitationLink;
 use App\Repositories\InvitationLink\InvitationLinkRepository;
@@ -27,6 +28,8 @@ class CreateInvitationLinkService
             $request["hash"] = InvitationLink::generateHash();
 
             return $this->invitationLinkRepository->register($request);
+        } catch (UserNotAdmin $e) {
+            throw new UserNotAdmin($e->getMessage());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
