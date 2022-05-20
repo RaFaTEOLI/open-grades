@@ -11,10 +11,7 @@ class RemoveRolePermissionService
     public function execute(array $request): Role
     {
         try {
-            $role = Role::find($request["roleId"]);
-            if (!$role) {
-                throw new Exception('Invalid Request');
-            }
+            $role = Role::findOrFail($request["roleId"]);
 
             $permission = Permission::find($request["permissionId"]);
             $role->detachPermission($permission);
