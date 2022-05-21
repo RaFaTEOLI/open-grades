@@ -16,13 +16,13 @@ class CreateMessageService
         $this->telegramRepository = (new TelegramRepository());
     }
 
-    public function execute(array $request): void
+    public function execute(array $request): object
     {
         try {
             AdminController::isAdminOrFail();
 
             Http::get("https://api.telegram.org/bot" . env('BOT_KEY') . "/sendMessage?chat_id=" . env('CHANNEL_ID') . "&text=" . $request["message"]);
-            $this->telegramRepository->store($request);
+            return $this->telegramRepository->store($request);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
