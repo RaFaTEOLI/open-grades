@@ -47,7 +47,7 @@ class CreateUserService
                 if ($type) {
                     if ($type == "RESPONSIBLE") {
                         StudentsResponsible::create([
-                            "student_id" => $studentId,
+                            "student_id" => $studentId ?? $request["student_id"],
                             "responsible_id" => $user->id,
                         ]);
                     }

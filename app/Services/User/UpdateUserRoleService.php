@@ -17,7 +17,7 @@ class UpdateUserRoleService
             $user = DB::transaction(function () use ($request) {
                 $user = User::where("id", $request["userId"])
                     ->where("deleted_at", null)
-                    ->first();
+                    ->firstOrFail();
 
                 $role = Role::find($request["roleId"]);
                 $user->attachRole($role);
