@@ -47,10 +47,12 @@ class StudentRepository implements StudentRepositoryInterface
         try {
             return Student::where("id", $id)
                 ->where("deleted_at", null)
+                ->withRole("student")
+                ->get()
                 ->firstOrFail()
                 ->format();
         } catch (ItemNotFoundException) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundException(__('exceptions.item_not_found'), 404);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
