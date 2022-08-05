@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Role;
 use App\Services\Year\OpenSchoolYearService;
+use Exception;
 
 class YearTest extends TestCase
 {
@@ -34,5 +35,23 @@ class YearTest extends TestCase
         ]);
 
         $this->assertTrue(is_numeric($year->id));
+    }
+
+    /**
+     * It should throw an exception when invalid data is provided
+     *
+     * @return void
+     */
+    public function testShouldThrowAnExceptionWhenInvalidDataIsProvided()
+    {
+        $this->expectException(Exception::class);
+        $user = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+
+        $this->actingAs($user);
+
+        $year = (new OpenSchoolYearService())->execute([]);
     }
 }
