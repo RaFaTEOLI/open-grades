@@ -8,6 +8,8 @@
 Open Grades is an opensource application build with Laravel to manage class calendars, class grades and etc, it is made for students and teachers.
 We believe that every school or independent teacher should have access to an easy system to manage his students, grades and much more for free.
 
+(***Development In Progress - First Version Estimated to Be Released Next Year***)
+
 - Simple and fast (Clean UI that any user can learn).
 - Organize your classes with our calendars.
 - Generate grades, classes, presences reports.
