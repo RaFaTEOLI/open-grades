@@ -24,12 +24,14 @@ services:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
             MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_USER: "admin"
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
             MYSQL_ROOT_HOST: "%"
         ports:
             - "${DB_EXTERNAL_PORT}:3306"
+        volumes:
+            - ./docker-compose/mysql:/data/db
         networks:
             - opengrades
 
