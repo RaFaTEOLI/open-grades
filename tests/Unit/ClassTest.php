@@ -67,7 +67,7 @@ class ClassTest extends TestCase
             }
         } else {
             factory(Year::class)->create();
-            $year = Year::where('closed', 0)->first()->get();
+            $year = Year::where('closed', 0)->first();
             $year->update(['closed' => 1]);
         }
 
