@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Year;
 use App\Services\Year\OpenSchoolYearService;
 use Exception;
 
@@ -53,5 +54,32 @@ class YearTest extends TestCase
         $this->actingAs($user);
 
         $year = (new OpenSchoolYearService())->execute([]);
+    }
+
+    /**
+     * It should create a new school year and close previous
+     *
+     * @return void
+     */
+    public function testShouldCreateANewSchoolYearAndClosePrevious()
+    {
+        $user = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+
+        $this->actingAs($user);
+
+        factory(Year::class)->create();
+
+        $year = (new OpenSchoolYearService())->execute([
+            "start_date" => $this->faker->date('Y-m-d'),
+            "end_date" => $this->faker->dateTimeBetween('+10 month', '+12 month')->format('Y-m-d')
+        ]);
+
+        $isOpen = Year::where('closed', 0)->first();
+
+        $this->assertTrue(is_numeric($year->id));
+        $this->assertTrue($isOpen->id === $year->id);
     }
 }
