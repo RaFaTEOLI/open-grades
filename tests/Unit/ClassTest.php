@@ -98,6 +98,7 @@ class ClassTest extends TestCase
     public function testShouldNotCreateANewEmptyClass()
     {
         $this->expectException(Exception::class);
+        factory(Year::class)->create();
         (new CreateClassService())->execute([]);
     }
 }
