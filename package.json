@@ -11,9 +11,10 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "up": "docker-compose build app && docker-compose up -d",
         "down": "docker-compose down",
-        "exec-install": "docker-compose exec app composer install",
-        "exec-migrate": "docker-compose exec app php artisan migrate",
-        "exec-db-seed": "docker-compose exec app php artisan db:seed",
+        "run:install": "docker-compose exec app composer install",
+        "migrate": "docker-compose exec app php artisan migrate",
+        "db:seed": "docker-compose exec app php artisan db:seed",
+        "test": "docker-compose exec app php artisan test --stop-on-failure",
         "prepare": "husky install",
         "changelog": "auto-changelog --template changelog-template.hbs -p -u --commit-limit false",
         "changelog-debug": "auto-changelog --template changelog-template.hbs -p --template json --output changelog-data.json"

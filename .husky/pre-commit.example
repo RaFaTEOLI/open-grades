@@ -5,4 +5,4 @@
 #php artisan test --stop-on-failure
 
 # For Docker Users
-#docker exec <containerId> php artisan test --stop-on-failure
+#yarn test
