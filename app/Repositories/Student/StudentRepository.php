@@ -61,6 +61,7 @@ class StudentRepository implements StudentRepositoryInterface
     public function getNewCount(): int
     {
         $newStudents = Student::where("deleted_at", null)
+            ->withRole("student")
             ->whereDate('created_at', '>', Carbon::now()->subDays(30))->get();
 
         return count($newStudents);
