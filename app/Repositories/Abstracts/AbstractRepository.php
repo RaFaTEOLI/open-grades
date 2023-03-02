@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\Abstract;
+namespace App\Repositories\Abstracts;
 
-use App\Repositories\Abstract\AbstractRepositoryInterface;
+use App\Repositories\Abstracts\AbstractRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

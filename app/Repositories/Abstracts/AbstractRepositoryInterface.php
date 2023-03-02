@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Abstract;
+namespace App\Repositories\Abstracts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

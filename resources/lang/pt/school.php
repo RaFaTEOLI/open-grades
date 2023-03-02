@@ -18,5 +18,6 @@ return [
     'name' => 'Nome',
     "start_date" => "Inicio",
     "end_date" => "Fim",
-    "closed" => "Fechado"
+    "closed" => "Fechado",
+    "reporter" => "Reportado Por"
 ];

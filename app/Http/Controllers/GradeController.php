@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Grade\GradeRequest;
-use App\Repositories\Class\ClassRepository;
+use App\Repositories\Classes\ClassRepository;
 use App\Repositories\Grade\GradeRepository;
 use Exception;
 use Illuminate\Http\Request;

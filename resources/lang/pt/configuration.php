@@ -19,4 +19,9 @@ return [
     "max-grade" => "Nota Máxima",
     "point-average" => "Média",
     "can-student-enroll" => "Aluno pode se matricular? (1 para sim e 0 para não)",
+    "school-monthly-price" => "Valor da mensalidade",
+    "use-email-notification" => "Usar Notificação Email (1 para sim e 0 para não)",
+    "use-telegram-notification" => "Usar Notificação Telegram (1 para sim e 0 para não)",
+    "use-whatsapp-notification" => "Usar Notificação Whatsapp (1 para sim e 0 para não)",
+    "max-enroll-subjects" => "Número máximo de matrículas"
 ];

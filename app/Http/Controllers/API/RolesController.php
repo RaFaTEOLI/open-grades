@@ -4,11 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\HttpStatus;
 use App\Http\Requests\Role\RoleRequest;
 use App\Http\Traits\Pagination;
-use App\Models\Role;
 use App\Services\Role\CreateRoleService;
 use App\Repositories\Roles\RolesRepository;
 use Exception;

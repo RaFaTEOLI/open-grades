@@ -3,7 +3,7 @@
 namespace App\Repositories\Telegram;
 
 use App\Models\Telegram;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 
 class TelegramRepository extends AbstractRepository
 {

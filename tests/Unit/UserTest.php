@@ -117,4 +117,94 @@ class UserTest extends TestCase
             "roleId" => $role->id,
         ]);
     }
+
+    /**
+     * It should create a new user using STUDENT type
+     *
+     * @return void
+     */
+    public function testShouldCreateANewUserUsingStudentType()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        $createdUser = (new CreateUserService())->execute([
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => "12345678",
+            "type" => "STUDENT",
+        ]);
+
+        $this->assertTrue(is_numeric($createdUser->id));
+    }
+
+    /**
+     * It should create a new user using RESPONSIBLE type
+     *
+     * @return void
+     */
+    public function testShouldCreateANewUserUsingResponsibleType()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        $student = factory(User::class)->create();
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        $createdUser = (new CreateUserService())->execute([
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => "12345678",
+            "type" => "RESPONSIBLE",
+            "student_id" => $student->id
+        ]);
+
+        $this->assertTrue(is_numeric($createdUser->id));
+    }
+
+    /**
+     * It should not create a new user because request is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewUserBecauseRequestIsInvalid()
+    {
+        $this->expectException(Exception::class);
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+
+        (new CreateUserService())->execute([
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => "12345678",
+            "hash" => $this->faker->text()
+        ]);
+    }
+
+    /**
+     * It should not add a role to a user because request is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotAddRoleToUserBecauseRequestIsInvalid()
+    {
+        $this->expectException(Exception::class);
+        $userAdmin = factory(User::class)->create();
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+        $this->actingAs($userAdmin);
+
+        (new UpdateUserRoleService())->execute([
+            "userId" => $this->faker->text(),
+            "roleId" => $this->faker->text(),
+        ]);
+    }
 }

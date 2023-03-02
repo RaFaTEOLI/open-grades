@@ -3,7 +3,7 @@
 namespace App\Repositories\Subject;
 
 use App\Models\Subject;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 
 class SubjectRepository extends AbstractRepository
 {

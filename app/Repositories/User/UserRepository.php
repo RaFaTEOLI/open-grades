@@ -88,7 +88,7 @@ class UserRepository implements UserRepositoryInterface
     public function update(int $userId, array $set): void
     {
         try {
-            $user = User::findOrFail($userId)->first();
+            $user = User::findOrFail($userId);
 
             $user->update($set);
             (new RedisRepository())->invalidate("users");
@@ -118,6 +118,47 @@ class UserRepository implements UserRepositoryInterface
             $user->attachRole($role);
         } else {
             throw new Exception("No type specified");
+        }
+    }
+
+    /*
+        Get All Active Responsibles
+    */
+    public function allResponsibles(): Collection
+    {
+        try {
+            return User::where("deleted_at", null)
+                ->withRole("responsible")
+                ->get()
+                ->map->format();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
+        Get All Active Users Besides Admin
+    */
+    public function allButAdmin(): Collection
+    {
+        try {
+            $students = User::where("deleted_at", null)
+                ->withRole("student")
+                ->get();
+
+            $teachers = User::where("deleted_at", null)
+                ->withRole("teacher")
+                ->get();
+            $merged = $students->merge($teachers);
+
+            $responsibles = User::where("deleted_at", null)
+                ->withRole("responsible")
+                ->get();
+            $merged = $merged->merge($responsibles);
+
+            return $merged;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 }

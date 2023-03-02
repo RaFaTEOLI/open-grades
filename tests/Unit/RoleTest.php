@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\RolePermission\RemoveRolePermissionService;
 use App\Services\RolePermission\UpdateRolePermissionService;
+use Exception;
 
 class RoleTest extends TestCase
 {
@@ -95,5 +96,74 @@ class RoleTest extends TestCase
         ]);
 
         $this->assertTrue(count($roleDelete->permissions) == 0);
+    }
+
+    /**
+     * It should not create a new empty Role
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewEmptyRole()
+    {
+        $this->expectException(Exception::class);
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        (new CreateRoleService())->execute([]);
+    }
+
+    /**
+     * It should not delete a permission to a role because request is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotDeletePermissionToRoleBecauseRequestIsInvalid()
+    {
+        $this->expectException(Exception::class);
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        $permission = Permission::find(1);
+
+        $roleTest = factory(Role::class)->create();
+
+        (new UpdateRolePermissionService())->execute([
+            "roleId" => $roleTest->id,
+            "permissionId" => $permission->id,
+        ]);
+
+        (new RemoveRolePermissionService())->execute([
+            "roleId" => $this->faker->text(),
+            "permissionId" => $this->faker->text(),
+        ]);
+    }
+
+    /**
+     * It should not add a permission to a role because request is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotAddPermissionToRoleBecauseRequestIsInvalid()
+    {
+        $this->expectException(Exception::class);
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        (new UpdateRolePermissionService())->execute([
+            "roleId" => $this->faker->text(),
+            "permissionId" => $this->faker->text(),
+        ]);
     }
 }

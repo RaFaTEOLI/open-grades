@@ -3,7 +3,7 @@
 namespace App\Repositories\Grade;
 
 use App\Models\Grade;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;

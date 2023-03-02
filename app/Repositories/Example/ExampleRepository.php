@@ -3,7 +3,7 @@
 namespace App\Repositories\Example;
 
 use App\Models\User;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 
 class ExampleRepository extends AbstractRepository
 {

@@ -3,7 +3,7 @@
 namespace App\Repositories\EvaluationType;
 
 use App\Models\EvaluationType;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 
 class EvaluationTypeRepository extends AbstractRepository
 {

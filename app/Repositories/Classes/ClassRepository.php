@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Class;
+namespace App\Repositories\Classes;
 
 use App\Models\Classes;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;

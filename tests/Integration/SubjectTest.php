@@ -37,6 +37,7 @@ class SubjectTest extends TestCase
     public function testShouldListAllSubjects()
     {
         $user = User::find(1);
+        factory(Subject::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/subjects");
 
         $response
@@ -103,6 +104,7 @@ class SubjectTest extends TestCase
     public function testShouldFetchListOfSubjectsWithLimitAndOffset()
     {
         $user = User::find(1);
+        factory(Subject::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/subjects?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

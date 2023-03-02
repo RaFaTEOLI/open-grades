@@ -25,5 +25,7 @@ return [
     "permissions" => "Permissions",
     "years" => "School Years",
     "grades" => "Grades",
-    "evaluation_types" => "Evaluation Types"
+    "evaluation_types" => "Evaluation Types",
+    "warnings" => "Warnings",
+    "statements" => "Statements"
 ];

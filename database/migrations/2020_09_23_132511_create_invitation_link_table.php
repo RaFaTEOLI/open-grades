@@ -18,7 +18,7 @@ class CreateInvitationLinkTable extends Migration
             $table->unsignedBigInteger("user_id");
             $table->text("hash");
             $table->string("type");
-            $table->unsignedBigInteger("student_id")->nullable;
+            $table->unsignedBigInteger("student_id")->nullable();
             $table->timestamp("used_at")->nullable();
             $table->timestamps();
 

@@ -3,7 +3,9 @@
 namespace App\Services\StudentClass;
 
 use App\Exceptions\AlreadyEnrolled;
+use App\Exceptions\NoStudentToEnroll;
 use App\Exceptions\NotResponsible;
+use App\Exceptions\StudentCannotEnroll;
 use App\Models\StudentsClasses;
 use App\Repositories\Configuration\ConfigurationRepository;
 use Exception;
@@ -22,14 +24,14 @@ class CreateStudentClassService
             if (Auth::user()->hasRole('student')) {
                 $canStudentEnroll = (new ConfigurationRepository())->findByName('can-student-enroll');
                 if (!$canStudentEnroll->value) {
-                    throw new Exception('Students are not allowed to enroll', 500);
+                    throw new StudentCannotEnroll('Students are not allowed to enroll', 500);
                 }
                 $studentId = Auth::user()->id;
             } else {
                 if (isset($request["student_id"])) {
                     $studentId = $request["student_id"];
                 } else {
-                    throw new Exception('Cannot enroll, there is no student to enroll', 500);
+                    throw new NoStudentToEnroll('Cannot enroll, there is no student to enroll', 500);
                 }
             }
 
@@ -52,12 +54,14 @@ class CreateStudentClassService
             $studentClass = $studentClassRepository->store($request);
 
             return $studentClass;
+        } catch (StudentCannotEnroll $e) {
+            throw new StudentCannotEnroll($e->getMessage());
+        } catch (NoStudentToEnroll $e) {
+            throw new NoStudentToEnroll($e->getMessage());
         } catch (NotResponsible $e) {
             throw new NotResponsible($e->getMessage());
         } catch (AlreadyEnrolled $e) {
             throw new AlreadyEnrolled($e->getMessage());
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
         }
     }
 }

@@ -2,6 +2,6 @@
 
 namespace App\Repositories\EvaluationType;
 
-interface EvaluationTypeInterface
+interface EvaluationTypeRepositoryInterface
 {
 }

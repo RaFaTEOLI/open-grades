@@ -6,7 +6,7 @@ use App\Exceptions\AlreadyEnrolled;
 use App\Exceptions\Forbidden;
 use App\Exceptions\NotResponsible;
 use App\Http\Requests\StudentClass\StudentClassRequest;
-use App\Repositories\Class\ClassRepository;
+use App\Repositories\Classes\ClassRepository;
 use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\StudentClass\StudentClassRepository;
 use App\Repositories\Grade\GradeRepository;
@@ -17,6 +17,7 @@ use App\Services\StudentClass\CreateStudentClassService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ItemNotFoundException;
 
 class StudentClassController extends Controller
 {
@@ -111,19 +112,20 @@ class StudentClassController extends Controller
     public function show(int $studentId, int $id = 0)
     {
         try {
+            if ($studentId > 0) {
+                $studentClass = $this->studentClassRepository->findClassesByStudentIdAndClassId($studentId, $id);
+                $student = (new StudentRepository())->findById($studentId);
+            } else {
+                $studentClass = $this->studentClassRepository->findById($id);
+            }
+
             if (Auth::user()->hasRole('student')) {
-                $id = $studentId;
                 $studentClass = $this->studentClassRepository->findById($id);
                 $student = Auth::user();
 
                 if ($studentClass->user_id !== Auth::user()->id) {
                     throw new Forbidden('You cannot access this page!', 403);
                 }
-            } else if (Auth::user()->hasRole('teacher')) {
-                $studentClass = $this->studentClassRepository->findClassesByStudentIdAndClassId($studentId, $id);
-                $student = (new StudentRepository())->findById($studentId);
-            } else {
-                $studentClass = $this->studentClassRepository->findById($id);
             }
 
             $class = (new ClassRepository())->findById($studentClass->class_id);
@@ -140,10 +142,11 @@ class StudentClassController extends Controller
                 "students" => $students,
                 "student" => $student
             ]);
+        } catch (ItemNotFoundException $e) {
+            return back()->with("error", __("exceptions.item_not_found"));
         } catch (Forbidden $e) {
             return back()->with("error", __("exceptions.forbidden"));
         } catch (Exception $e) {
-            dd($e);
             return back()->with("error", __("actions.error"));
         }
     }

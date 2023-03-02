@@ -38,7 +38,7 @@
                     <label>{{ __('class.subject') }}</label>
                     @if (Auth::user()->can('update-classes') && Auth::user()->hasRole('admin'))
                     <select name="subject_id" class="form-control">
-                        @if (count($subjects) > 1)
+                        @if (count($subjects) > 0)
                             @foreach ($subjects as $subject)
                                 @if (!empty($class))
                                     <option {{ ($class->subject_id == $subject->id ? 'selected' : '') }} value="{{ $subject->id }}">{{ $subject->name }}</option>
@@ -49,7 +49,7 @@
                         @endif
                     </select>
                     @else
-                        @if (count($subjects) > 1)
+                        @if (count($subjects) > 0)
                                 @foreach ($subjects as $subject)
                                     @if (!empty($class))
                                         @if ($class->subject_id == $subject->id)
@@ -110,7 +110,7 @@
                     <label>{{ __('class.user') }}</label>
                     @if (Auth::user()->can('update-classes') && Auth::user()->hasRole('admin'))
                     <select name="user_id" class="form-control">
-                        @if (count($teachers) > 1)
+                        @if (count($teachers) > 0)
                             @foreach ($teachers as $user)
                                 @if (!empty($class))
                                     <option {{ ($class->user_id == $user->id ? 'selected' : '') }} value="{{ $user->id }}">{{ $user->name }}</option>
@@ -121,7 +121,7 @@
                         @endif
                     </select>
                     @else
-                        @if (count($teachers) > 1)
+                        @if (count($teachers) > 0)
                             @foreach ($teachers as $user)
                                 @if (!empty($class))
                                     @if ($class->user_id == $user->id)

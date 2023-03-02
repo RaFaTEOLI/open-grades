@@ -25,5 +25,7 @@ return [
     "permissions" => "Permissões",
     "years" => "Anos Escolares",
     "grades" => "Séries",
-    "evaluation_types" => "Tipos de Avaliação"
+    "evaluation_types" => "Tipos de Avaliação",
+    "warnings" => "Advertências",
+    "statements" => "Comunicados"
 ];

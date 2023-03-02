@@ -1158,236 +1158,6 @@
                 ]
             }
         },
-        "/permissions": {
-            "get": {
-                "tags": [
-                    "Permission"
-                ],
-                "summary": "Get Permissions",
-                "description": "Get a list of permissions",
-                "operationId": "index",
-                "parameters": [
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset for pagination",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit of results for pagination",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Permission"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Permission"
-                ],
-                "summary": "Create Permission",
-                "description": "Create Permission by name, description",
-                "operationId": "store",
-                "requestBody": {
-                    "description": "Send name, value",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "create-users"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Create Users"
-                                    },
-                                    "create": {
-                                        "type": "string",
-                                        "example": "on"
-                                    },
-                                    "update": {
-                                        "type": "string",
-                                        "example": "on"
-                                    },
-                                    "read": {
-                                        "type": "string",
-                                        "example": "on"
-                                    },
-                                    "delete": {
-                                        "type": "string",
-                                        "example": "on"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/permissions/{id}": {
-            "get": {
-                "tags": [
-                    "Permission"
-                ],
-                "summary": "Get Permission",
-                "description": "Show Permission by id",
-                "operationId": "show",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Permission id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Permission"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Permission"
-                ],
-                "summary": "Update Permission",
-                "description": "Update Permission",
-                "operationId": "update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Permission id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "Send name or display_name or description to update permission",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "create-users"
-                                    },
-                                    "display_name": {
-                                        "type": "string",
-                                        "example": "Create Users"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Create Users"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Permission"
-                ],
-                "summary": "Delete Permission",
-                "description": "Delete Permission by id",
-                "operationId": "destroy",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Permission id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/roles": {
             "get": {
                 "tags": [
@@ -1619,13 +1389,91 @@
                 ]
             }
         },
-        "/student/{studentId}/classes": {
+        "/roles/{roleId}/permission/{permissionId}": {
+            "delete": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Remove permission",
+                "description": "Remove permission from role",
+                "operationId": "delete-destroy",
+                "parameters": [
+                    {
+                        "name": "roleId",
+                        "in": "path",
+                        "description": "Role id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "permissionId",
+                        "in": "path",
+                        "description": "Permission id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Add new permission",
+                "description": "Add new permission to role",
+                "operationId": "patch-store",
+                "parameters": [
+                    {
+                        "name": "roleId",
+                        "in": "path",
+                        "description": "Role id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "permissionId",
+                        "in": "path",
+                        "description": "Permission id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/statements": {
             "get": {
                 "tags": [
-                    "Student Class"
+                    "Statement"
                 ],
-                "summary": "Get Classes from Student",
-                "description": "Get a list of Classes from Student",
+                "summary": "Get Statements",
+                "description": "Get a list of statements",
                 "operationId": "index",
                 "parameters": [
                     {
@@ -1645,11 +1493,88 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Statement"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
                     {
-                        "name": "studentId",
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Statement"
+                ],
+                "summary": "Create Statement",
+                "description": "Create Statement",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send Statement",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "statement"
+                                ],
+                                "properties": {
+                                    "statement": {
+                                        "type": "string",
+                                        "example": "Friday the school will be closed"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Statement"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/statements/{id}": {
+            "get": {
+                "tags": [
+                    "Statement"
+                ],
+                "summary": "Get Statement",
+                "description": "Show Statement by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
                         "in": "path",
-                        "description": "Student id",
+                        "description": "Statement id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1662,13 +1587,88 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/StudentsClasses"
-                                    }
+                                    "$ref": "#/components/schemas/Statement"
                                 }
                             }
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Statement"
+                ],
+                "summary": "Update Statement",
+                "description": "Update Statement",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Statement id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update statement",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "statement"
+                                ],
+                                "properties": {
+                                    "statement": {
+                                        "type": "string",
+                                        "example": "Friday the school will be closed"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Statement"
+                ],
+                "summary": "Delete Statement",
+                "description": "Delete Statement by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Warning id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     }
                 },
                 "security": [
@@ -1853,7 +1853,8 @@
                                     },
                                     "left_date": {
                                         "description": "Date he left or finished",
-                                        "type": "datetime",
+                                        "type": "string",
+                                        "format": "date-time",
                                         "example": "2021-06-12 10:00:00"
                                     }
                                 },
@@ -2722,199 +2723,7 @@
                 ]
             }
         },
-        "/login": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Sign in",
-                "description": "Login by email, password",
-                "operationId": "login",
-                "requestBody": {
-                    "description": "Pass user credentials",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user@email.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "422": {
-                        "description": "Wrong credentials response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Sorry, wrong email address or password. Please try again"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "access_token": {
-                                            "type": "string",
-                                            "format": "access_token",
-                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYyNjgyMzQ1OCwiZXhwIjoxNjI2ODI3MDU4LCJuYmYiOjE2MjY4MjM0NTgsImp0aSI6IkZmdWVSa21DRDVKbGJiZTUiLCJzdWIiOjEsInBydiI6IjIzd4rdsffdYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IRcT8xxb8XqMmRCMMjEO_WZF764k6VV-gBDCXtQLBiU"
-                                        },
-                                        "token_type": {
-                                            "type": "string",
-                                            "format": "string",
-                                            "example": "bearer"
-                                        },
-                                        "expires_in": {
-                                            "type": "integer",
-                                            "format": "string",
-                                            "example": 3600
-                                        },
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/register": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Sign up",
-                "description": "Sign up by name, email, password",
-                "operationId": "register",
-                "requestBody": {
-                    "description": "Send user name, email, password and hash to sign up",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "hash"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "user@email.com"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user@email.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
-                                    },
-                                    "hash": {
-                                        "type": "string",
-                                        "example": "2y10mQJ6icVKtp7anWURyy1WOMEDM26k7SI4CqJOFhgQcqo4bEr8RVW"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserRoles"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/users": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Get Users",
-                "description": "Get a list of users",
-                "operationId": "all",
-                "parameters": [
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset for pagination",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit of results for pagination",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/UserRoles"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
             "post": {
                 "tags": [
                     "User"
@@ -2952,188 +2761,6 @@
                 "responses": {
                     "201": {
                         "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserRoles"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/logout": {
-            "get": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Logout",
-                "description": "Log the user out (Invalidate the token)",
-                "operationId": "logout",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "User successfully signed out"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Get User",
-                "description": "Show user data by id",
-                "operationId": "show",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserRoles"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Update User",
-                "description": "Update User",
-                "operationId": "update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "Send name, email, photo to update user",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "user@email.com"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user@email.com"
-                                    },
-                                    "photo": {
-                                        "type": "string",
-                                        "example": "/images/johndoe.png"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Delete User",
-                "description": "Delete user by id",
-                "operationId": "destroy",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/details": {
-            "get": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Get User Details",
-                "description": "Get details from the user signed in",
-                "operationId": "details",
-                "responses": {
-                    "200": {
-                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3255,6 +2882,227 @@
                 ]
             }
         },
+        "/warnings": {
+            "get": {
+                "tags": [
+                    "Warning"
+                ],
+                "summary": "Get Warnings",
+                "description": "Get a list of Warnings",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of results for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Warning"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Warning"
+                ],
+                "summary": "Create Warning",
+                "description": "Create Warning",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Send student_id, class_id and description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "student_id",
+                                    "class_id",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "student_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "class_id": {
+                                        "type": "integer",
+                                        "example": "5"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Student was being too loud"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Warning"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/warnings/{id}": {
+            "get": {
+                "tags": [
+                    "Warning"
+                ],
+                "summary": "Get Warning",
+                "description": "Show Warning by id",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Warning id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Warning"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Warning"
+                ],
+                "summary": "Delete Warning",
+                "description": "Delete Warning by id",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Warning id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Warning"
+                ],
+                "summary": "Update Warning",
+                "description": "Update Warning",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Warning id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "description"
+                                ],
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Student was being too loud"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/years": {
             "get": {
                 "tags": [
@@ -3323,11 +3171,13 @@
                                 ],
                                 "properties": {
                                     "start_date": {
-                                        "type": "datetime",
+                                        "type": "string",
+                                        "format": "date-time",
                                         "example": "2020-01-31"
                                     },
                                     "end_date": {
-                                        "type": "datetime",
+                                        "type": "string",
+                                        "format": "date-time",
                                         "example": "2020-11-31"
                                     }
                                 },
@@ -3418,11 +3268,13 @@
                             "schema": {
                                 "properties": {
                                     "start_date": {
-                                        "type": "datetime",
+                                        "type": "string",
+                                        "format": "date-time",
                                         "example": "2020-01-31"
                                     },
                                     "end_date": {
-                                        "type": "datetime",
+                                        "type": "string",
+                                        "format": "date-time",
                                         "example": "2020-11-31"
                                     },
                                     "closed": {
@@ -3793,6 +3645,26 @@
                     "name": "Role"
                 }
             },
+            "Statement": {
+                "required": [
+                    "statement"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "statement": {
+                        "type": "string",
+                        "example": "This is statement is to inform that the school will be closed this friday"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Statement"
+                }
+            },
             "Student": {
                 "required": [
                     "name",
@@ -3872,11 +3744,13 @@
                         "example": "2"
                     },
                     "enroll_date": {
-                        "type": "datetime",
+                        "type": "string",
+                        "format": "date-time",
                         "example": "2021-08-01"
                     },
                     "left_date": {
-                        "type": "datetime",
+                        "type": "string",
+                        "format": "date-time",
                         "example": "2022-08-01"
                     }
                 },
@@ -4161,6 +4035,37 @@
                     "name": "UserRoles"
                 }
             },
+            "Warning": {
+                "required": [
+                    "student_id",
+                    "class_id",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "student": {
+                        "$ref": "#/components/schemas/Student"
+                    },
+                    "reporter": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "class": {
+                        "$ref": "#/components/schemas/Classes"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Student was being too loud"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Warning"
+                }
+            },
             "Year": {
                 "required": [
                     "start_date",
@@ -4173,11 +4078,13 @@
                         "example": "1"
                     },
                     "start_date": {
-                        "type": "datetime",
+                        "type": "string",
+                        "format": "date-time",
                         "example": "2020-01-27"
                     },
                     "end_date": {
-                        "type": "datetime",
+                        "type": "string",
+                        "format": "date-time",
                         "example": "2020-12-10"
                     },
                     "closed": {

@@ -19,4 +19,9 @@ return [
     "max-grade" => "Max Grade",
     "point-average" => "Point Average",
     "can-student-enroll" => "Can Student Enroll? (1 for yes and 0 for no)",
+    "school-monthly-price" => "Monthly Price",
+    "use-email-notification" => "Use Email Notification (1 for yes and 0 for no)",
+    "use-telegram-notification" => "Use Telegram Notification (1 for yes and 0 for no)",
+    "use-whatsapp-notification" => "Use Whatsapp Notification (1 for yes and 0 for no)",
+    "max-enroll-subjects" => "Max number of enrollments"
 ];

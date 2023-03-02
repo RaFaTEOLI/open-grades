@@ -177,9 +177,15 @@
                     <li>
                         <a href="{{ route('grades') }}" class="waves-effect"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i>{{ __('menu.grades') }}</a>
                     </li>
+                    <li>
+                        <a href="{{ route('statements') }}" class="waves-effect"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i>{{ __('menu.statements') }}</a>
+                    </li>
                     @endif
                     <li>
                         <a href="{{ route('classes') }}" class="waves-effect"><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>{{ __('menu.classes') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('warnings') }}" class="waves-effect"><i class="fa fa-warning fa-fw" aria-hidden="true"></i>{{ __('menu.warnings') }}</a>
                     </li>
                     @if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("teacher"))
                     <li>

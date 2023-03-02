@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\NoYearOngoing;
 use App\Models\Grade;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -56,13 +57,17 @@ class ClassTest extends TestCase
      */
     public function testShouldNotCreateANewClassBecauseYearIsNotOpen()
     {
-        $this->expectException(Exception::class);
-
+        $this->expectException(NoYearOngoing::class);
         $user = factory(User::class)->create();
 
-        $year = Year::where('closed', 0)->first()->get();
-
-        if ($year) {
+        $isThereYearOpen = Year::where('closed', 0)->get();
+        if (count($isThereYearOpen)) {
+            foreach ($isThereYearOpen as $yearOpen) {
+                $yearOpen->update(['closed' => 1]);
+            }
+        } else {
+            factory(Year::class)->create();
+            $year = Year::where('closed', 0)->first();
             $year->update(['closed' => 1]);
         }
 
@@ -83,5 +88,17 @@ class ClassTest extends TestCase
             "grade_id" => $grade->id,
             "user_id" => $teacher->id,
         ]);
+    }
+
+    /**
+     * It should not create a new empty class
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewEmptyClass()
+    {
+        $this->expectException(Exception::class);
+        factory(Year::class)->create();
+        (new CreateClassService())->execute([]);
     }
 }

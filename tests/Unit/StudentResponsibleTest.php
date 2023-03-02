@@ -11,6 +11,7 @@ use App\Services\InvitationLink\CreateInvitationLinkService;
 use App\Services\StudentsResponsible\AddStudentsResponsibleService;
 use App\Services\StudentsResponsible\RemoveStudentsResponsibleService;
 use App\Services\StudentsResponsible\UpdateStudentsResponsibleService;
+use Exception;
 
 class StudentResponsibleTest extends TestCase
 {
@@ -105,5 +106,69 @@ class StudentResponsibleTest extends TestCase
         $updated = (new UpdateStudentsResponsibleService())->execute(["hash" => $invitationLink->hash]);
 
         $this->assertTrue($updated);
+    }
+
+    /**
+     * It should not add a student responsible when request is empty
+     *
+     * @return void
+     */
+    public function testShouldNotAddAStudentResponsibleWhenRequestIsEmpty()
+    {
+        $this->expectException(Exception::class);
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "responsible")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        (new AddStudentsResponsibleService())->execute([]);
+    }
+
+    /**
+     * It should not remove a student responsible when request is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotRemoveAStudentResponsibleWhenRequestIsInvalid()
+    {
+        $this->expectException(Exception::class);
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "responsible")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        $student = factory(User::class)->create();
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        (new AddStudentsResponsibleService())->execute(['student_id' => $student->id, 'responsible_id' => $user->id]);
+        (new RemoveStudentsResponsibleService())->execute([
+            "student_id" => $this->faker->text(),
+            "responsible_id" => $this->faker->text(),
+        ]);
+    }
+
+    /**
+     * It should not update a student responsible when hash is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotUpdateStudentResponsibleByHashWhenHashIsInvalid()
+    {
+        $this->expectException(Exception::class);
+
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "responsible")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        $student = factory(User::class)->create();
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        (new AddStudentsResponsibleService())->execute(['student_id' => $student->id, 'responsible_id' => $user->id]);
+
+        $this->actingAs($user);
+        (new UpdateStudentsResponsibleService())->execute(["hash" => $this->faker->text()]);
     }
 }

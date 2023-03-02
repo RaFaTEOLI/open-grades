@@ -4,11 +4,12 @@ namespace App\Repositories\StudentClass;
 
 use App\Exceptions\NotResponsible;
 use App\Models\StudentsClasses;
-use App\Repositories\Abstract\AbstractRepository;
+use App\Repositories\Abstracts\AbstractRepository;
 use App\Repositories\StudentsResponsible\StudentsResponsibleRepository;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ItemNotFoundException;
 
 class StudentClassRepository extends AbstractRepository implements StudentClassRepositoryInterface
 {
@@ -33,9 +34,15 @@ class StudentClassRepository extends AbstractRepository implements StudentClassR
 
     public function findClassesByStudentIdAndClassId(int $studentId, int $classId): object
     {
-        return StudentsClasses::where("user_id", $studentId)->where("class_id", $classId)
-            ->get()
-            ->first();
+        try {
+            return StudentsClasses::where("user_id", $studentId)->where("class_id", $classId)
+                ->get()
+                ->firstOrFail();
+        } catch (ItemNotFoundException) {
+            throw new ItemNotFoundException();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function deleteByStudentAndClass(int $studentId, int $classId): bool

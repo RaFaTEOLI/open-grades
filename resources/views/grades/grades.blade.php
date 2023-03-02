@@ -18,9 +18,11 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
+            @if (Auth::user()->can('create-grades'))
             <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
                 <a type="button" href="{{ route('grades.new') }}" class="btn btn-success pull-right row b-none"><i class="fa fa-plus"></i></a>
             </div>
+            @endif
             <h3 class="box-title">{{ __('menu.grades') }}</h3>
             @if (is_array($errors))
             @foreach ($errors as $error)

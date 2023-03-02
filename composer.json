@@ -1,6 +1,7 @@
 {
     "name": "rafateoli/open-grades",
     "type": "project",
+    "version": "0.0.1",
     "description": "Application for schools to manage grades, classes and calendars.",
     "keywords": [
         "framework",
@@ -9,8 +10,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "darkaonline/l5-swagger": "^8.0",
         "spatie/laravel-ignition": "^1.0",
+        "darkaonline/l5-swagger": "^8.3",
+        "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.13",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -64,6 +66,8 @@
     "prefer-stable": true,
     "scripts": {
         "doc": "@php artisan l5-swagger:generate",
+        "test": "@php artisan test",
+        "schedule": "@php artisan schedule:work",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

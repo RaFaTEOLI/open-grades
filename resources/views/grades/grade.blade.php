@@ -25,7 +25,7 @@
                 @method(empty($grade) ? 'POST' : 'PUT')
                 <div class="form-group">
                     <label>{{ __('configuration.name') }}</label>
-                    <input id="name" type="text" name="name" class="form-control" value="{{ $grade->name ?? '' }}">
+                    <input id="name" type="text" name="name" class="form-control" value="{{ $grade->name ?? '' }}"  {{ (Auth::user()->can('create-grades') || Auth::user()->can('update-grades')) ? '' : 'disabled' }}>
                     @if ($errors->get('name'))
                     <p class="label-error">
                         @foreach ($errors->get('name') as $error)
@@ -36,14 +36,17 @@
                     </p>
                     @endif
                 </div>
+                @if (Auth::user()->can('create-grades') || Auth::user()->can('update-grades'))
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">{{ __('actions.save') }}</button>
                 </div>
+                @endif
             </form>
         </div>
     </div>
 </div>
 
+@if (!empty($grade))
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
@@ -93,5 +96,6 @@
         </div>
     </div>
 </div>
+@endif
 <!-- /.container-fluid -->
 @endsection

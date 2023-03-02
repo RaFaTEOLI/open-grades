@@ -145,6 +145,11 @@ class StudentTest extends TestCase
     public function testShouldListAllStudents()
     {
         $user = User::find(1);
+        $student = factory(User::class)->create();
+
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students");
 
         $response
@@ -215,6 +220,11 @@ class StudentTest extends TestCase
     public function testShouldFetchListOfStudentsWithLimitAndOffset()
     {
         $user = User::find(1);
+        $student = factory(User::class)->create();
+
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

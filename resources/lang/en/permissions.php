@@ -31,5 +31,7 @@ return [
     "years" => "School Years",
     "grades" => "Grades",
     "dashboard" => "Dashboard",
-    "evaluation-types" => "Evaluation Types"
+    "evaluation-types" => "Evaluation Types",
+    "warnings" => "Warnings",
+    "statements" => "Statements"
 ];

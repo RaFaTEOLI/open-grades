@@ -10,8 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\Permission\CreatePermissionService;
-use App\Services\RolePermission\RemoveRolePermissionService;
-use App\Services\RolePermission\UpdateRolePermissionService;
+use Exception;
 
 class PermissionTest extends TestCase
 {
@@ -39,5 +38,23 @@ class PermissionTest extends TestCase
         ]);
 
         $this->assertTrue($createdPermission);
+    }
+
+    /**
+     * It should not create a new empty Permission
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewEmptyPermission()
+    {
+        $this->expectException(Exception::class);
+        $userAdmin = factory(User::class)->create();
+
+        $role = Role::where("name", "admin")->first();
+        $userAdmin->attachRole($role);
+
+        $this->actingAs($userAdmin);
+
+        (new CreatePermissionService())->execute([]);
     }
 }

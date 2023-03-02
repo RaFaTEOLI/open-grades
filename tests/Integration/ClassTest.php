@@ -45,13 +45,14 @@ class ClassTest extends TestCase
     }
 
     /**
-     * It should list all Classs
+     * It should list all Classes
      *
      * @return void
      */
-    public function testShouldListAllClasss()
+    public function testShouldListAllClasses()
     {
         $user = User::find(1);
+        factory(Classes::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/classes");
 
         $response
@@ -121,13 +122,14 @@ class ClassTest extends TestCase
     }
 
     /**
-     * It should return the list of Classs with limit and offset
+     * It should return the list of Classes with limit and offset
      *
      * @return void
      */
     public function testShouldFetchListOfClasssWithLimitAndOffset()
     {
         $user = User::find(1);
+        factory(Classes::class)->create();
         $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/classes?offset=0&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);

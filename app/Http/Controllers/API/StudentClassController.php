@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Exceptions\AlreadyEnrolled;
+use App\Exceptions\Forbidden;
 use App\Exceptions\NotResponsible;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentClass\StudentClassRequest;
@@ -16,6 +17,7 @@ use App\Services\StudentClass\UpdateStudentClassService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ItemNotFoundException;
 
 class StudentClassController extends Controller
 {
@@ -136,6 +138,10 @@ class StudentClassController extends Controller
             ], HttpStatus::SUCCESS);
 
             return response()->json($classes, HttpStatus::SUCCESS);
+        } catch (ItemNotFoundException) {
+            return back()->with("error", __("exceptions.item_not_found"));
+        } catch (Forbidden $e) {
+            return back()->with("error", __("exceptions.forbidden"));
         } catch (NotResponsible $nR) {
             return response()->json(["message" => __("exceptions.not_responsible")], HttpStatus::BAD_REQUEST);
         } catch (Exception $e) {
@@ -273,6 +279,8 @@ class StudentClassController extends Controller
             $class = (new FetchStudentClassService())->execute($id);
 
             return response()->json($class, HttpStatus::SUCCESS);
+        } catch (Forbidden $e) {
+            return back()->with("error", __("exceptions.forbidden"));
         } catch (NotResponsible $e) {
             return response()->json(["message" => $e->getMessage()], HttpStatus::FORBIDDEN);
         } catch (Exception $e) {

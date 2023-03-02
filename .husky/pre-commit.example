@@ -2,7 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # For Non-Docker Users
-#php artisan test
+#php artisan test --stop-on-failure
 
 # For Docker Users
-#docker exec <containerId> php artisan test
+#yarn test
