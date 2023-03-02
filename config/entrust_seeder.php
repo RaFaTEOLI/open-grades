@@ -37,7 +37,7 @@ return [
             "teachers" => "r",
             "students" => "r",
             "classes" => "r",
-            "student-classes" => "c, r",
+            "student-classes" => "c,r",
             "warnings" => "r",
         ],
         "responsible" => [
@@ -45,7 +45,7 @@ return [
             "teachers" => "r",
             "students" => "r",
             "classes" => "r",
-            "student-classes" => "c, r",
+            "student-classes" => "c,r",
             "warnings" => "r",
         ],
     ],
