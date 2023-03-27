@@ -13,18 +13,14 @@ class YearRepository extends AbstractRepository
 
     public function all(int $limit = 0, int $offset = 0): Collection | array
     {
-        try {
-            return Year::when($limit, function ($query, $limit) {
-                return $query->limit($limit);
+        return Year::when($limit, function ($query, $limit) {
+            return $query->limit($limit);
+        })
+            ->when($offset && $limit, function ($query, $offset) {
+                return $query->offset($offset);
             })
-                ->when($offset && $limit, function ($query, $offset) {
-                    return $query->offset($offset);
-                })
-                ->orderBy('closed')
-                ->get()
-                ->map->format();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+            ->orderBy('closed')
+            ->get()
+            ->map->format();
     }
 }
