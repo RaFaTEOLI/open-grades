@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Controllers\API\HttpStatus;
 use App\Models\Classes;
 use App\Models\Role;
+use App\Models\StudentsResponsible;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Warning;
 use App\Models\Year;
@@ -128,9 +129,64 @@ class WarningTest extends TestCase
 
         factory(Warning::class)->create();
         factory(Warning::class)->create();
-        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/warnings?offset=0&limit=1");
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/warnings?offset=1&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);
         $this->assertTrue(count($response->original) == 1);
+    }
+
+    /**
+     * It should list Warnings for teacher
+     *
+     * @return void
+     */
+    public function testShouldListWarningsForTeacher()
+    {
+        $class = factory(Classes::class)->create();
+        $user = User::find($class->user_id);
+        Auth::login($user);
+
+        factory(Warning::class)->create(["class_id" => $class->id]);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/warnings");
+
+        $response->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'student', 'class', 'reporter', 'description']]);
+    }
+
+    /**
+     * It should list Warnings for Student
+     *
+     * @return void
+     */
+    public function testShouldListWarningsForStudent()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "student")->first();
+        $user->attachRole($role);
+        Auth::login($user);
+
+        factory(Warning::class)->create(["student_id" => $user->id]);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/warnings");
+
+        $response->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'student', 'class', 'reporter', 'description']]);
+    }
+
+    /**
+     * It should list Warnings for Responsible
+     *
+     * @return void
+     */
+    public function testShouldListWarningsForResponsible()
+    {
+        $studentResponsible = factory(StudentsResponsible::class)->create();
+        $user = User::find($studentResponsible->responsible_id);
+        Auth::login($user);
+
+        factory(Warning::class)->create(["student_id" => $studentResponsible->student_id]);
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/warnings");
+
+        $response->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'student', 'class', 'reporter', 'description']]);
     }
 }
