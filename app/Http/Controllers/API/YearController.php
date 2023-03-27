@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Requests\Year\YearRequest;
 use App\Http\Traits\Pagination;
 use App\Repositories\Year\YearRepository;
@@ -57,7 +58,7 @@ class YearController extends Controller
      *  ),
      * )
      */
-    public function index(Request $request)
+    public function index(PaginationRequest $request)
     {
         try {
             $paginated = $this->paginate($request);
