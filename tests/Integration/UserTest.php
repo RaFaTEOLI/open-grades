@@ -96,7 +96,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testShouldNotCreateANewUserBecauseHashIsInvalid()
+    public function testShouldNotCreateANewUserBecauseHashIsNotBeingUsed()
     {
         $user = [
             "name" => $this->faker->name,
@@ -216,5 +216,24 @@ class UserTest extends TestCase
         $response = $this->actingAs($user, "api")->json("PATCH", env("APP_API") . "/users/{$userToAddRole->id}/role/1");
 
         $response->assertStatus(HttpStatus::NO_CONTENT);
+    }
+
+    /**
+     * It should not create a new user because hash is invalid
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewUserBecauseHashIsInvalid()
+    {
+        $user = [
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            "hash" => $this->faker->word()
+        ];
+
+        $response = $this->json("POST", env("APP_API") . "/register", $user);
+
+        $response->assertStatus(HttpStatus::UNPROCESSABLE_ENTITY);
     }
 }
