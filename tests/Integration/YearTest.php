@@ -109,9 +109,27 @@ class YearTest extends TestCase
     {
         $user = User::find(1);
         factory(Year::class)->create();
-        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/years?offset=0&limit=1");
+        factory(Year::class)->create();
+        $responseNoLimit = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/years");
+        $responseWithLimit = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/years?offset=1&limit=1");
 
-        $response->assertStatus(HttpStatus::SUCCESS);
-        $this->assertTrue(count($response->original) == 1);
+        $responseNoLimit->assertStatus(HttpStatus::SUCCESS);
+        $responseWithLimit->assertStatus(HttpStatus::SUCCESS);
+        $this->assertTrue(count($responseNoLimit->original) > 1);
+        $this->assertTrue(count($responseWithLimit->original) == 1);
+    }
+
+    /**
+     * It should not return the list of Years with invalid limit and offset
+     *
+     * @return void
+     */
+    public function testShouldNotFetchListOfYearsWithInvalidLimitAndOffset()
+    {
+        $user = User::find(1);
+        factory(Year::class)->create();
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/years?offset=test&limit=nothingValid");
+
+        $response->assertStatus(HttpStatus::UNPROCESSABLE_ENTITY);
     }
 }
