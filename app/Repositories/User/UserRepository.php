@@ -141,24 +141,21 @@ class UserRepository implements UserRepositoryInterface
     */
     public function allButAdmin(): Collection
     {
-        try {
-            $students = User::where("deleted_at", null)
-                ->withRole("student")
-                ->get();
 
-            $teachers = User::where("deleted_at", null)
-                ->withRole("teacher")
-                ->get();
-            $merged = $students->merge($teachers);
+        $students = User::where("deleted_at", null)
+            ->withRole("student")
+            ->get();
 
-            $responsibles = User::where("deleted_at", null)
-                ->withRole("responsible")
-                ->get();
-            $merged = $merged->merge($responsibles);
+        $teachers = User::where("deleted_at", null)
+            ->withRole("teacher")
+            ->get();
+        $merged = $students->merge($teachers);
 
-            return $merged;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        $responsibles = User::where("deleted_at", null)
+            ->withRole("responsible")
+            ->get();
+        $merged = $merged->merge($responsibles);
+
+        return $merged;
     }
 }
