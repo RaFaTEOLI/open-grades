@@ -63,16 +63,4 @@ class StudentClassRepository extends AbstractRepository implements StudentClassR
             throw new Exception($e->getMessage());
         }
     }
-
-    public function findIdByStudentIdAndClassId(int $studentId, int $classId): int
-    {
-        $studentClass = StudentsClasses::where("user_id", $studentId)->where('class_id', $classId)
-            ->get()->first();
-
-        if (empty($studentClass)) {
-            return 0;
-        } else {
-            return $studentClass->id;
-        }
-    }
 }
