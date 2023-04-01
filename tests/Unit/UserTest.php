@@ -207,4 +207,25 @@ class UserTest extends TestCase
             "roleId" => $this->faker->text(),
         ]);
     }
+
+    /**
+     * It should not create a new user using INVALID type
+     *
+     * @return void
+     */
+    public function testShouldNotCreateANewUserUsingInvalidType()
+    {
+        $this->expectException(Exception::class);
+        $user = factory(User::class)->create();
+        $role = Role::where("name", "admin")->first();
+        $user->attachRole($role);
+        $this->actingAs($user);
+
+        (new CreateUserService())->execute([
+            "name" => $this->faker->name,
+            "email" => $this->faker->unique()->safeEmail,
+            "password" => "12345678",
+            "type" => "THIS_IS_AN_INVALID_TYPE",
+        ]);
+    }
 }
