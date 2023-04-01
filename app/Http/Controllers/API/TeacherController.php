@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\Teacher\TeacherRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Traits\Pagination;
 use App\Repositories\Teacher\TeacherRepository;
 use App\Repositories\User\UserRepository;
@@ -61,7 +62,7 @@ class TeacherController extends Controller
      *  ),
      * )
      */
-    public function index(Request $request)
+    public function index(PaginationRequest $request)
     {
         try {
             $paginated = $this->paginate($request);
