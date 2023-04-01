@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Class\ClassRequest;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Traits\Pagination;
 use App\Repositories\Classes\ClassRepository;
 use App\Services\Class\CreateClassService;
@@ -14,6 +15,7 @@ class ClassController extends Controller
 {
     use Pagination;
     private $gradeRepository;
+    private $classRepository;
 
     public function __construct()
     {
@@ -58,7 +60,7 @@ class ClassController extends Controller
      *  ),
      * )
      */
-    public function index(Request $request)
+    public function index(PaginationRequest $request)
     {
         try {
             $paginated = $this->paginate($request);
