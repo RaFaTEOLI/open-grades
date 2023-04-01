@@ -125,7 +125,10 @@ class TeacherTest extends TestCase
         $teacherRole = Role::where("name", "teacher")->first();
         $teacher->attachRole($teacherRole);
 
-        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/teachers?offset=0&limit=1");
+        $teacher = factory(User::class)->create();
+        $teacher->attachRole($teacherRole);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/teachers?offset=1&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);
         $this->assertTrue(count($response->original) == 1);
