@@ -53,8 +53,6 @@ class StudentRepository implements StudentRepositoryInterface
                 ->format();
         } catch (ItemNotFoundException) {
             throw new ItemNotFoundException(__('exceptions.item_not_found'), 404);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
         }
     }
 
