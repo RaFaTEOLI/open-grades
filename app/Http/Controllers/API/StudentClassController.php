@@ -23,6 +23,7 @@ class StudentClassController extends Controller
 {
     use Pagination;
     private $gradeRepository;
+    private $studentClassRepository;
 
     public function __construct()
     {
