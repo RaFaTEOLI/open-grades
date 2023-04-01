@@ -59,6 +59,23 @@ class StudentClassTest extends TestCase
     }
 
     /**
+     * It should list all student classes as a responsible
+     *
+     * @return void
+     */
+    public function testShouldListAllStudentClassesAsAResponsible()
+    {
+        $studentResponsible = factory(StudentsResponsible::class)->create();
+        $user = User::find($studentResponsible->responsible_id);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/student/{$studentResponsible->student_id}/classes");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure(['classes', 'studentId']);
+    }
+
+    /**
      * It should show a student class by id
      *
      * @return void
@@ -119,9 +136,32 @@ class StudentClassTest extends TestCase
     {
         $user = User::find(1);
         factory(StudentsClasses::class)->create();
-        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/student/classes?offset=0&limit=1");
+        factory(StudentsClasses::class)->create();
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/student/classes?offset=1&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);
         $this->assertTrue(count($response->original["classes"]) == 1);
+    }
+
+    /**
+     * It should not list all student classes because user is not the responsible of that student
+     *
+     * @return void
+     */
+    public function testShouldNotListAllStudentClassesBecauseTheUserIsNotTheResponsible()
+    {
+        $responsible = factory(User::class)->create();
+        $responsibleRole = Role::where("name", "responsible")->first();
+        $responsible->attachRole($responsibleRole);
+
+        $student = factory(User::class)->create();
+        $studentRole = Role::where("name", "student")->first();
+        $student->attachRole($studentRole);
+
+        $response = $this->actingAs($responsible, "api")->json("GET", env("APP_API") . "/student/{$student->id}/classes");
+
+        $response
+            ->assertStatus(HttpStatus::BAD_REQUEST)
+            ->assertJson(['message' => "You can't see this user because you're not his responsible"]);
     }
 }
