@@ -18,53 +18,30 @@ class UserRepository implements UserRepositoryInterface
     */
     public function all(int $limit = 0, int $offset = 0): Collection | array
     {
-        try {
-            $users = (new RedisRepository())->all("users", $limit, $offset);
+        $users = (new RedisRepository())->all("users", $limit, $offset);
 
-            if (empty($users)) {
-                $users = User::where("deleted_at", null)
-                    ->when($limit, function ($query, $limit) {
-                        return $query->limit($limit);
-                    })
-                    ->when($offset && $limit, function ($query, $offset) {
-                        return $query->offset($offset);
-                    })
-                    ->get()
-                    ->map->format();
-            }
-
-            return $users;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), 500);
-        }
-    }
-
-    /*
-        Get All Active Students
-    */
-    public function allStudents(): Collection
-    {
-        try {
-            return User::where("deleted_at", null)
-                ->withRole("student")
+        if (empty($users)) {
+            $users = User::where("deleted_at", null)
+                ->when($limit, function ($query, $limit) {
+                    return $query->limit($limit);
+                })
+                ->when($offset && $limit, function ($query, $offset) {
+                    return $query->offset($offset);
+                })
                 ->get()
                 ->map->format();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
         }
+
+        return $users;
     }
 
     public function store(array $request): User
     {
-        try {
-            $userCreated = User::create($request);
+        $userCreated = User::create($request);
 
-            (new RedisRepository())->set("users", $this->all());
+        (new RedisRepository())->set("users", $this->all());
 
-            return $userCreated;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        return $userCreated;
     }
 
     /*
@@ -72,41 +49,29 @@ class UserRepository implements UserRepositoryInterface
     */
     public function findById(int $id): object
     {
-        try {
-            $user = (new RedisRepository())->findById("users", $id);
+        $user = (new RedisRepository())->findById("users", $id);
 
-            if (empty($user)) {
-                $user = User::where("id", $id)->where("deleted_at", null)->firstOrFail()->format();
-            }
-
-            return $user;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if (empty($user)) {
+            $user = User::where("id", $id)->where("deleted_at", null)->firstOrFail()->format();
         }
+
+        return $user;
     }
 
     public function update(int $userId, array $set): void
     {
-        try {
-            $user = User::findOrFail($userId);
+        $user = User::findOrFail($userId);
 
-            $user->update($set);
-            (new RedisRepository())->invalidate("users");
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        $user->update($set);
+        (new RedisRepository())->invalidate("users");
     }
 
     public function delete(int $userId): bool
     {
-        try {
-            $this->update($userId, ["deleted_at" => Carbon::now()]);
-            (new RedisRepository())->invalidate("users");
+        $this->update($userId, ["deleted_at" => Carbon::now()]);
+        (new RedisRepository())->invalidate("users");
 
-            return true;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        return true;
     }
 
     public function createType(string $type, int $userId): void
@@ -118,21 +83,6 @@ class UserRepository implements UserRepositoryInterface
             $user->attachRole($role);
         } else {
             throw new Exception("No type specified");
-        }
-    }
-
-    /*
-        Get All Active Responsibles
-    */
-    public function allResponsibles(): Collection
-    {
-        try {
-            return User::where("deleted_at", null)
-                ->withRole("responsible")
-                ->get()
-                ->map->format();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
         }
     }
 
