@@ -10,6 +10,7 @@ use App\Http\Controllers\API\HttpStatus;
 use App\Models\Classes;
 use App\Models\Grade;
 use App\Models\Role;
+use App\Models\StudentsClasses;
 use App\Models\Subject;
 use App\Models\Year;
 
@@ -134,5 +135,23 @@ class ClassTest extends TestCase
 
         $response->assertStatus(HttpStatus::SUCCESS);
         $this->assertTrue(count($response->original) == 1);
+    }
+
+    /**
+     * It should show students from a Class by id
+     *
+     * @return void
+     */
+    public function testShouldShowStudentsFromAClassById()
+    {
+        $user = User::find(1);
+
+        $studentClass = factory(StudentsClasses::class)->create();
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/classes/{$studentClass->class_id}/students");
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJsonStructure([['id', 'name', 'email', 'photo', 'created_at', 'updated_at', 'roles']]);
     }
 }
