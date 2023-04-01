@@ -9,34 +9,34 @@ use Illuminate\Support\Collection;
 
 class StudentsResponsibleRepository implements StudentsResponsibleRepositoryInterface
 {
-    /*
-        Get All Active Students Responsibles
-    */
-    public function all(): Collection
-    {
-        return StudentsResponsible::all()->map->format();
-    }
+    // /*
+    //     Get All Active Students Responsibles
+    // */
+    // public function all(): Collection
+    // {
+    //     return StudentsResponsible::all()->map->format();
+    // }
 
-    /*
-        Get A Student Responsible By Id
-    */
-    public function findById(int $id): object
-    {
-        return StudentsResponsible::where("id", $id)
-            ->first()
-            ->format();
-    }
+    // /*
+    //     Get A Student Responsible By Id
+    // */
+    // public function findById(int $id): object
+    // {
+    //     return StudentsResponsible::where("id", $id)
+    //         ->first()
+    //         ->format();
+    // }
 
-    /*
-        Get All Students from a Responsible Id
-    */
-    public function findByResponsibleId(int $id): Collection
-    {
-        return StudentsResponsible::where("responsible_id", $id)
-            ->get()
-            ->map
-            ->formatStudentsOnly();
-    }
+    // /*
+    //     Get All Students from a Responsible Id
+    // */
+    // public function findByResponsibleId(int $id): Collection
+    // {
+    //     return StudentsResponsible::where("responsible_id", $id)
+    //         ->get()
+    //         ->map
+    //         ->formatStudentsOnly();
+    // }
 
     /*
         Get A Student Responsible By Id
