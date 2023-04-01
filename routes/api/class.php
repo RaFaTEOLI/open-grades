@@ -17,6 +17,10 @@ Route::group(["middleware" => "auth:api"], function () {
             ->name("classes.show")
             ->middleware("permission:read-classes");
 
+        Route::get("/classes/{id}/students", "API\ClassStudentsController@show")
+            ->name("classes.show.students")
+            ->middleware("permission:read-classes");
+
         Route::post("/classes", "API\ClassController@store")
             ->name("classes.store")
             ->middleware("permission:create-classes");
