@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\API\HttpStatus;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Requests\User\InviteUserRequest;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Traits\Pagination;
+use App\Repositories\Student\StudentRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\User\CreateUserService;
 use Exception;
@@ -20,10 +22,12 @@ class UserController extends Controller
     use RegistersUsers;
 
     private $userRepository;
+    private $studentRepository;
 
     public function __construct()
     {
         $this->userRepository = new UserRepository();
+        $this->studentRepository = new StudentRepository();
     }
 
     /**
@@ -470,7 +474,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all(Request $request)
+    public function all(PaginationRequest $request)
     {
         try {
             $paginated = $this->paginate($request);
