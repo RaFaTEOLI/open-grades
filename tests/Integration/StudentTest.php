@@ -3,7 +3,9 @@
 namespace Tests\Integration;
 
 use App\Http\Controllers\API\HttpStatus;
+use App\Models\Classes;
 use App\Models\Role;
+use App\Models\StudentsClasses;
 use App\Models\StudentsResponsible;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -158,6 +160,46 @@ class StudentTest extends TestCase
     }
 
     /**
+     * It should list all students as a responsible
+     *
+     * @return void
+     */
+    public function testShouldListAllStudentsAsAResponsible()
+    {
+        $studentsResponsible = factory(StudentsResponsible::class)->create();
+        $user = User::find($studentsResponsible->responsible_id);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students");
+
+        $student = User::find($studentsResponsible->student_id);
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJson([['id' => $student->id, 'name' => $student->name, 'email' => $student->email]]);
+    }
+
+    /**
+     * It should list all students as a teacher
+     *
+     * @return void
+     */
+    public function testShouldListAllStudentsAsATeacher()
+    {
+        $studentClass = factory(StudentsClasses::class)->create();
+
+        $class = Classes::find($studentClass->class_id);
+        $user = User::find($class->user_id);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students");
+
+        $student = User::find($studentClass->user_id);
+
+        $response
+            ->assertStatus(HttpStatus::SUCCESS)
+            ->assertJson([['id' => $student->id, 'name' => $student->name, 'email' => $student->email]]);
+    }
+
+    /**
      * It should show a student by id
      *
      * @return void
@@ -221,11 +263,13 @@ class StudentTest extends TestCase
     {
         $user = User::find(1);
         $student = factory(User::class)->create();
-
         $studentRole = Role::where("name", "student")->first();
         $student->attachRole($studentRole);
 
-        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students?offset=0&limit=1");
+        $student = factory(User::class)->create();
+        $student->attachRole($studentRole);
+
+        $response = $this->actingAs($user, "api")->json("GET", env("APP_API") . "/students?offset=1&limit=1");
 
         $response->assertStatus(HttpStatus::SUCCESS);
         $this->assertTrue(count($response->original) == 1);
