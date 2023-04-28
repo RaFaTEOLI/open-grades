@@ -34,6 +34,6 @@ Route::group(["prefix" => "admin", "middleware" => ["role:admin"]], function () 
         ->middleware("permission:delete-invitation");
 
     Route::post("/invitations", "InvitationLinkController@store")
-        ->name("invitations")
+        ->name("invitations.store")
         ->middleware("permission:create-invitation");
 });

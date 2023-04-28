@@ -25,7 +25,7 @@
             </div>
             <h3 class="box-title">{{ __('invitation.invitations') }}</h3>
             @csrf
-            <form role="form" action="{{ route('invitations') }}" method="POST">
+            <form role="form" action="{{ route('invitations.store') }}" method="POST">
                 @csrf
                 @if (!empty($invitation))
                 <div class="form-group">
@@ -68,7 +68,7 @@
         document.execCommand("copy");
         $.toast({
             heading: 'Open Grades',
-            text: '<?= __('messages.copied') ?>',
+            text: '<?= __("messages.copied") ?>',
             position: 'top-right',
             loaderBg: '#fff',
             icon: 'success',

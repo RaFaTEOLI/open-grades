@@ -35,7 +35,7 @@ class InvitationLinkController extends Controller
 
             $invitation = $createInvitationLinkService->execute($input);
 
-            return view("admin/invitation/invitations", ["invitation" => $invitation]);
+            return view("admin/invitation/invitation", ["invitation" => $invitation]);
         } catch (Exception $e) {
             return back()->with("error", __("actions.error"));
         }
