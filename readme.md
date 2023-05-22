@@ -1,4 +1,5 @@
-<p align="center">![image](https://github.com/RaFaTEOLI/open-grades/assets/40833512/e0421587-87cc-4a73-80e8-462757828d12)
+<p align="center">
+    ![image](https://github.com/RaFaTEOLI/open-grades/assets/40833512/e0421587-87cc-4a73-80e8-462757828d12)
 </p>
 
 <p align="center">
