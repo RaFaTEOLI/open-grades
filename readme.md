@@ -1,6 +1,4 @@
-<p align="center">
-    ![image](https://github.com/RaFaTEOLI/open-grades/assets/40833512/e0421587-87cc-4a73-80e8-462757828d12)
-</p>
+![image](https://github.com/RaFaTEOLI/open-grades/assets/40833512/7da3239e-0c3e-4c86-a79f-174c86b05f37)
 
 <p align="center">
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
