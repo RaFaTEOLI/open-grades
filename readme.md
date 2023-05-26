@@ -37,19 +37,25 @@ The Open Grades app is open-source software licensed under the [MIT license](htt
 
 ## How To Install
 
-**Using Docker**\
-    - `cp .env.example .env`\
-    - `docker-compose build app`\
-    - `docker-compose up -d`\
-    - `docker-compose exec app composer install`\
-    - `docker-compose exec app php artisan migrate`\
-    - `docker-compose exec app php artisan db:seed`\
-    - Then Access: server_domain_or_IP:8000
+**Using Docker**
+```console
+cp .env.example .env
+yarn install
+yarn up
+yarn run:install
+yarn migrate
+yarn db:seed
+```
+Then Access: server_domain_or_IP:8000
     
-**Without Docker**\
-    - `composer install`\
-    - `php artisan migrate`\
-    - `php artisan db:seed`\
-    - `php artisan serve`\
-    - Then Access: server_domain_or_IP:8000
+**Without Docker**
+```console
+cp .env.example .env
+yarn install
+composer install
+php artisan migrate
+php artisan db:seed
+php artisan serve
+```
+Then Access: server_domain_or_IP:8000
     
