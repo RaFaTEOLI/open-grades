@@ -22,9 +22,7 @@ class ApiResponseTime
 
     public function terminate($request, $response)
     {
-        if (!defined('LARAVEL_START')) {
-            $laravelStart = microtime(true);
-        }
+        $laravelStart = defined('LARAVEL_START') ? LARAVEL_START : microtime(true);
 
         $response_time = (microtime(true) - $laravelStart) * 1000;
         $redis = Redis::connection();
